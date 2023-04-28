@@ -66,3 +66,6 @@
 ~5/31 実装  
 6/2 MVPリリース  
 6/9 本リリース
+
+## 画面遷移図
+https://www.figma.com/file/ym6L6BtjalGczAeJyhYsSJ/%E3%82%B3%E3%82%B1%E3%83%BC%E3%83%9C?node-id=7-194&t=D1431jr47oNpVVHN-0
