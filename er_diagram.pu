@@ -1,0 +1,91 @@
+@startuml kokebo
+hide circle
+hide empty members
+
+'string = varchar(255)
+
+entity "ユーザー\nusers" as users {
+  id [PK]
+  --
+  username
+  email
+  crypted_password
+  salt
+  host_or_partner
+  created_at
+  updated_at
+}
+
+entity "パートナー\npartnerships" as partnerships {
+  id [PK]
+  --
+  host_id(user)
+  partner_id(user)
+}
+
+entity "子ども\nchildren" as children {
+  id [PK]
+  --
+  name
+  age
+  created_at
+  user_id [FK]
+}
+
+entity "希望進路\ncourses" as courses {
+  id [PK]
+  --
+  sending_money
+  created_at
+  updated_at
+  child_id [FK]
+}
+
+entity "希望校\nschools" as schools {
+  id [PK]
+  --
+  school
+  public_or_private
+  subject
+  course_id [FK]
+}
+
+entity "積立履歴\nsavings" as savings{
+  id [PK]
+  --
+  amount
+  created_at
+  user_id [FK]
+  child_id [FK]
+  tag_id [FK]
+}
+
+entity "費目\nitems" as items {
+  id [PK]
+  --
+  name
+}
+
+entity "積立計画\nplans" as plans {
+  id [PK]
+  --
+  save_date
+  amount
+  auto_or_manual
+  start_of_duration
+  end_of_duration
+  child_id [FK]
+  items_id [FK]
+}
+
+users ||-r-o| partnerships
+users ||--|{ children
+users ||-r-o{ savings
+children ||-l-|| courses
+children ||-r-o{ savings
+children ||--|{ plans
+courses ||-l-|{ schools
+savings ||-r-o| items
+plans ||-r-o| items
+
+@enduml
