@@ -27,10 +27,10 @@ entity "パートナー\npartnerships" as partnerships {
 entity "子ども\nchildren" as children {
   id integer [PK]
   --
+  user_id integer [FK]
   name string
   age integer
   created_at datetime
-  user_id integer [FK]
 }
 
 '教育費シュミレーション時に入力する基本情報を保存するテーブル
@@ -76,7 +76,6 @@ entity "積立計画\nplans" as plans {
   --
   child_id integer [FK]
   items_id integer [FK]
-  save_date datetime
   amount integer
   is_auto bool
   start_of_duration datetime
