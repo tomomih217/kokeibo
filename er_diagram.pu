@@ -2,80 +2,85 @@
 hide circle
 hide empty members
 
-'string = varchar(255)
-
+'ユーザー情報
 entity "ユーザー\nusers" as users {
-  id [PK]
+  id integer [PK]
   --
-  username
-  email
-  crypted_password
-  salt
-  host_or_partner
-  created_at
-  updated_at
+  name string
+  email string
+  crypted_password string
+  salt string
+  is_host bool
+  created_at datetime
+  updated_at datetime
 }
 
+'会員(host:users)とパートナー(partner:users)の中間テーブル
 entity "パートナー\npartnerships" as partnerships {
-  id [PK]
+  id integer [PK]
   --
-  host_id(user)
-  partner_id(user)
+  host_id integer [FK]
+  partner_id integer [FK]
 }
 
+'子どもの情報
 entity "子ども\nchildren" as children {
-  id [PK]
+  id integer [PK]
   --
-  name
-  age
-  created_at
-  user_id [FK]
+  name string
+  age integer
+  created_at datetime
+  user_id integer [FK]
 }
 
+'教育費シュミレーション時に入力する基本情報を保存するテーブル
 entity "希望進路\ncourses" as courses {
-  id [PK]
+  id integer [PK]
   --
-  sending_money
-  created_at
-  updated_at
-  child_id [FK]
+  child_id integer [FK]
+  sending_money integer
+  created_at datetime
+  updated_at datetime
 }
 
+'教育費シュミレーション時に入力する学校の情報を保存するテーブル
 entity "希望校\nschools" as schools {
-  id [PK]
+  id integer [PK]
   --
-  school
-  public_or_private
-  subject
-  course_id [FK]
+  course_id integer [FK]
+  stage integer(enum)
+  type integer(enum)
 }
 
+'実際に積立したお金を保存するテーブル
 entity "積立履歴\nsavings" as savings{
-  id [PK]
+  id integer [PK]
   --
-  amount
-  created_at
-  user_id [FK]
-  child_id [FK]
-  tag_id [FK]
+  user_id integer [FK]
+  child_id integer [FK]
+  item_id integer [FK]
+  amount integer
+  created_at datetime
 }
 
+'費目の種類を保存するテーブル
 entity "費目\nitems" as items {
-  id [PK]
+  id integer [PK]
   --
-  name
+  name string
 }
 
+'積立計画を保存するテーブル
 entity "積立計画\nplans" as plans {
-  id [PK]
+  id integer [PK]
   --
-  save_date
-  amount
-  auto_or_manual
-  start_of_duration
-  end_of_duration
-  child_id [FK]
-  items_id [FK]
+  child_id integer [FK]
+  items_id integer [FK]
+  save_date datetime
+  amount integer
+  is_auto bool
+  start_of_duration datetime
+  end_of_duration datetime
 }
 
 users ||-r-o| partnerships
