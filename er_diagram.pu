@@ -11,8 +11,6 @@ entity "ユーザー\nusers" as users {
   crypted_password string
   salt string
   is_host bool
-  created_at datetime
-  updated_at datetime
 }
 
 '会員(host:users)とパートナー(partner:users)の中間テーブル
@@ -30,7 +28,6 @@ entity "子ども\nchildren" as children {
   user_id integer [FK]
   name string
   age integer
-  created_at datetime
 }
 
 '教育費シュミレーション時に入力する基本情報を保存するテーブル
@@ -39,8 +36,6 @@ entity "希望進路\ncourses" as courses {
   --
   child_id integer [FK]
   sending_money integer
-  created_at datetime
-  updated_at datetime
 }
 
 '教育費シュミレーション時に入力する学校の情報を保存するテーブル
@@ -60,7 +55,6 @@ entity "積立履歴\nsavings" as savings{
   child_id integer [FK]
   item_id integer [FK]
   amount integer
-  created_at datetime
 }
 
 '費目の種類を保存するテーブル
