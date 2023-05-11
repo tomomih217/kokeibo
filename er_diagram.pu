@@ -35,7 +35,7 @@ entity "希望進路\ncourses" as courses {
   id integer [PK]
   --
   child_id integer [FK]
-  sent_money_for_living_alone integer
+  living_alone_funds integer
 }
 
 '教育費シュミレーション時に入力する学校の情報を保存するテーブル
@@ -44,7 +44,7 @@ entity "希望校\nschools" as schools {
   --
   course_id integer [FK]
   stage integer(enum)
-  public_or_private_and_subject string
+  school_type string
 }
 
 '実際に積立したお金を保存するテーブル
