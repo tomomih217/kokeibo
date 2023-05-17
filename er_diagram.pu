@@ -1,0 +1,90 @@
+@startuml kokebo
+hide circle
+hide empty members
+
+'ユーザー情報
+entity "ユーザー\nusers" as users {
+  id integer [PK]
+  --
+  name string
+  email string
+  crypted_password string
+  salt string
+  is_host bool
+}
+
+'会員(host:users)とパートナー(partner:users)の中間テーブル
+entity "パートナー\npartnerships" as partnerships {
+  id integer [PK]
+  --
+  host_id integer [FK]
+  partner_id integer [FK]
+}
+
+'子どもの情報
+entity "子ども\nchildren" as children {
+  id integer [PK]
+  --
+  user_id integer [FK]
+  name string
+  age integer
+}
+
+'教育費シュミレーション時に入力する基本情報を保存するテーブル
+entity "希望進路\ncourses" as courses {
+  id integer [PK]
+  --
+  child_id integer [FK]
+  living_alone_funds integer
+}
+
+'教育費シュミレーション時に入力する学校の情報を保存するテーブル
+entity "希望校\nschools" as schools {
+  id integer [PK]
+  --
+  course_id integer [FK]
+  stage integer(enum)
+  school_type string
+}
+
+'実際に積立したお金を保存するテーブル
+entity "積立履歴\nsavings" as savings{
+  id integer [PK]
+  --
+  user_id integer [FK]
+  child_id integer [FK]
+  item_id integer [FK]
+  amount integer
+}
+
+'費目の種類を保存するテーブル
+entity "費目\nitems" as items {
+  id integer [PK]
+  --
+  name string
+}
+
+'積立計画を保存するテーブル
+entity "積立計画\nplans" as plans {
+  id integer [PK]
+  --
+  child_id integer [FK]
+  item_id integer [FK]
+  amount integer
+  is_auto bool
+  payment_date datetime
+  start_age integer
+  end_age integer
+}
+
+users ||-r-o| partnerships
+users ||--|{ children
+users ||-r-o{ savings
+children ||-l-|| courses
+children ||-r-o{ savings
+children ||--|{ plans
+courses ||-l-|{ schools
+savings ||-r-o| items
+plans ||-r-o| items
+
+@enduml
