@@ -86,6 +86,7 @@ GEM
       railties (>= 3.2)
     erubi (1.12.0)
     ffi (1.15.5)
+    foreman (0.87.2)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.13.0)
@@ -227,6 +228,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   dotenv-rails
+  foreman
   jbuilder (~> 2.7)
   listen (~> 3.3)
   mysql2 (~> 0.5)
