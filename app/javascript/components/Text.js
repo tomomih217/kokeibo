@@ -1,15 +1,17 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class Text extends React.Component {
-  render() {
-    const { size, color, value } = this.props;
-    const style = `text-${size} text-${color}`;
+const Text = ({ size, color, children }) => {
+  const textStyle = `text-${size} text-${color}`;
 
-    return(
-      <p className={style}>{value}</p>
-    )
-  }
-}
+  return <p className={textStyle}>{children}</p>;
+};
+
+Text.propTypes = {
+  size: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 export default Text;
+

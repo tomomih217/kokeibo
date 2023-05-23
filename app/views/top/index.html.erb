@@ -1,4 +1,6 @@
 <h1>Top#index</h1>
 <p class='text-red-500'>Find me in app/views/top/index.html.erb</p>
 
-<%= react_component('Text', { size: '5xl', color: 'blue-500', value: 'これはテキスト' }) %>
+<%= react_component('Text', { size: '5xl', color: 'red-500', children: 'Text' }) %>
+<%= react_component('Label', { size: 'sm', color: 'blue-300', children: 'これはLavel'}) %>
+<%= react_component('Button', { width: '300', height: '30', color: 'green-400', roundness: 'full', link: '#', children: 'ボタン'})%>
