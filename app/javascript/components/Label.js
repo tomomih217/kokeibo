@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Label = ({ size, color, children }) => {
-  const labelStyle = `text-${size} text-${color}`;
+  const labelStyle = `text-${size} text-${color} `;
 
   return <span className={labelStyle}>{children}</span>;
 };
