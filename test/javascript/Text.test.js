@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Text from '../../app/javascript/components/Text';
+import Text from '../../app/javascript/components/components/Text';
 import { toBeInTheDocument } from '@testing-library/jest-dom';
 
 describe('Text Component', () => {

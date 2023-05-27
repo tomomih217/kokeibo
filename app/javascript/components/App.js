@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './Header';
+import Header from './components/Header';
 import Top from './pages/Top';
-import Footer from './Footer';
+import Footer from './components/Footer';
 
 const MainContent = () => {
   return (

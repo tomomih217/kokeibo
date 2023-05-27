@@ -1,7 +1,7 @@
 import React from 'react';
-import Text from '../Text';
-import Image from '../Image';
-import Button from '../Button';
+import Text from '../components/Text';
+import Image from '../components/Image';
+import Button from '../components/Button';
 
 const Top = () => {
   const sentences = [

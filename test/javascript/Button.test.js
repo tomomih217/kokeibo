@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import Button from '../../app/javascript/components/Button';
+import Button from '../../app/javascript/components/components/Button';
 import { toBeInTheDocument } from '@testing-library/jest-dom';
 
 describe('Buttonコンポーネント', () => {

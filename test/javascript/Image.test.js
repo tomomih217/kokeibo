@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Image from '../../app/javascript/components/Image';
+import Image from '../../app/javascript/components/components/Image';
 import { toBeInTheDocument } from '@testing-library/jest-dom';
 
 describe('Imageコンポーネント', () => {

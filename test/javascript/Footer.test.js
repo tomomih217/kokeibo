@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Footer from '../../app/javascript/components/Footer';
+import Footer from '../../app/javascript/components/components/Footer';
 import { toBeInTheDocument } from '@testing-library/jest-dom';
 
 
