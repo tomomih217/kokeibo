@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Button = ({ label, size, color, fontColor, roundType, onClick }) => {
+const Button = ({ pxSize, pySize, color, fontColor, roundType, onClick, children }) => {
   // ボタンのスタイルを動的に生成
-  const buttonStyle = `py-${size} px-${size} bg-${color} text-${fontColor} rounded-${roundType}`;
+  const buttonStyle = `py-${pySize} px-${pxSize} bg-${color} text-${fontColor} rounded-${roundType}`;
 
   return (
     <button className={buttonStyle} onClick={onClick}>
-      {label}
+      {children}
     </button>
   );
 };

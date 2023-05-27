@@ -4,33 +4,31 @@ import Button from '../../app/javascript/components/Button';
 import { toBeInTheDocument } from '@testing-library/jest-dom';
 
 describe('Buttonコンポーネント', () => {
-  it('正しく描画されていること', () => {
-    const size = '2';
-    const color = 'green-300';
-    const fontColor = 'white';
-    const roundType = 'full';
-
-    const onClickMock = jest.fn();
-    const label = 'Click me';
-    const { getByText } = render(<Button label={label} size={size} color={color} fontColor={fontColor} roundType={roundType} onClick={onClickMock} />);
-    
-    const buttonElement = getByText(label);
+  test('ボタンが表示されること', () => {
+    const { getByText } = render(<Button>Click me</Button>);
+    const buttonElement = getByText('Click me');
     expect(buttonElement).toBeInTheDocument();
-    expect(buttonElement).toHaveClass(`py-${size}`);
-    expect(buttonElement).toHaveClass(`px-${size}`);
-    expect(buttonElement).toHaveClass(`text-${fontColor}`);
-    expect(buttonElement).toHaveClass(`bg-${color}`);
-    expect(buttonElement).toHaveClass(`rounded-${roundType}`);
   });
 
-  it('クリックイベントが発火すること', () => {
+  test('クリックイベントが正しく動作すること', () => {
     const onClickMock = jest.fn();
-    const label = 'Click me';
-    const { getByText } = render(<Button label={label} onClick={onClickMock} />);
-    
-    const buttonElement = getByText(label);
+    const { getByText } = render(<Button onClick={onClickMock}>Click me</Button>);
+    const buttonElement = getByText('Click me');
     fireEvent.click(buttonElement);
+    expect(onClickMock).toHaveBeenCalled();
+  });
 
-    expect(onClickMock).toHaveBeenCalledTimes(1);
+  test('スタイルが正しく適用されること', () => {
+    const { getByText } = render(
+      <Button pxSize="4" pySize="2" color="blue" fontColor="white" roundType="md">
+        Click me
+      </Button>
+    );
+    const buttonElement = getByText('Click me');
+    expect(buttonElement).toHaveClass('py-2');
+    expect(buttonElement).toHaveClass('px-4');
+    expect(buttonElement).toHaveClass('bg-blue');
+    expect(buttonElement).toHaveClass('text-white');
+    expect(buttonElement).toHaveClass('rounded-md');
   });
 });
