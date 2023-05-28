@@ -13,4 +13,25 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  theme: {
+    fontFamily: {
+      body: [
+        'Courier',
+        'Verdana',
+        'Arial',
+        'ヒラギノ角ゴシック',
+        'YuGothic',
+        "Yu Gothic",
+        "Hiragino Sans",
+        'sans-serif',
+      ]
+    },
+    extend: {
+      colors: {
+        'amber-dark': '#5C5446',
+        'amber-light': '#FFFBE3',
+        'amber-vivid': '#FE6B01',
+      },
+    },
+  },
 }
