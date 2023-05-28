@@ -18,7 +18,7 @@ const Top = () => {
         </div>
         <ul className='mt-10'>
           {sentences.map((sentence, key) => (
-            <li id={key} className='mb-3'>
+            <li key={key} className='mb-3'>
               <Text size='sm' color='amber-dark'>{sentence}</Text>
             </li>
           ))}
