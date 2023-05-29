@@ -22,8 +22,5 @@
     "private_litelature": 6898000,
     "private_science": 8216000
   },
-  "living_alone_funds": {
-    "initial_cost": 387000,
-    "month_funds": 80000
-  }
+  "living_alone_funds": 4179000
 }
