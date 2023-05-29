@@ -1,0 +1,26 @@
+{
+  "certified_childcare_center": 430000,
+  "kindergarten": {
+    "public": 644088,
+    "private": 1584777
+  } ,
+  "primary_school": {
+    "public": 1926809,
+    "private": 9592145
+  },
+  "junior_high_school": {
+    "public": 1462118,
+    "private": 4217172
+  },
+  "high_school": {
+    "public": 1372072,
+    "private": 2904230
+  },
+  "university": {
+    "public_litelature": 4812000,
+    "public_science": 4812000,
+    "private_litelature": 6898000,
+    "private_science": 8216000
+  },
+  "living_alone_funds": 4179000
+}
