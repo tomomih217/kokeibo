@@ -2,11 +2,13 @@ import React from 'react';
 import Header from './components/Header';
 import Top from './pages/Top';
 import Footer from './components/Footer';
+import Card from './components/Card';
 
 const MainContent = () => {
   return (
     <div className='mt-16 h-5/6'>
       <Top />
+      <Card title='見本'>カード挿入</Card>
     </div>
   )
 };

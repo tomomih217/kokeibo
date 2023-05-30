@@ -30,6 +30,7 @@ module.exports = {
       colors: {
         'amber-dark': '#5C5446',
         'amber-light': '#FFFBE3',
+        'amber-card': '#FFF6C6',
         'amber-vivid': '#FE6B01',
       },
     },
