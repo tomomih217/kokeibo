@@ -14,7 +14,7 @@ describe('Card', () => {
     // カードの要素が表示されていることを確認
     const cardElement = screen.getByText(title).parentElement;
     expect(cardElement).toBeInTheDocument();
-    expect(cardElement).toHaveClass('w-1/2');
+    expect(cardElement).toHaveClass(`w-${widthSize}`);
 
     // タイトルが表示されていることを確認
     const titleElement = screen.getByText(title);
