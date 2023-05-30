@@ -2,14 +2,18 @@ import React from 'react';
 import Header from './components/Header';
 import Top from './pages/Top';
 import Footer from './components/Footer';
-import WithoutTitleCard from './components/WithoutTitleCard';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const MainContent = () => {
   return (
-    <div className='mt-16 h-5/6'>
-      <Top />
-      <WithoutTitleCard>カード挿入</WithoutTitleCard>
-    </div>
+    <BrowserRouter>
+      <div className='mt-16 h-5/6'>
+        <Routes>
+          <Route path='/' element={<Top />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+
   )
 };
 
