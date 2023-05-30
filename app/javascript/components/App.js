@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Top from './pages/Top';
 import Footer from './components/Footer';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Simulation from './pages/Simulation';
 
 const MainContent = () => {
   return (
@@ -10,6 +11,7 @@ const MainContent = () => {
       <div className='mt-16 h-5/6'>
         <Routes>
           <Route path='/' element={<Top />} />
+          <Route path='/simulation' element={<Simulation />} />
         </Routes>
       </div>
     </BrowserRouter>
