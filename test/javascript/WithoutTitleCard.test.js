@@ -11,9 +11,9 @@ describe('Card', () => {
     render(<WithoutTitleCard widthSize={widthSize}>{children}</WithoutTitleCard>);
 
     //要素が表示されること
-    const cardElement = screen.getByText('Test Content').parentElement;
+    const cardElement = screen.getByText('Test Content').parentElement.parentElement;
     expect(cardElement).toBeInTheDocument();
-    expect(cardElement).toHaveClass(`test-${widthSize}`);
+    expect(cardElement).toHaveClass(`w-${widthSize}`);
 
     //コンテンツが表示されること
     const contentElement = screen.getByText('Test Content');
