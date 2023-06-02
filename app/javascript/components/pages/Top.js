@@ -12,7 +12,7 @@ const Top = () => {
   ];
 
   return (
-    <div className='flex justify-center items-center h-full'>
+    <div className='flex justify-center items-center h-screen'>
       <div className='w-4/12'>
         <div>
           <Text size='3xl' color='amber-vivid'>わが子のために、今できること</Text>

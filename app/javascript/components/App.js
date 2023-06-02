@@ -8,7 +8,7 @@ import Simulation from './pages/Simulation';
 const MainContent = () => {
   return (
     <BrowserRouter>
-      <div className='mt-16 h-5/6'>
+      <div className='mt-16 h-full'>
         <Routes>
           <Route path='/' element={<Top />} />
           <Route path='/simulation' element={<Simulation />} />
@@ -21,7 +21,7 @@ const MainContent = () => {
 
 const App = () => {
   return (
-    <div className='w-full h-screen absolute bg-amber-light top-0'>
+    <div className='w-full h-full absolute bg-amber-light top-0 overflow-y-scroll relative'>
       <Header />
       <MainContent />
       <Footer />
