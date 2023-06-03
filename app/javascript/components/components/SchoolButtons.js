@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from './Button';
 
-const SchoolButtons = ({ identifier, onChange }) => {
+const SchoolButtons = ({ identifier, selectedButton, onChange }) => {
 
   const options = (
     identifier === 'university'
@@ -22,19 +22,22 @@ const SchoolButtons = ({ identifier, onChange }) => {
   };
 
   return (
-    <div className='flex'>
+    <div className='flex flex-wrap justify-end w-2/5'>
       {options.map((option) => (
-        <Button
-          key={option.identifier}
-          onClick={() => handleOptionClick(option.value)}
-          pxSize='3'
-          pySize='2'
-          color='yellow-300'
-          fontColor='amber-dark'
-          roundType='md'
-        >
-          {option.label}
-        </Button>
+        <div className='ml-3 mb-2'>
+          <Button
+            key={option.identifier}
+            onClick={() => handleOptionClick(option.value)}
+            pxSize='3'
+            pySize='2'
+            color={ selectedButton === option.value ? 'yellow-300' : 'white' }
+            fontColor='amber-dark'
+            roundType='md'
+            style='w-16 border border-yellow-300 hover:bg-yellow-300'
+          >
+            {option.label}
+          </Button>
+        </div>
       ))}
     </div>
   );

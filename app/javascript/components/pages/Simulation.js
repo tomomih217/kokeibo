@@ -9,7 +9,13 @@ import SchoolButtons from '../components/SchoolButtons';
 const Simulation = () => {
   //ユーザーの入力値を格納
   const [selectedValues, setSelectedValues] = useState({
-    age: ''
+    age: '',
+    nurcerySchool: '',
+    kindergarten: '',
+    primarySchool: '',
+    juniorHighSchool: '',
+    highSchool: '',
+    university: ''
   });
 
   // ドロップダウンの値が変更されたときに実行されるハンドラ関数
@@ -51,10 +57,11 @@ const Simulation = () => {
               <Text size='md' color='amber-dark'>希望進路を選択してください。</Text>
               <div className='lg:px-28 pt-8'>
                 { schoolTypes.map((schoolType, index) => {
+                  const selectedValue = schoolType.type;
                   return (
                     <div className='flex justify-between mb-5'>
                       <Label size='md' color='amber-dark'>{schoolType.label}</Label>
-                      <SchoolSelect identifier={schoolType.type} onChange={handleDropdownChange} />
+                      <SchoolButtons identifier={schoolType.type} selectedButton={selectedValues[selectedValue]} onChange={handleDropdownChange} />
                     </div>
                   )
                 }) }
