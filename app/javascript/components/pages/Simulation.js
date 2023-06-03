@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import Text from '../components/Text';
 import Card from '../components/Card';
-import SchoolSelect from '../features/SchoolSelect';
 import AgeSelect from '../components/AgeSelect';
 import Label from '../components/Label';
-import SchoolButtons from '../components/SchoolButtons';
+import SchoolButtons from '../features/SchoolButtons';
 
 const Simulation = () => {
   //ユーザーの入力値を格納
