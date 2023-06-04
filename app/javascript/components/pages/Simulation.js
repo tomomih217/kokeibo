@@ -4,6 +4,8 @@ import Card from '../components/Card';
 import AgeSelect from '../components/AgeSelect';
 import Label from '../components/Label';
 import SchoolButtons from '../features/SchoolButtons';
+import LivingAloneFundsSelectDropdown from '../features/LivingAloneFundsSelect';
+import Button from '../components/Button';
 
 const Simulation = () => {
   //ユーザーの入力値を格納
@@ -14,7 +16,8 @@ const Simulation = () => {
     primarySchool: '',
     juniorHighSchool: '',
     highSchool: '',
-    university: ''
+    university: '',
+    livingAloneFunds: ''
   });
 
   // ドロップダウンの値が変更されたときに実行されるハンドラ関数
@@ -45,7 +48,7 @@ const Simulation = () => {
           <Card widthSize='1/2' title='STEP1'>
             <div className='py-5 text-center'>
               <Text size='md' color='amber-dark'>お子様のご年齢は？</Text>
-              <AgeSelect />
+              <AgeSelect identifier='age' onChange={handleDropdownChange} />
             </div>
           </Card>
         </div>
@@ -73,10 +76,16 @@ const Simulation = () => {
           <Card widthSize='1/2' title='STEP3'>
             <div className='py-5 text-center'>
               <Text size='md' color='amber-dark'>仕送り（自宅外通学）予定金額</Text>
+              <LivingAloneFundsSelectDropdown identifier='livingAloneFunds' onChange={handleDropdownChange} />
             </div>
           </Card>
         </div>
 
+        <div className='text-center mt-5 mb-24'>
+          <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='md'>
+            シミュレーション結果へ
+          </Button>
+        </div>
       </div>
     </div>
   )
