@@ -6,12 +6,13 @@ import Label from '../components/Label';
 import SchoolButtons from '../features/SchoolButtons';
 import LivingAloneFundsSelectDropdown from '../features/LivingAloneFundsSelect';
 import Button from '../components/Button';
+import Result from '../features/Result';
 
 const Simulation = () => {
   //ユーザーの入力値を格納
   const [selectedValues, setSelectedValues] = useState({
     age: '',
-    nurcerySchool: '',
+    nurserySchool: '',
     kindergarten: '',
     primarySchool: '',
     juniorHighSchool: '',
@@ -19,6 +20,7 @@ const Simulation = () => {
     university: '',
     livingAloneFunds: ''
   });
+  const [showResult, setShowResult] = useState(false);
 
   // ドロップダウンの値が変更されたときに実行されるハンドラ関数
   const handleDropdownChange = (identifier, value) => {
@@ -36,6 +38,10 @@ const Simulation = () => {
     { type: 'highSchool', label: '高等学校' },
     { type: 'university', label: '大学' }
   ]
+
+  const handleClick = () => {
+    setShowResult(true);
+  }
 
   return (
     <div className='m-auto'>
@@ -82,10 +88,17 @@ const Simulation = () => {
         </div>
 
         <div className='text-center mt-5 mb-24'>
-          <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='md'>
-            シミュレーション結果へ
-          </Button>
+          { showResult ? (
+            //シュミレーション結果
+            <Result {...selectedValues} />
+           ) : (
+            <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='md' onClick={handleClick}>
+              シミュレーション結果へ
+            </Button>
+           )
+          }
         </div>
+        
       </div>
     </div>
   )
