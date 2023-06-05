@@ -7,6 +7,7 @@ import SchoolButtons from '../features/SchoolButtons';
 import LivingAloneFundsSelectDropdown from '../features/LivingAloneFundsSelect';
 import Button from '../components/Button';
 import Result from '../features/Result';
+import ResultValidation from '../features/ResultValidation';
 
 const Simulation = () => {
   //ユーザーの入力値を格納
@@ -54,7 +55,7 @@ const Simulation = () => {
           <Card widthSize='1/2' title='STEP1'>
             <div className='py-5 text-center'>
               <Text size='md' color='amber-dark'>お子様のご年齢は？</Text>
-              <AgeSelect identifier='age' onChange={handleDropdownChange} />
+              <AgeSelect identifier='age' selectedAge={selectedValues['age']} onChange={handleDropdownChange} />
             </div>
           </Card>
         </div>
@@ -88,15 +89,13 @@ const Simulation = () => {
         </div>
 
         <div className='text-center mt-5 mb-24'>
-          { showResult ? (
-            //シュミレーション結果
-            <Result {...selectedValues} />
-           ) : (
-            <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='md' onClick={handleClick}>
-              シミュレーション結果へ
-            </Button>
-           )
-          }
+          <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='md' onClick={handleClick}>
+            シミュレーション結果へ
+          </Button>
+
+          <div className='mt-10'>
+            { showResult && <Result {...selectedValues} /> }
+          </div>
         </div>
         
       </div>

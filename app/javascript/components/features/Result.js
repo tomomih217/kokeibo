@@ -1,5 +1,7 @@
 import React from 'react';
 import json from '../../../../public/education_cost.json';
+import WithoutTitleCard from '../components/WithoutTitleCard';
+import Text from '../components/Text';
 
 const Result = ({ age, nurserySchool, kindergarten, primarySchool, juniorHighSchool, highSchool, university, livingAloneFunds }) => {
   //積立期間
@@ -35,15 +37,21 @@ const Result = ({ age, nurserySchool, kindergarten, primarySchool, juniorHighSch
   }
 
   const amount = nurserySchoolCost + kindergartenCost + primarySchoolCost + juniorHighSchoolCost + highSchoolCost + universityCost;
+  const formattedAmount = amount.toLocaleString();
 
   //月々の積立金額
   const monthlyAmount = amount / duration;
+  const formattedMonthlyAmount = Math.round(monthlyAmount).toLocaleString();
 
   return (
     <div>
-      <p>duration: {duration}ヶ月</p>
-      <p>amount: {amount}円</p>
-      <p>monthlyAmount: {monthlyAmount}円</p>
+      <WithoutTitleCard widthSize='1/2'>
+        <div className='m-auto'>
+          <Text size='lg' color='amber-dark' style='mb-3'>{age}〜18才まで　{duration}ヶ月</Text>
+          <Text size='3xl' color='amber-dark' style='mb-3'>総額： {formattedAmount}円</Text>
+          <Text size='lg' color='amber-dark'>月額　約{formattedMonthlyAmount}円</Text>
+        </div>
+      </WithoutTitleCard>
     </div>
   );
 }

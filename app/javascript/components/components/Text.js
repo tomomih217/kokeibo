@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Text = ({ size, color, children }) => {
-  const textStyle = `text-${size} text-${color}`;
+const Text = ({ size, color, style, children }) => {
+  const textStyle = style ? `text-${size} text-${color} ${style}` : `text-${size} text-${color}`;
 
   return <p className={textStyle}>{children}</p>;
 };
