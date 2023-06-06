@@ -36,7 +36,14 @@ const Result = ({ age, nurserySchool, kindergarten, primarySchool, juniorHighSch
     universityCost = 0;
   }
 
-  const amount = nurserySchoolCost + kindergartenCost + primarySchoolCost + juniorHighSchoolCost + highSchoolCost + universityCost;
+  let livingAloneCost;
+  if (livingAloneFunds > 0) {
+    livingAloneCost = json.livingAllowance.initialize + livingAloneFunds * 12 * 4;
+  } else {
+    livingAloneCost = 0;
+  }
+
+  const amount = nurserySchoolCost + kindergartenCost + primarySchoolCost + juniorHighSchoolCost + highSchoolCost + universityCost + livingAloneCost;
   const formattedAmount = amount.toLocaleString();
 
   //月々の積立金額
