@@ -32,7 +32,7 @@ const Simulation = () => {
   };
 
   const schoolTypes = [
-    { type: 'nurcerySchool', label: '保育園' }, 
+    { type: 'nurserySchool', label: '保育園' }, 
     { type: 'kindergarten', label: '幼稚園' },
     { type: 'primarySchool', label: '小学校' },
     { type: 'juniorHighSchool', label: '中学校' },
@@ -94,7 +94,7 @@ const Simulation = () => {
           </Button>
 
           <div className='mt-10'>
-            { showResult && <Result {...selectedValues} /> }
+            { showResult && <ResultValidation selectedValues={selectedValues} /> }
           </div>
         </div>
         

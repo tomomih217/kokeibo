@@ -25,5 +25,7 @@
     "privateArts": 6898000,
     "privateScience": 8216000
   },
-  "livingAllowance": 4179000
+  "livingAllowance": {
+    "initialize": 3700000
+  }
 }

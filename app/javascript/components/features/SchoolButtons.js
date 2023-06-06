@@ -7,7 +7,7 @@ const SchoolButtons = ({ identifier, selectedButton, onChange }) => {
     identifier === 'university'
     ? [
       { identifier: 'publicArts', value: 'publicArts', label: '公立文系' },
-      { identifier: 'publicScience', value: 'publicScrience', label: '公立理系'},
+      { identifier: 'publicScience', value: 'publicScience', label: '公立理系'},
       { identifier: 'privateArts', value: 'privateArts', label: '私立文系'},
       { identifier: 'privateScience', value: 'privateScience', label: '私立理系' }
     ]
