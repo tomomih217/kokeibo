@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import Text from '../components/Text';
 import Card from '../components/Card';
-import AgeSelect from '../components/AgeSelect';
+import AgeSelect from '../features/AgeSelect';
 import Label from '../components/Label';
 import SchoolButtons from '../features/SchoolButtons';
 import LivingAloneFundsSelectDropdown from '../features/LivingAloneFundsSelect';
 import Button from '../components/Button';
-import Result from '../features/Result';
 import ResultValidation from '../features/ResultValidation';
 
 const Simulation = () => {

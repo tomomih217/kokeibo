@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Logo from '../../app/javascript//components/components/Logo';
+import Logo from '../../../app/javascript//components/components/Logo';
 import { toBeInTheDocument } from '@testing-library/jest-dom';
 
 describe('Logoコンポーネント', () => {

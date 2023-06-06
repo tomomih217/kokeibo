@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import WithoutTitleCard from '../../app/javascript/components/components/WithoutTitleCard';
+import WithoutTitleCard from '../../../app/javascript/components/components/WithoutTitleCard';
 import { toBeInTheDocument } from '@testing-library/jest-dom';
 
 describe('Card', () => {

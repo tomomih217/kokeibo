@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, getByDisplayValue } from '@testing-library/react';
-import AgeSelect from '../../app/javascript/components/components/AgeSelect';
+import AgeSelect from '../../../app/javascript/components/features/AgeSelect';
 import { toBeInTheDocument } from '@testing-library/jest-dom';
 
 describe('AgeSelectコンポーネント', () => {

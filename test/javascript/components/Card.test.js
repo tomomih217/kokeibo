@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Card from '../../app/javascript/components/components/Card';
+import Card from '../../../app/javascript/components/components/Card';
 import { toBeInTheDocument } from '@testing-library/jest-dom';
 
 describe('Card', () => {
