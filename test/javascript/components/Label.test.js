@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Label from '../../app/javascript/components/components/Label';
+import Label from '../../../app/javascript/components/components/Label';
 import { toBeInTheDocument } from '@testing-library/jest-dom';
 
 describe('Label Component', () => {

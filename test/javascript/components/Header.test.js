@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Header from '../../app/javascript/components/components/Header';
+import Header from '../../../app/javascript/components/components/Header';
 import { toBeInTheDocument } from '@testing-library/jest-dom';
 
 describe('Headerコンポーネント', () => {

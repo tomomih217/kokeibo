@@ -11,7 +11,7 @@ const Top = () => {
   ];
 
   return (
-    <div className='flex justify-center items-center h-full'>
+    <div className='flex justify-center items-center h-screen'>
       <div className='w-4/12'>
         <div>
           <Text size='3xl' color='amber-vivid'>わが子のために、今できること</Text>
@@ -24,7 +24,9 @@ const Top = () => {
           ))}
         </ul>
         <div className='mt-16 text-center'>
-          <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='lg'>教育費シュミレーション</Button>
+          <a href='/simulation'>
+            <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='lg'>教育費シュミレーション</Button>
+          </a>
         </div>
       </div>
       <div className='w-4/12'>

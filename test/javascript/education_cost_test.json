@@ -1,0 +1,28 @@
+{
+  "nurserySchool": {
+    "public": 10000,
+    "private": 20000
+  },
+  "kindergarten": {
+    "public": 30000,
+    "private": 40000
+  },
+  "primarySchool": {
+    "public": 50000,
+    "private": 60000
+  },
+  "juniorHighSchool": {
+    "public": 70000,
+    "private": 80000
+  },
+  "highSchool": {
+    "public": 90000,
+    "private": 100000
+  },
+  "university": {
+    "publicArts": 105000,
+    "publicScience": 110000,
+    "privateArts": 115000,
+    "privateScience": 120000
+  }
+}

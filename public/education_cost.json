@@ -1,26 +1,31 @@
 {
-  "certified_childcare_center": 430000,
+  "nurserySchool": {
+    "public": 850000,
+    "private": 850000
+  },
   "kindergarten": {
     "public": 644088,
     "private": 1584777
   } ,
-  "primary_school": {
+  "primarySchool": {
     "public": 1926809,
     "private": 9592145
   },
-  "junior_high_school": {
+  "juniorHighSchool": {
     "public": 1462118,
     "private": 4217172
   },
-  "high_school": {
+  "highSchool": {
     "public": 1372072,
     "private": 2904230
   },
   "university": {
-    "public_litelature": 4812000,
-    "public_science": 4812000,
-    "private_litelature": 6898000,
-    "private_science": 8216000
+    "publicArts": 4812000,
+    "publicScience": 4812000,
+    "privateArts": 6898000,
+    "privateScience": 8216000
   },
-  "living_alone_funds": 4179000
+  "livingAllowance": {
+    "initialize": 3700000
+  }
 }
