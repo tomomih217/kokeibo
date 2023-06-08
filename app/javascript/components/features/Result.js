@@ -2,6 +2,7 @@ import React from 'react';
 import json from '../../../../public/education_cost.json';
 import WithoutTitleCard from '../components/WithoutTitleCard';
 import Text from '../components/Text';
+import ResultGraph from './ResultGraph';
 
 const Result = ({ age, nurserySchool, kindergarten, primarySchool, juniorHighSchool, highSchool, university, livingAloneFunds }) => {
   //積立期間
@@ -47,8 +48,8 @@ const Result = ({ age, nurserySchool, kindergarten, primarySchool, juniorHighSch
   const formattedAmount = amount.toLocaleString();
 
   //月々の積立金額
-  const monthlyAmount = amount / duration;
-  const formattedMonthlyAmount = Math.round(monthlyAmount).toLocaleString();
+  const monthlyAmount = Math.round(amount / duration);
+  const formattedMonthlyAmount = monthlyAmount.toLocaleString();
 
   return (
     <div>
@@ -59,6 +60,11 @@ const Result = ({ age, nurserySchool, kindergarten, primarySchool, juniorHighSch
           <Text size='lg' color='amber-dark'>月額　約{formattedMonthlyAmount}円</Text>
         </div>
       </WithoutTitleCard>
+
+      <div className='w-1/2 m-auto'>
+        <ResultGraph monthlyAmount={monthlyAmount} />
+      </div>
+
       <div className='mt-3'>
         <Text size='xs' color='amber-dark'>
           『平成30年度子供の学習費調査の結果について（文部科学省より・令和元年１２月発行）』
