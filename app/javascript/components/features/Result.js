@@ -52,14 +52,14 @@ const Result = ({ age, nurserySchool, kindergarten, primarySchool, juniorHighSch
 
   return (
     <div>
-      <WithoutTitleCard widthSize='1/2'>
+      <WithoutTitleCard widthSize='1/2' bgColor='blue-100' borderColor='blue-500'>
         <div>
           <Text size='lg' color='amber-dark' style='mb-3'>{age}〜18才まで　{duration}ヶ月</Text>
           <Text size='3xl' color='amber-dark' style='mb-3'>総額： {formattedAmount}円</Text>
           <Text size='lg' color='amber-dark'>月額　約{formattedMonthlyAmount}円</Text>
         </div>
       </WithoutTitleCard>
-      <div>
+      <div className='mt-3'>
         <Text size='xs' color='amber-dark'>
           『平成30年度子供の学習費調査の結果について（文部科学省より・令和元年１２月発行）』
         </Text>
