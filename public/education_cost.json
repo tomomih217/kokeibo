@@ -1,29 +1,93 @@
 {
   "nurserySchool": {
-    "public": 850000,
-    "private": 850000
+    "public": {
+      "age1": 430000,
+      "age2": 420000
+    },
+    "private": {
+      "age1": 430000,
+      "age2": 420000
+    }
   },
   "kindergarten": {
-    "public": 644088,
-    "private": 1584777
-  } ,
+    "public": {
+      "age3": 133353,
+      "age4": 140838,
+      "age5": 198555
+    },
+    "private": {
+      "age3": 309170,
+      "age4": 276125,
+      "age5": 339341
+    }
+  },
   "primarySchool": {
-    "public": 1926809,
-    "private": 9592145
+    "public": {
+      "age6": 379539,
+      "age7": 283211,
+      "age8": 315794,
+      "age9": 329198,
+      "age10": 380774,
+      "age11": 423506
+    },
+    "private": {
+      "age6": 2136449,
+      "age7": 1402725,
+      "age8": 1519595,
+      "age9": 1592088,
+      "age10": 1683972,
+      "age11": 1664831
+    }
   },
   "juniorHighSchool": {
-    "public": 1462118,
-    "private": 4217172
+    "public": {
+      "age12": 531544,
+      "age13": 443848,
+      "age14": 640925
+    },
+    "private": {
+      "age12": 1806991,
+      "age13": 1218559,
+      "age14": 1278255
+    }
   },
   "highSchool": {
-    "public": 1372072,
-    "private": 2904230
+    "public": {
+      "age15": 629459,
+      "age16": 457895,
+      "age17": 455762
+    },
+    "private": {
+      "age15": 1276978,
+      "age16": 941873,
+      "age17": 937550
+    }
   },
   "university": {
-    "publicArts": 4812000,
-    "publicScience": 4812000,
-    "privateArts": 6898000,
-    "privateScience": 8216000
+    "publicArts": {
+      "age18": 1707000,
+      "age19": 1035000,
+      "age20": 1035000,
+      "age21": 1035000
+    },
+    "publicScience": {
+      "age18": 1707000,
+      "age19": 1035000,
+      "age20": 1035000,
+      "age21": 1035000
+    },
+    "privateArts": {
+      "age18": 2338000,
+      "age19": 1520000,
+      "age20": 1520000,
+      "age21": 1520000
+    },
+    "privateScience": {
+      "age18": 2720000,
+      "age19": 1832000,
+      "age20": 1832000,
+      "age21": 1832000
+    }
   },
   "livingAllowance": {
     "initialize": 3700000
