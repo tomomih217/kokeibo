@@ -61,8 +61,6 @@ const ResultGraph = ({ monthlyAmount, costArray }) => {
   costData = costData + costArray[5]
   costDatas.push(costData);
 
-
-
   const graphData = {
     labels: [
       //軸ラベル
@@ -79,6 +77,8 @@ const ResultGraph = ({ monthlyAmount, costArray }) => {
       {
         type: 'line',
         data: costDatas,
+        backgroundColor: 'rgba(255, 69, 0, 0.5',
+        borderColor: 'rgba(255, 69, 0, 0.5)',
         label: '教育費（円）',
       }
     ],
