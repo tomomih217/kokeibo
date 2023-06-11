@@ -28,41 +28,39 @@ ChartJS.register(
 );
 
 const ResultGraph = ({ monthlyAmount, age, costArray }) => {
-  let savingDatas = [0];
+  //3年ごとの積立累計額を配列savingDatasに渡す
+  let savingDatas = [];
   let current = 0;
-  for (let i = 0; i < 6; i++) {
-    const ans = current + monthlyAmount * 36;
-    savingDatas.push(ans);
+  let ans = 0;
+  for (let i = 0; i < 7; i++) {
+    const duration = (i * 3 - age) * 12
+    if ( duration < 0 ){
+      savingDatas.push(0);
+    } else {
+      ans = monthlyAmount * duration;
+      savingDatas.push(ans);
+    }
     current = ans;
   }
   savingDatas.push(current);
 
+  //3年ごとの累計教育費をcostArrayから算出して配列costDatasに渡す
   let costDatas = [0];
   let costData = 0;
-  //3才までの累計コスト
-  costData = costArray[0];
-  costDatas.push(costData);
-  //6才までの累計コスト
-  costData = costData + costArray[1]
-  costDatas.push(costData);
-  //９才までの累計コスト
-  costData = costData + costArray[2] / 2
-  costDatas.push(costData);
-  //12才までの累計コスト
-  costData = costData + costArray[2] / 2
-  costDatas.push(costData);
-  //15才までの累計コスト
-  costData = costData + costArray[3]
-  costDatas.push(costData);
-  //18才までの累計コスト
-  costData = costData + costArray[4]
-  costDatas.push(costData);
-  //22才までの累計コスト
-  costData = costData + costArray[5]
-  if ( costArray[6] !== 0 ){
-    costData = costData + costArray[6];
+  let count = 0;
+
+  for (let i = 0; i < costArray.length; i++) {
+    if (i === 2 || i === 3) {
+      costData += costArray[2] / 2;
+      if ( i === 3 ){ count += 1; }
+    } else if (count === 5 && costArray[count + 1] !== 0) {
+      costData += costArray[count] + costArray[count + 1];
+    } else {
+      costData += costArray[count];
+      count += 1;
+    }
+    costDatas.push(costData);
   }
-  costDatas.push(costData);
 
   const options = {
     maintainAspectRatio: false
