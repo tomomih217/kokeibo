@@ -10,51 +10,30 @@ const Result = ({ props }) => {
 
   //積立総額
   let costArray = [];
-  const nurserySchoolCost =
-    props.nurserySchool === 'public' 
-      ? json.nurserySchool.public.age1 + json.nurserySchool.public.age2 
-      : json.nurserySchool.private.age1 + json.nurserySchool.private.age2;
-  costArray.push(nurserySchoolCost);
+  const caluculateCost = (schoolType, ageRange) => {
+    const categoryKey = props[schoolType];
+    const publicOrPrivate = json[schoolType][categoryKey];
 
-  const kindergartenCost =
-    props.kindergarten === 'public' 
-      ? json.kindergarten.public.age3 + json.kindergarten.public.age4 + json.kindergarten.public.age5
-      : json.kindergarten.private.age3 + json.kindergarten.private.age4 + json.kindergarten.private.age5;
-  costArray.push(kindergartenCost);
+    let totalCost = 0;
 
-  const primarySchoolCost =
-    props.primarySchool === 'public'
-      ? json.primarySchool.public.age6 + json.primarySchool.public.age7 + json.primarySchool.public.age8 + json.primarySchool.public.age9 + json.primarySchool.public.age10 + json.primarySchool.public.age11
-      : json.primarySchool.private.age6 + json.primarySchool.private.age7 + json.primarySchool.private.age8 + json.primarySchool.private.age9 + json.primarySchool.private.age10 + json.primarySchool.private.age11;
-  costArray.push(primarySchoolCost);
+    ageRange.forEach((age) => {
+      const ageCost = publicOrPrivate[age];
+      totalCost += ageCost;
+    });
 
-  const juniorHighSchoolCost =
-    props.juniorHighSchool === 'public'
-      ? json.juniorHighSchool.public.age12 + json.juniorHighSchool.public.age13 + json.juniorHighSchool.public.age14
-      : json.juniorHighSchool.private.age12 + json.juniorHighSchool.private.age13 + json.juniorHighSchool.private.age14;
-  costArray.push(juniorHighSchoolCost);
-
-  const highSchoolCost =
-    props.highSchool == 'public'
-      ? json.highSchool.public.age15 + json.highSchool.public.age16 + json.highSchool.public.age17
-      : json.highSchool.private.age15 + json.highSchool.private.age16 + json.highSchool.private.age17;
-  costArray.push(highSchoolCost);
-
-  let universityCost = 0;
-  if ( props.university === 'publicArts' ) {
-    universityCost = json.university.publicArts.age18 + json.university.publicArts.age19 + json.university.publicArts.age20 + json.university.publicArts.age21;
-  } else if ( props.university === 'publicScience' ) {
-    universityCost = json.university.publicScience.age18 + json.university.publicScience.age19 + json.university.publicScience.age20 + json.university.publicScience.age21;
-  } else if ( props.university === 'privateArts' ) {
-    universityCost = json.university.privateArts.age18 + json.university.privateArts.age19 + json.university.privateArts.age20 + json.university.privateArts.age21;
-  } else if ( props.university === 'privateScience' ) {
-    universityCost = json.university.privateScience.age18 + json.university.privateScience.age19 + json.university.privateScience.age20 + json.university.privateScience.age21;
+    costArray.push(totalCost);
   }
-  costArray.push(universityCost);
+
+  caluculateCost("nurserySchool", ["age1", "age2"]);
+  caluculateCost("kindergarten", ["age3", "age4", "age5"]);
+  caluculateCost("primarySchool", ["age6", "age7", "age8", "age9", "age10", "age11"]);
+  caluculateCost("juniorHighSchool", ["age12", "age13", "age14"]);
+  caluculateCost("highSchool", ["age15", "age16", "age17"]);
+  caluculateCost("university", ["age18", "age19", "age20", "age21"]);
 
   let livingAloneCost;
   if (props.livingAloneFunds > 0) {
-    livingAloneCost = json.livingAllowance.initialize + livingAloneFunds * 12 * 4;
+    livingAloneCost = json.livingAllowance.initialize + props.livingAloneFunds * 12 * 4;
   } else {
     livingAloneCost = 0;
   }
@@ -80,7 +59,7 @@ const Result = ({ props }) => {
       </WithoutTitleCard>
 
       <div className='w-1/2 m-auto'>
-        <ResultGraph monthlyAmount={monthlyAmount} costArray={costArray} />
+        <ResultGraph monthlyAmount={monthlyAmount} age={props.age} costArray={costArray} />
       </div>
 
       <div className='mt-3'>

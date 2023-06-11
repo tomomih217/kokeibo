@@ -11,7 +11,7 @@ import ResultValidation from '../features/ResultValidation';
 const Simulation = () => {
   //ユーザーの入力値を格納
   const [selectedValues, setSelectedValues] = useState({
-    age: '',
+    age: 0,
     nurserySchool: '',
     kindergarten: '',
     primarySchool: '',
@@ -50,6 +50,7 @@ const Simulation = () => {
       </div>
 
       <div className='m-auto'>
+        {/* 子どもの年齢フォームは一旦保留
         <div className='mt-5'>
           <Card widthSize='1/2' title='STEP1'>
             <div className='py-5 text-center'>
@@ -58,16 +59,17 @@ const Simulation = () => {
             </div>
           </Card>
         </div>
+  */}
 
         <div className='mt-10'>
-          <Card widthSize='1/2' title='STEP2'>
+          <Card widthSize='1/2' title='STEP1'>
             <div className='py-5 text-center'>
               <Text size='md' color='amber-dark'>希望進路を選択してください。</Text>
               <div className='lg:px-28 pt-8'>
                 { schoolTypes.map((schoolType, index) => {
                   const selectedValue = schoolType.type;
                   return (
-                    <div className='flex justify-between mb-5'>
+                    <div className='mb-5'>
                       <Label size='md' color='amber-dark'>{schoolType.label}</Label>
                       <SchoolButtons identifier={schoolType.type} selectedButton={selectedValues[selectedValue]} onChange={handleDropdownChange} />
                     </div>
@@ -79,7 +81,7 @@ const Simulation = () => {
         </div>
 
         <div className='mt-10'>
-          <Card widthSize='1/2' title='STEP3'>
+          <Card widthSize='1/2' title='STEP2'>
             <div className='py-5 text-center'>
               <Text size='md' color='amber-dark'>仕送り（自宅外通学）予定金額</Text>
               <LivingAloneFundsSelectDropdown identifier='livingAloneFunds' onChange={handleDropdownChange} />

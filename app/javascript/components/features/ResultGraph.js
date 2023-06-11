@@ -27,7 +27,7 @@ ChartJS.register(
   PointElement
 );
 
-const ResultGraph = ({ monthlyAmount, costArray }) => {
+const ResultGraph = ({ monthlyAmount, age, costArray }) => {
   let savingDatas = [0];
   let current = 0;
   for (let i = 0; i < 6; i++) {
@@ -59,7 +59,14 @@ const ResultGraph = ({ monthlyAmount, costArray }) => {
   costDatas.push(costData);
   //22才までの累計コスト
   costData = costData + costArray[5]
+  if ( costArray[6] !== 0 ){
+    costData = costData + costArray[6];
+  }
   costDatas.push(costData);
+
+  const options = {
+    maintainAspectRatio: false
+  }
 
   const graphData = {
     labels: [
@@ -79,14 +86,14 @@ const ResultGraph = ({ monthlyAmount, costArray }) => {
         data: costDatas,
         backgroundColor: 'rgba(255, 69, 0, 0.5',
         borderColor: 'rgba(255, 69, 0, 0.5)',
-        label: '教育費（円）',
+        label: '教育費累計額（円）',
       }
     ],
   };
 
   return (
-    <div>
-      <Bar data={graphData} />
+    <div className='h-64'>
+      <Bar data={graphData} options={options} />
     </div>
   );
 }
