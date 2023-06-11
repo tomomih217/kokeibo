@@ -3,6 +3,19 @@ import { render, screen } from '@testing-library/react';
 import ResultValidation from '../../../app/javascript/components/features/ResultValidation';
 import { toBeInTheDocument } from '@testing-library/jest-dom';
 
+// Mock canvas and ResizeObserver
+beforeAll(() => {
+  global.ResizeObserver = jest.fn(function () {
+    return {
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    };
+  });
+
+  global.HTMLCanvasElement.prototype.getContext = jest.fn();
+});
+
 describe('ResultValidation', () => {
   test('入力が完全ではない場合、メッセージが表示されること', () => {
     const selectedValues = {

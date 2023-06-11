@@ -91,7 +91,7 @@ const ResultGraph = ({ monthlyAmount, age, costArray }) => {
 
   return (
     <div className='h-64'>
-      <Bar data={graphData} options={options} />
+      <Bar data-testid='savingGraph' data={graphData} options={options} />
     </div>
   );
 }
