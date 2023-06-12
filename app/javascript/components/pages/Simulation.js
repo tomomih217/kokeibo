@@ -11,7 +11,7 @@ import ResultValidation from '../features/ResultValidation';
 const Simulation = () => {
   //ユーザーの入力値を格納
   const [selectedValues, setSelectedValues] = useState({
-    age: '',
+    age: 0,
     nurserySchool: '',
     kindergarten: '',
     primarySchool: '',
@@ -50,6 +50,7 @@ const Simulation = () => {
       </div>
 
       <div className='m-auto'>
+
         <div className='mt-5'>
           <Card widthSize='1/2' title='STEP1'>
             <div className='py-5 text-center'>
@@ -67,7 +68,7 @@ const Simulation = () => {
                 { schoolTypes.map((schoolType, index) => {
                   const selectedValue = schoolType.type;
                   return (
-                    <div className='flex justify-between mb-5'>
+                    <div className='mb-5'>
                       <Label size='md' color='amber-dark'>{schoolType.label}</Label>
                       <SchoolButtons identifier={schoolType.type} selectedButton={selectedValues[selectedValue]} onChange={handleDropdownChange} />
                     </div>

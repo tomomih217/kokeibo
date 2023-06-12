@@ -3,6 +3,19 @@ import { render } from '@testing-library/react';
 import Result from '../../../app/javascript/components/features/Result';
 import { toBeInTheDocument } from '@testing-library/jest-dom';
 
+// Mock canvas and ResizeObserver
+beforeAll(() => {
+  global.ResizeObserver = jest.fn(function () {
+    return {
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    };
+  });
+
+  global.HTMLCanvasElement.prototype.getContext = jest.fn();
+});
+
 describe('Result', () => {
   test('正しい結果が表示されること', () => {
     const selectedValues = {
@@ -43,7 +56,7 @@ describe('Result', () => {
       }
     };
 
-    const { getByText } = render(<Result {...selectedValues} json={json} />);
+    const { getByText } = render(<Result props={selectedValues} json={json} />);
     // カスタムのテキストマッチャー関数を使用して要素を検索
     const durationText = getByText((content, element) => {
       return element.tagName.toLowerCase() === 'p' && content.includes('〜18才まで');

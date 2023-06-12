@@ -7,7 +7,7 @@ const ResultValidation = ({ selectedValues }) => {
 
   return (
     <div>
-      {isEmpty ? <p>入力が完全ではありません</p> : <Result {...selectedValues} />}
+      {isEmpty ? <p>入力が完全ではありません</p> : <Result props={selectedValues} />}
     </div>
   );
 };

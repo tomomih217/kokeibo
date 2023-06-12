@@ -22,9 +22,9 @@ const SchoolButtons = ({ identifier, selectedButton, onChange }) => {
   };
 
   return (
-    <div className='flex flex-wrap justify-end w-2/5'>
+    <div className='flex justify-center'>
       {options.map((option, index) => (
-        <div className='ml-3 mb-2' key={index}>
+        <div className='mx-3' key={index}>
           <Button
             onClick={() => handleOptionClick(option.value)}
             pxSize='3'
