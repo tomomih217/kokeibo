@@ -2,6 +2,7 @@ import React from 'react';
 import Text from '../components/Text';
 import Image from '../components/Image';
 import Button from '../components/Button';
+import Link from '../components/Link';
 
 const Top = () => {
   const sentences = [
@@ -24,9 +25,9 @@ const Top = () => {
           ))}
         </ul>
         <div className='mt-16 text-center'>
-          <a href='/simulation'>
+          <Link page='/simulation'>
             <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='lg'>教育費シュミレーション</Button>
-          </a>
+          </Link>
         </div>
       </div>
       <div className='w-4/12'>

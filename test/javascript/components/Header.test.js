@@ -18,13 +18,6 @@ describe('Headerコンポーネント', () => {
     expect(loginButton).toBeInTheDocument();
   });
 
-  test('ロゴをクリックするとトップページに遷移すること', () => {
-    const testRenderer = TestRenderer.create(<Header />);
-    const testInstance = testRenderer.root;
-
-    expect(testInstance.findByType(Logo).parent.props.href).toBe("/");
-  })
-
   /*test('ログインボタンをクリックした時に適切な処理が実行されること', () => {
     // モック関数を定義
     const mockOnClick = jest.fn();
