@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Container from '../components/Container';
 import Text from '../components/Text';
 import Card from '../components/Card';
 import AgeSelect from '../features/AgeSelect';
@@ -44,13 +45,8 @@ const Simulation = () => {
   }
 
   return (
-    <div className='m-auto'>
-      <div className='text-center'>
-        <Text size='3xl' color='amber-dark'>教育費シュミレーション</Text>
-      </div>
-
-      <div className='m-auto'>
-
+    <div>
+      <Container title='教育費シュミレーション'>
         <div className='mt-5'>
           <Card widthSize='1/2' title='STEP1'>
             <div className='py-5 text-center'>
@@ -98,7 +94,7 @@ const Simulation = () => {
           </div>
         </div>
         
-      </div>
+      </Container>
     </div>
   )
 };
