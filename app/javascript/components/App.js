@@ -4,6 +4,7 @@ import Top from './pages/Top';
 import Footer from './components/Footer';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Simulation from './pages/Simulation';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 const MainContent = () => {
   return (
@@ -12,6 +13,7 @@ const MainContent = () => {
         <Routes>
           <Route path='/' element={<Top />} />
           <Route path='/simulation' element={<Simulation />} />
+          <Route path='/privacypolicy' element={<PrivacyPolicy />} />
         </Routes>
       </div>
     </BrowserRouter>
