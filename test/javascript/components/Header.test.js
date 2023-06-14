@@ -1,7 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Header from '../../../app/javascript/components/components/Header';
+import Logo from '../../../app/javascript/components/components/Logo';
 import { toBeInTheDocument } from '@testing-library/jest-dom';
+import TestRenderer from 'react-test-renderer';
 
 describe('Headerコンポーネント', () => {
   test('ロゴが表示されること', () => {

@@ -1,3 +1,5 @@
+const { runtime } = require("webpack")
+
 module.exports = function(api) {
   var validEnv = ['development', 'test', 'production']
   var currentEnv = api.env()
@@ -41,7 +43,8 @@ module.exports = function(api) {
         '@babel/preset-react',
         {
           development: isDevelopmentEnv || isTestEnv,
-          useBuiltIns: true
+          useBuiltIns: true,
+          runtime: 'automatic'
         }
       ]
     ].filter(Boolean),
