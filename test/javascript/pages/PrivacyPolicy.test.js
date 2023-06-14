@@ -8,5 +8,5 @@ describe('PrivacyPolicyコンポーネント', () => {
     const titleElement = getAllByText('プライバシーポリシー');
 
     expect(titleElement.length).toBe(1);
-  })
-})
+  });
+});
