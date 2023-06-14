@@ -10,7 +10,9 @@ const Footer = () => {
           <Link page='/privacypolicy'>
             <Text size='sm' color='blue-500'>プライバシーポリシー</Text>
           </Link>
-          <Text size='sm' color='blue-500'>利用規約</Text>
+          <Link page='/termandcondition'>
+            <Text size='sm' color='blue-500'>利用規約</Text>
+          </Link>
           <Text size='sm' color='blue-500'>お問い合わせ</Text>
         </div>
         <div className='text-center my-3'>

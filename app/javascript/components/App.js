@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Simulation from './pages/Simulation';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsAndCondition from './pages/TermsAndCondition';
 
 const MainContent = () => {
   return (
@@ -14,6 +15,7 @@ const MainContent = () => {
           <Route path='/' element={<Top />} />
           <Route path='/simulation' element={<Simulation />} />
           <Route path='/privacypolicy' element={<PrivacyPolicy />} />
+          <Route path='/termandcondition' element={<TermsAndCondition />} />
         </Routes>
       </div>
     </BrowserRouter>
