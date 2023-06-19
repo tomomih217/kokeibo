@@ -1,6 +1,6 @@
 import React from 'react';
-import Container from '../components/Container';
-import Card from '../components/Card';
+import Container from '../../components/Container';
+import Card from '../../components/Card';
 
 const UserNew = () => {
   return (
@@ -8,7 +8,9 @@ const UserNew = () => {
       <Container title='会員登録'>
         <div className='mt-5'>
           <Card title='登録フォーム' widthSize='1/2'>
-            <div></div>
+            <div>
+              <p>フォームが入るよ。</p>
+            </div>
           </Card>
         </div>
       </Container>

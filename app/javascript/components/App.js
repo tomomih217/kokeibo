@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Simulation from './pages/Simulation';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndCondition from './pages/TermsAndCondition';
-import UserNew from './pages/UserNew';
+import UserNew from './pages/users/UserNew';
 
 const MainContent = () => {
   return (
