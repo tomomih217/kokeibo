@@ -246,8 +246,9 @@ Rails.application.config.sorcery.configure do |config|
     # -- core --
     # Specify username attributes, for example: [:username, :email].
     # Default: `[:email]`
+    # 識別をemailではなくusernameで行う。
     #
-    # user.username_attribute_names =
+    user.username_attribute_names = [:username]
 
     # Change *virtual* password attribute, the one which is used until an encrypted one is generated.
     # Default: `:password`
@@ -318,8 +319,9 @@ Rails.application.config.sorcery.configure do |config|
 
     # How long in seconds the session length will be
     # Default: `60 * 60 * 24 * 7`
+    # 45日間に変更 `60 * 60 * 24 * 45`
     #
-    # user.remember_me_for =
+    user.remember_me_for = 3888000
 
     # When true, sorcery will persist a single remember me token for all
     # logins/logouts (to support remembering on multiple browsers simultaneously).
