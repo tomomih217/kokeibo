@@ -8,6 +8,7 @@ class UserForm
   # バリデーションを設定
   validates :name, presence: true, length: { maximum: 255 }
   validates :password, presence: true
+  validates :password, confirmation: true # passwordとpassword_confirmationが同じか判定
   validates :password_confirmation, presence: true
   validates :term_of_service, acceptance: true # term_of_serviceの値がtrueかどうかを判定
   

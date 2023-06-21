@@ -9,7 +9,12 @@ class UsersController < ApplicationController
 
   def confirm
     @form = UserForm.new(user_params)
-    session[:user_params] = user_params if @form.valid?
+    
+    if @form.valid?
+      session[:user_params] = user_params
+    else
+      render :new
+    end
   end
 
   def create
@@ -19,10 +24,6 @@ class UsersController < ApplicationController
     else
       render :new
     end
-  end
-
-  def delete_session
-    session.delete(:user_params)
   end
 
   private

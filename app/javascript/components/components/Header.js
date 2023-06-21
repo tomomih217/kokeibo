@@ -2,6 +2,7 @@ import React from 'react';
 import Logo from './Logo';
 import Button from './Button';
 import Link from './Link';
+import Text from './Text';
 
 const Header = () => {
   return (
@@ -10,7 +11,12 @@ const Header = () => {
         <Link page='/'>
           <Logo />
         </Link>
-        <Button pxSize='3' pySize='2' color='green-200' fontColor='amber-dark' roundType='full'>ログイン</Button>
+        <div className='flex items-center'>
+          <Link page='/users/new'>
+            <Text size='md' color='blue-500' style='mr-3 underline'>SignUp</Text>
+          </Link>
+          <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='full'>LogIn</Button>
+        </div>
       </div>
     </header>
 
