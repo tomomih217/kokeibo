@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_19_144317) do
+ActiveRecord::Schema.define(version: 2023_06_21_010331) do
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
-    t.string "username", null: false
+    t.string "name", null: false
     t.string "crypted_password"
     t.string "salt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "remember_me_token"
     t.datetime "remember_me_token_expires_at"
+    t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
-    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
 end

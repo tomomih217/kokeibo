@@ -248,7 +248,7 @@ Rails.application.config.sorcery.configure do |config|
     # Default: `[:email]`
     # 識別をemailではなくusernameで行う。
     #
-    user.username_attribute_names = [:username]
+    user.username_attribute_names = [:name]
 
     # Change *virtual* password attribute, the one which is used until an encrypted one is generated.
     # Default: `:password`
