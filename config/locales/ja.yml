@@ -1,0 +1,9 @@
+ja:
+  errors:
+    models:
+      user:
+        blank: 'を入力してください'
+        attributes:
+          name:
+            too_long: 'は255文字以内で入力してください。'
+            taken: 'は既に使用されています。'
