@@ -21,11 +21,13 @@ class UsersController < ApplicationController
   def create
     @form = UserForm.new(session[:user_params])
     if @form.save
-      redirect_to root_path, success: '会員登録が完了しました。'
+      redirect_to users_complete_path
     else
       render :new
     end
   end
+
+  def complete ;end
 
   private
 
