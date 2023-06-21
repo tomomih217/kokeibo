@@ -14,6 +14,7 @@
     <div class='w-full h-screen absolute bg-amber-light top-0 overflow-y-scroll relative'>
       <%= react_component('components/Header') %>
       <div class='mt-16 mb-24 h-full'>
+        <%= render '/shared/flash_messages' %>
         <%= yield %>
       </div>
       <%= react_component('components/Footer') %>

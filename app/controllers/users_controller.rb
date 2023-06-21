@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     is_duplicated = User.duplicated?(user_params[:name])
     
     if @form.invalid? || is_duplicated
-      flash.now[:notice] = 'そのユーザー名は使用されています。'
+      flash.now[:danger] = 'そのユーザー名は使用されています。'
       render :new
     end
     session[:user_params] = user_params
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   def create
     @form = UserForm.new(session[:user_params])
     if @form.save
-      redirect_to root_path
+      redirect_to root_path, success: '会員登録が完了しました。'
     else
       render :new
     end
