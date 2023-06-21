@@ -9,12 +9,13 @@ class UsersController < ApplicationController
 
   def confirm
     @form = UserForm.new(user_params)
+    is_duplicated = User.duplicated?(user_params[:name])
     
-    if @form.valid?
-      session[:user_params] = user_params
-    else
+    if @form.invalid? || is_duplicated
+      flash.now[:notice] = 'そのユーザー名は使用されています。'
       render :new
     end
+    session[:user_params] = user_params
   end
 
   def create
