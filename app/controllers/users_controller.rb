@@ -1,11 +1,16 @@
 class UsersController < ApplicationController
   layout 'before_login_layout'
   def new
-    @user = User.new
+    @form = UserForm.new
   end
 
   def create
-    redirect_to root_path
+    @form = UserForm.new(user_params)
+    if @form.save
+      redirect_to root_path
+    else
+      render :new
+    end
   end
 
   private
