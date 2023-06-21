@@ -2,7 +2,7 @@
 <div class='w-2/3 md:w-1/2 rounded-lg border border-amber-dark text-amber-dark bg-amber-card pt-2 m-auto shadow-md'>
   <h2 class="text-xl text-center mb-2">登録フォーム</h2>
   <div class="bg-white rounded-b-lg px-4 md:px-16 lg:px-36 py-12">
-    <%= form_with model: @form, local: true do |f| %>
+    <%= form_with model: @form, url: users_confirm_path, local: true do |f| %>
         <%= render 'shared/error_messages', object: @form %>
         <div class="form-group mb-5">
           <%= f.label :name, class: 'block text-amber-dark font-bold mb-1 pr-4' %>
@@ -21,7 +21,7 @@
           <%= f.label :term_of_service, '利用規約とプライバシーポリシーに同意する' %>
         </div>
         <div class='text-center'>
-          <%= f.submit '登録', class: 'py-3 lg:py-2 px-14 lg:px-14 rounded-3xl bg-green-300 shadow-md hover:shadow-sm transition-all outline-none text-white text-lg' %>
+          <%= f.submit '確認画面へ', class: 'py-3 lg:py-2 px-8 rounded-3xl bg-amber-vivid shadow-md hover:shadow-sm transition-all outline-none text-white text-lg' %>
         </div>
       <% end %>
   </div>

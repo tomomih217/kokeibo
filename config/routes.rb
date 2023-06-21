@@ -5,5 +5,8 @@ Rails.application.routes.draw do
   get '/termandcondition', to: redirect('/')
 
   resources :users, only: %i[new create]
+  namespace :users do
+    post 'confirm'
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

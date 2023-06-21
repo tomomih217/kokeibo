@@ -1,9 +1,7 @@
 ja:
-  errors:
-    models:
+  activerecord:
+    attributes:
       user:
-        blank: 'を入力してください'
-        attributes:
-          name:
-            too_long: 'は255文字以内で入力してください。'
-            taken: 'は既に使用されています。'
+        name: 'ユーザー名'
+        password: 'パスワード'
+        password_confirmation: 'パスワード（確認用）'
