@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Kokeibo</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body class='font-body'>
+    <div class='w-full h-screen absolute bg-amber-light top-0 overflow-y-scroll relative'>
+      <%= render 'shared/header' %>
+      <div class='mt-16 mb-24 h-full'>
+        <%= render '/shared/flash_messages' %>
+        <%= yield %>
+      </div>
+      <%= react_component('components/Footer') %>
+    </div>
+  </body>
+</html>

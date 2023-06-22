@@ -15,7 +15,9 @@ const Header = () => {
           <Link page='/users/new'>
             <Text size='md' color='blue-500' style='mr-3 underline'>SignUp</Text>
           </Link>
-          <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='full'>LogIn</Button>
+          <Link page='/login'>
+            <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='full'>LogIn</Button>
+          </Link>
         </div>
       </div>
     </header>
