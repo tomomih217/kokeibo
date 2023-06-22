@@ -1,0 +1,30 @@
+<h1 class='text-3xl text-amber-dark text-center mb-5'>会員登録</h1>
+<div class='w-2/3 md:w-1/2 rounded-lg border border-amber-dark text-amber-dark bg-amber-card pt-2 m-auto shadow-md'>
+  <h2 class="text-xl text-center mb-2">登録フォーム</h2>
+  <div class="bg-white rounded-b-lg px-4 md:px-16 lg:px-36 py-12">
+    <%= form_with model: @form, url: users_confirm_path, local: true do |f| %>
+        <%= render 'shared/error_messages', object: @form %>
+        <div class="form-group mb-5">
+          <%= f.label :name, class: 'block text-amber-dark font-bold mb-1 pr-4' %>
+          <%= f.text_field :name, class: 'bg-white border-2 border-amber-dark rounded w-full py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %>
+        </div>
+        <div class="form-group mb-5">
+          <%= f.label :password, class: 'block text-amber-dark font-bold mb-1 pr-4' %>
+          <%= f.password_field :password, class: 'bg-white border-2 border-amber-dark rounded w-full py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %>
+        </div>
+        <div class="form-group mb-5">
+          <%= f.label :password_confirmation, class: 'block text-amber-dark font-bold mb-1 pr-4' %>
+          <%= f.password_field :password_confirmation, class: 'bg-white border-2 border-amber-dark rounded w-full py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500'%>
+        </div>
+        <div class='form-group mb-5'>
+          <%= f.check_box :term_of_service, as: :boolean, checked: false %>
+          <%= f.label :term_of_service do %>
+            <a href='/termandcondition'><span class='text-blue-500 underline'>利用規約</span></a>と<a href='/privacypolicy'><span class='text-blue-500 underline'>プライバシーポリシー</span></a>に同意する
+          <% end %>
+        </div>
+        <div class='text-center'>
+          <%= f.submit '確認画面へ', class: 'py-3 lg:py-2 px-8 rounded-3xl bg-amber-vivid shadow-md hover:shadow-sm transition-all outline-none text-white text-lg' %>
+        </div>
+      <% end %>
+  </div>
+</div>

@@ -4,7 +4,7 @@ import Link from './Link';
 
 const Footer = () => {
   return (
-    <footer className='absolute bottom-0 w-full'>
+    <footer className='relative bottom-0 w-full'>
       <div className='w-4/5 m-auto'>
         <div className='flex justify-around'>
           <Link page='/privacypolicy'>
