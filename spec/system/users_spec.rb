@@ -36,6 +36,55 @@ RSpec.describe "Users", type: :system do
         end
       end
 
+      context 'without password' do
+        before do
+          visit new_user_path
+          fill_in 'ユーザー名', with: 'Test_1'
+          # パスワードを入力しない
+          fill_in 'パスワード（確認用）', with: 'password'
+          check '利用規約とプライバシーポリシーに同意する'
+
+          click_button '確認画面へ'
+        end
+        it 'is failed' do
+          expect(page).to have_content 'Password confirmationとPasswordの入力が一致しません'
+          expect(page).to have_content 'Passwordを入力してください'
+        end
+      end
+
+      context 'without password_confirmation' do
+        before do
+          visit new_user_path
+          fill_in 'ユーザー名', with: 'Test_1'
+          fill_in 'パスワード', with: 'password'
+          # パスワード（確認用）を入力しない
+          # fill_in 'パスワード（確認用）', with: 'password'
+          check '利用規約とプライバシーポリシーに同意する'
+
+          click_button '確認画面へ'
+        end
+        it 'is failed' do
+          expect(page).to have_content 'Password confirmationとPasswordの入力が一致しません'
+          expect(page).to have_content 'Password confirmationを入力してください'
+        end
+      end
+
+      context 'without checkbox' do
+        before do
+          visit new_user_path
+          fill_in 'ユーザー名', with: 'Test_1'
+          fill_in 'パスワード', with: 'password'
+          fill_in 'パスワード（確認用）', with: 'password'
+          # 同意しない
+          # check '利用規約とプライバシーポリシーに同意する'
+
+          click_button '確認画面へ'
+        end
+        it 'is failed' do
+          expect(page).to have_content 'Term of serviceを受諾してください'
+        end
+      end
+
       context 'with duplicated name' do
         let!(:duplicated_user){ create(:user, name: 'Test_1') }
         before do
@@ -49,6 +98,22 @@ RSpec.describe "Users", type: :system do
         end
         it 'is failed' do
           expect(page).to have_content 'そのユーザー名は使用されています'
+        end
+      end
+
+      context 'with wrong password_confirmation' do
+        before do
+          visit new_user_path
+          fill_in 'ユーザー名', with: 'Test_1'
+          fill_in 'パスワード', with: 'password'
+          # 違うパスワードを入力する
+          fill_in 'パスワード（確認用）', with: 'Test_1'
+          check '利用規約とプライバシーポリシーに同意する'
+
+          click_button '確認画面へ'
+        end
+        it 'is failed' do
+          expect(page).to have_content 'Password confirmationとPasswordの入力が一致しません'
         end
       end
     end

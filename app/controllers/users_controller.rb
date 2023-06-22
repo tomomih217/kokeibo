@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     is_duplicated = User.duplicated?(user_params[:name])
     
     if @form.invalid? || is_duplicated
-      flash.now[:danger] = 'そのユーザー名は使用されています。'
+      flash.now[:danger] = 'そのユーザー名は使用されています。' if is_duplicated
       render :new
     end
     session[:user_params] = user_params
