@@ -112,7 +112,7 @@ RSpec.describe "UserSessions", type: :system do
   end
 
   describe 'Logout' do
-    fcontext 'after login' do
+    context 'after login' do
       before do
         visit login_path
 
