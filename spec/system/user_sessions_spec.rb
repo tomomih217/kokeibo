@@ -24,14 +24,7 @@ RSpec.describe "UserSessions", type: :system do
     end
 
     context 'with all attributes' do
-      before do
-        visit login_path
-
-        fill_in 'ユーザー名', with: user.name
-        fill_in 'パスワード', with: 'password'
-        check 'ログイン情報を保持する'
-        click_button 'ログイン'
-      end
+      before { login(user) }
       it 'is successful' do
         expect(current_path).to eq mypage_path # マイページに遷移されていること
         expect(page).to have_content "#{user.name}さんのマイページです" # ログインしたユーザーのマイページが表示されていること
@@ -114,13 +107,7 @@ RSpec.describe "UserSessions", type: :system do
   describe 'Logout' do
     context 'after login' do
       before do
-        visit login_path
-
-        fill_in 'ユーザー名', with: user.name
-        fill_in 'パスワード', with: 'password'
-        check 'ログイン情報を保持する'
-        click_button 'ログイン'
-
+        login(user)
         click_button 'ログアウト'
       end
       it 'is successful' do
