@@ -1,0 +1,24 @@
+<div class='w-2/3 md:w-1/2 rounded-lg border border-amber-dark text-amber-dark bg-amber-card pt-2 m-auto shadow-md'>
+  <h2 class="text-xl text-center mb-2">ログイン画面</h2>
+  <div class="bg-white rounded-b-lg px-4 md:px-16 lg:px-36 py-12">
+    <%= form_with model: @user, url: login_path, local: true do |f| %>
+        <div class='form-group mb-5'>
+          <%= f.label :name, class: 'block text-amber-dark font-bold mb-1 pr-4' %>
+          <%= f.text_field :name, class: 'bg-white border-2 border-amber-dark rounded w-full py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %>
+        </div>
+        <div class='form-group mb-5'>
+          <%= f.label :password, class: 'block text-amber-dark font-bold mb-1 pr-4' %>
+          <%= f.password_field :password, class: 'bg-white border-2 border-amber-dark rounded w-full py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %>
+        </div>
+        <div class='form-group'>
+          <%= f.check_box :remember, as: :boolean, checked: false %>
+          <%= f.label :remember do %>
+            ログイン情報を保持する
+          <% end %>
+        </div>
+        <div class='text-center mt-10'>
+          <%= f.submit 'ログイン', class: 'py-3 lg:py-2 px-8 rounded-3xl bg-green-300 shadow-md hover:shadow-sm transition-all outline-none text-white text-lg' %>
+        </div>
+      <% end %>
+  </div>
+</div>

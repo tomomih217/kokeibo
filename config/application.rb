@@ -23,5 +23,12 @@ module Kokeibo
     config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{rb,yml}').to_s]
     config.i18n.default_locale = :ja
 		config.i18n.available_locales = %i[ja en]
+
+    # Generateの設定
+    config.generators do |g|
+      g.assets false #assets生成しない
+      g.helper false #helper生成しない
+      g.test_framework false #test生成しない
+    end
   end
 end

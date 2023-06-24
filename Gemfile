@@ -46,6 +46,8 @@ group :development do
   gem 'spring'
   gem 'foreman'
   gem 'pry-rails'
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
 end
 
 group :test do

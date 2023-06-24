@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   layout 'before_login_layout'
+  skip_before_action :require_login, only: %i[new confirm create complete]
   skip_before_action :delete_session, only: %i[create]
   after_action :delete_session, only: %i[create]
 
@@ -12,7 +13,7 @@ class UsersController < ApplicationController
     is_duplicated = User.duplicated?(user_params[:name])
     
     if @form.invalid? || is_duplicated
-      flash.now[:danger] = 'そのユーザー名は使用されています。'
+      flash.now[:danger] = 'そのユーザー名は使用されています。' if is_duplicated
       render :new
     end
     session[:user_params] = user_params
