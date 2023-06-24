@@ -43,6 +43,7 @@ module.exports = {
         'amber-light': '#FFFBE3',
         'amber-card': '#FFF6C6',
         'amber-vivid': '#FE6B01',
+        'submenu': '#FFFEF3',
         info: colors.cyan,
         success: colors.emerald,
         warning: colors.orange,
