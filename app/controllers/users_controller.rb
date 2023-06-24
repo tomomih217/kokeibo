@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   layout 'before_login_layout'
+  skip_before_action :require_login, only: %i[new confirm create complete]
   skip_before_action :delete_session, only: %i[create]
   after_action :delete_session, only: %i[create]
 
