@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
+  has_many :child
+
   validates :name, presence: true, length: { maximum: 255 }, uniqueness: true
   # 新規登録かパスワード変更の時に以下のバリデーションを適用する。
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes[:crypted_password] }

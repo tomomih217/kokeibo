@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  get 'children/new'
-  get 'children/create'
-  get 'save_schedules/new'
-  get 'save_schedules/create'
   root 'top#index'
   get '/simulation', to: redirect('/')
   get '/privacypolicy', to: redirect('/')
@@ -13,6 +9,8 @@ Rails.application.routes.draw do
     post 'confirm'
     get 'complete'
   end
+
+  resources :children, only: %i[new create]
 
   get '/login', to: 'user_sessions#new'
   post '/login', to: 'user_sessions#create'
