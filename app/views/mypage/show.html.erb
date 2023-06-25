@@ -1,3 +1,6 @@
 <p><%= @user.name %>さんのマイページです</p>
-
-<%= link_to 'お子様の情報を登録', new_child_path, class: 'px-3 py-2 text-white bg-amber-vivid rounded-md' %>
+<% if current_user.child.empty? %>
+  <%= link_to 'お子様の情報を登録', new_child_path, class: 'px-3 py-2 text-white bg-amber-vivid rounded-md' %>
+<% else %>
+  <%= current_user.child[0].name %>
+<% end %>

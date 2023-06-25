@@ -8,6 +8,9 @@ RSpec.describe "SaveSchedules", type: :system do
         before do
           login(user)
           click_on '積立計画'
+
+          select '5万', from: '金額'
+          click_button '保存'
         end
         it 'is successfull' do
           expect(page).to have_content '積立計画登録画面'

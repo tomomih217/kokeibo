@@ -1,7 +1,11 @@
 <div class='bg-submenu h-full'>
   <ul>
-    <li class="px-5 py-3 hover:bg-gray-100<%= ' underline' if current_page?(mypage_path) %>">MyPage</li>
-    <li class="px-5 py-3 hover:bg-gray-100">積立計画</li>
+    <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(mypage_path) %>">
+      <%= link_to 'MyPage', mypage_path %>
+    </li>
+    <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(new_save_schedule_path) %>">
+      <%= link_to '積立計画', new_save_schedule_path %>
+    </li>
     <!-- li class='mb-3'>カレンダーと履歴</li>
     <li class='mb-3'>お子様情報追加</li>
     <li class='mb-3'>パートナー追加</li>

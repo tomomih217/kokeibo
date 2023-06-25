@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :children, only: %i[new create]
+  resources :save_schedules, only: %i[new create]
 
   get '/login', to: 'user_sessions#new'
   post '/login', to: 'user_sessions#create'
