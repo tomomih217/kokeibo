@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'children/new'
+  get 'children/create'
   get 'save_schedules/new'
   get 'save_schedules/create'
   root 'top#index'
