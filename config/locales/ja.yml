@@ -5,6 +5,9 @@ ja:
         name: 'ユーザー名'
         password: 'パスワード'
         password_confirmation: 'パスワード（確認用）'
+      child:
+        name: 'お子様の名前'
+        stage: 'ステージ'
   enum:
     child:
       stage:
