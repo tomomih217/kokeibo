@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'save_schedules/new'
+  get 'save_schedules/create'
   root 'top#index'
   get '/simulation', to: redirect('/')
   get '/privacypolicy', to: redirect('/')
