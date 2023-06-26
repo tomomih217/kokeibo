@@ -8,6 +8,8 @@ ja:
       child:
         name: 'お子様の名前'
         stage: 'ステージ'
+      save_schedule:
+        amount: '金額'
   enum:
     child:
       stage:
