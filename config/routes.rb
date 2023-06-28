@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'simulation/new'
+  get 'simulation/create'
   root 'top#index'
   get '/simulation', to: redirect('/')
   get '/privacypolicy', to: redirect('/')
