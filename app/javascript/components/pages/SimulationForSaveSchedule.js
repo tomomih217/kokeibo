@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
 import Container from '../components/Container';
 import Button from '../components/Button';
 import ResultValidation from '../features/ResultValidation';
 import SimulationForm from '../features/SimulationForm';
 
-const Simulation = () => {
+const SimulationForSaveSchedule = () => {
   //ユーザーの入力値を格納
   const [selectedValues, setSelectedValues] = useState({
     age: 0,
@@ -33,30 +32,42 @@ const Simulation = () => {
     { type: 'juniorHighSchool', label: '中学校' },
     { type: 'highSchool', label: '高等学校' },
     { type: 'university', label: '大学' }
-  ]
+  ];
 
   const handleClick = () => {
     setShowResult(true);
   }
 
-  return (
+  //RailsにデータをJSONで送信する
+  const handleSubmit = () => {
+    fetch('/save_schedules/new', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ selectedValues }),
+    })
+      .then(response => response.json())
+  };
+
+  return(
     <div>
-      <Container title='教育費シュミレーション'>
-        <SimulationForm selectedValues={selectedValues} handleDropdownChange={handleDropdownChange} schoolTypes={schoolTypes} />
+      <SimulationForm selectedValues={selectedValues} handleDropdownChange={handleDropdownChange} schoolTypes={schoolTypes} />
+      <div className='text-center mt-5 mb-24'>
+        <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='md' onClick={handleClick}>
+          シミュレーション結果へ
+        </Button>
 
-        <div className='text-center mt-5 mb-24'>
-          <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='md' onClick={handleClick}>
-            シミュレーション結果へ
-          </Button>
-
-          <div className='mt-10'>
-            { showResult && <ResultValidation selectedValues={selectedValues} /> }
-          </div>
+        <div className='mt-10'>
+          { showResult && <ResultValidation selectedValues={selectedValues} /> }
         </div>
-        
-      </Container>
+      </div>
+      
+      <div>
+        <Button pxSize='2' pySize='2' color='green-300' fontColor='white' roundType='pill' onClick={handleSubmit}>積立計画画面に戻る</Button>
+      </div>
     </div>
   )
 };
 
-export default Simulation;
+export default SimulationForSaveSchedule;

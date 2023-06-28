@@ -2,27 +2,29 @@ require 'rails_helper'
 
 RSpec.describe "SaveSchedules", type: :system do
   let!(:user){ create(:user) }
+  let!(:child){ create(:child, user: user) }
   describe 'Create' do
-    describe 'batch' do
-      fcontext 'with all attributes' do
-        before do
-          login(user)
-          click_on '積立計画'
+    let(:save_schedule){ create(:save_schedule, child: child ) }
+    fcontext 'with all attributes' do
+      before do
+        login(user)
+        click_on '積立計画'
 
-          select '5万', from: '金額'
-          click_button '保存'
-        end
-        it 'is successfull' do
-          expect(page).to have_content '積立計画登録画面'
-        end
+        select save_schedule.age_from, from: 'save_schedule[age_from]'
+        select save_schedule.age_to, from: 'save_schedule[age_to]'
+        select save_schedule.amount, from: 'save_schedule[amount]'
+        click_button '保存'
       end
-      context 'without term' do
-        it 'is failed' do
-        end
+      it 'is successfull' do
+        expect(page).to have_content '積立計画を登録しました'
       end
-      context 'without amount' do
-        it 'is failed' do
-        end
+    end
+    context 'without term' do
+      it 'is failed' do
+      end
+    end
+    context 'without amount' do
+      it 'is failed' do
       end
     end
   end
