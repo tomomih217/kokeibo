@@ -10,7 +10,7 @@ const SimulationForm = ({ selectedValues, handleDropdownChange, schoolTypes }) =
   return (
     <div>
       <div className='mt-5'>
-        <Card widthSize='1/2' title='STEP1'>
+        <Card widthSize='1/2 md:w-2/3' title='STEP1'>
           <div className='py-5 text-center'>
             <Text size='md' color='amber-dark'>お子様のご年齢は？</Text>
             <AgeSelect identifier='age' selectedAge={selectedValues['age']} onChange={handleDropdownChange} />
@@ -19,7 +19,7 @@ const SimulationForm = ({ selectedValues, handleDropdownChange, schoolTypes }) =
       </div>
 
       <div className='mt-10'>
-        <Card widthSize='1/2' title='STEP2'>
+        <Card widthSize='1/2 md:w-2/3' title='STEP2'>
           <div className='py-5 text-center'>
             <Text size='md' color='amber-dark'>希望進路を選択してください。</Text>
             <div className='lg:px-28 pt-8'>
@@ -38,7 +38,7 @@ const SimulationForm = ({ selectedValues, handleDropdownChange, schoolTypes }) =
       </div>
 
       <div className='mt-10'>
-        <Card widthSize='1/2' title='STEP3'>
+        <Card widthSize='1/2 md:w-2/3' title='STEP3'>
           <div className='py-5 text-center'>
             <Text size='md' color='amber-dark'>仕送り（自宅外通学）予定金額</Text>
             <LivingAloneFundsSelectDropdown identifier='livingAloneFunds' onChange={handleDropdownChange} />

@@ -12,13 +12,16 @@ Rails.application.routes.draw do
     get 'complete'
   end
 
+
   resources :children, only: %i[new create]
   resources :save_schedules, only: %i[new create]
+  resources :simulation, only: %i[new create]
 
   get '/login', to: 'user_sessions#new'
   post '/login', to: 'user_sessions#create'
   delete '/logout', to: 'user_sessions#destroy'
 
   get '/mypage', to: 'mypage#show'
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

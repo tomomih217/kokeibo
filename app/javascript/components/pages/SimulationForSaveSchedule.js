@@ -1,19 +1,20 @@
-import Container from '../components/Container';
+import React, { useState } from 'react';
 import Button from '../components/Button';
 import ResultValidation from '../features/ResultValidation';
 import SimulationForm from '../features/SimulationForm';
+import axios from 'axios';
 
 const SimulationForSaveSchedule = () => {
   //ユーザーの入力値を格納
   const [selectedValues, setSelectedValues] = useState({
     age: 0,
-    nurserySchool: '',
-    kindergarten: '',
-    primarySchool: '',
-    juniorHighSchool: '',
-    highSchool: '',
-    university: '',
-    livingAloneFunds: ''
+    nurserySchool: "",
+    kindergarten: "",
+    primarySchool: "",
+    juniorHighSchool: "",
+    highSchool: "",
+    university: "",
+    livingAloneFunds: ""
   });
   const [showResult, setShowResult] = useState(false);
 
@@ -39,16 +40,17 @@ const SimulationForSaveSchedule = () => {
   }
 
   //RailsにデータをJSONで送信する
-  const handleSubmit = () => {
-    fetch('/save_schedules/new', {
+  const handleSubmit = ({ selectedValues }) => {
+    let body = JSON.stringify({ selectedValues });
+    fetch('/simulation', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ selectedValues }),
+      body: body
     })
-      .then(response => response.json())
-  };
+      .then((response) => { return response.json() })
+  }
 
   return(
     <div>
@@ -62,9 +64,9 @@ const SimulationForSaveSchedule = () => {
           { showResult && <ResultValidation selectedValues={selectedValues} /> }
         </div>
       </div>
-      
+
       <div>
-        <Button pxSize='2' pySize='2' color='green-300' fontColor='white' roundType='pill' onClick={handleSubmit}>積立計画画面に戻る</Button>
+        <Button pxSize='2' pySize='2' color='green-300' fontColor='white' roundType='pill' onClick={handleSubmit(selectedValues)}>積立計画画面に戻る</Button>
       </div>
     </div>
   )
