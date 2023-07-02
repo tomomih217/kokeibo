@@ -4,7 +4,5 @@ class SimulationController < ApplicationController
   end
 
   def create
-    console.log(params[:selectedValues])
-    render json: { message: 'Data received successfully.' }
   end
 end
