@@ -75,7 +75,17 @@
           </div>
         </div>
 
-        <div>
+        <div class='mt-10'>
+          <div class='w-1/2 md:w-2/3 rounded-lg border border-amber-dark text-amber-dark bg-amber-card pt-2 m-auto'>
+            <h2 class="text-xl text-center mb-2">STEP3</h2>
+            <div class="bg-white rounded-b-lg px-4">
+              <div class='py-5 text-center'>
+                <p class='text-md text-amber-dark mb-5'>仕送り（自宅外通学）予定金額</p>
+                <%= f.select :living_alone_funds, living_alone_funds_options, class: 'border-amber-dark' %>
+              </div>
+            </div>
+          </div>
+        </div>
 
       <% end %>
 
