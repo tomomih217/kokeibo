@@ -3,7 +3,7 @@
     <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(mypage_path) %>">
       <%= link_to 'MyPage', mypage_path %>
     </li>
-    <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(new_save_schedule_path) %>">
+    <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(new_save_schedule_path) || current_page?(new_simulation_path) %>">
       <%= link_to '積立計画', new_save_schedule_path %>
     </li>
     <!-- li class='mb-3'>カレンダーと履歴</li>

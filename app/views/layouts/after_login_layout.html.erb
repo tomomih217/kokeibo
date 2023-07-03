@@ -7,6 +7,9 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <% if current_page?(new_simulation_path) %>
+      <meta name="turbolinks-visit-control" content="reload">
+    <% end %>
   </head>
 
   <body class='font-body'>
@@ -14,16 +17,16 @@
       <%= render 'shared/header' %>
       <div class='mt-16'>
         <%= render '/shared/flash_messages' %>
-        <div class='mb-24 h-full flex'>
-          <div class='w-1/4'>
+        <div class='flex'>
+          <div class='w-1/4 min-h-screen'>
             <%= render 'shared/submenu' %>
           </div>
           <div class='w-3/4'>
             <%= yield %>
           </div>
         </div>
+        <%= render 'shared/footer' %>
       </div>
-      <%= render 'shared/footer' %>
     </div>
   </body>
 </html>

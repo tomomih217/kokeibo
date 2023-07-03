@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   resources :children, only: %i[new create]
   resources :save_schedules, only: %i[new create]
   resources :simulation, only: %i[new create]
+  namespace :simulation do
+    post 'result'
+  end
 
   get '/login', to: 'user_sessions#new'
   post '/login', to: 'user_sessions#create'

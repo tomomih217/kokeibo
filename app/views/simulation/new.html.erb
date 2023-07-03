@@ -5,7 +5,17 @@
 
   <div class='m-auto'>
     <div>
-      <%= form_with model: Result.new, url: simulation_index_path, local: true do |f| %>
+      <%= form_with model: Result.new, url: simulation_result_path, local: true do |f| %>
+        <% if @errors.present? %>
+          <div class='text-red-500 text-center'>
+            <ul class='mb-0'>
+              <% @errors.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        
         <div class='mt-5'>
           <div class='w-1/2 md:w-2/3 rounded-lg border border-amber-dark text-amber-dark bg-amber-card pt-2 m-auto'>
             <h2 class="text-xl text-center mb-2">STEP1</h2>
@@ -87,38 +97,14 @@
           </div>
         </div>
 
+        <div class='mt-10 text-center'>
+          <%= f.submit 'シュミレーション結果', class: 'px-3 py-2 rounded-md bg-amber-vivid text-white' %>
+        <div>
       <% end %>
-
         
     </div>
   </div>
 </div>
-
-<!--
-
-      <div class='mt-10'>
-        <Card widthSize='1/2 md:w-2/3' title='STEP3'>
-          <div class='py-5 text-center'>
-            <Text size='md' color='amber-dark'>仕送り（自宅外通学）予定金額</Text>
-            <LivingAloneFundsSelectDropdown identifier='livingAloneFunds' onChange={handleDropdownChange} />
-          </div>
-        </Card>
-      </div>
-    </div>
-
-        <div class='text-center mt-5 mb-24'>
-          <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='md' onClick={handleClick}>
-            シミュレーション結果へ
-          </Button>
-
-          <div class='mt-10'>
-            { showResult && <ResultValidation selectedValues={selectedValues} /> }
-          </div>
-        </div>
-
-    </div>
-  </div>
-</div> -->
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
