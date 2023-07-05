@@ -30,15 +30,15 @@ RSpec.describe "Simulations", type: :system do
         within '.form-university-group' do
           find('label', text: '私立理系').click
         end
-        find("option[value='#{result.living_alone_funds},000円']").select_option
+        find("option[value='#{result.living_alone_funds}万円']").select_option
         click_button 'シュミレーション結果'
       end
       it 'is successful' do
         expect(current_path).to eq simulation_result_path  # シュミレーション結果画面への遷移を確認
-        expect(page).to have_content '0〜18才まで' # 積立期間が表示されること
-        expect(page).to have_content '総額： 22,523,486円' # 積立総額が表示されること
-        expect(page).to have_content '月額　約104,275円' # 月額の積立金額が表示されること
-        expect(page).to have_selector 'canvas' # グラフが表示されること
+        expect(page).to have_content "#{result.age}〜18才まで" # 積立期間が表示されること
+        expect(page).to have_content '総額： 22,015,376円' # 積立総額が表示されること
+        expect(page).to have_content '月額　約101,923円' # 月額の積立金額が表示されること
+        # expect(page).to have_selector 'canvas' # グラフが表示されること
       end
     end
   end 

@@ -10,6 +10,6 @@ module ApplicationHelper
     options = []
     options.push('選択してください')
     options.push('仕送りの予定はない')
-    options += (1..20).map{ |x| x.to_s + '0,000円' }
+    options += (1..20).map{ |x| x.to_s + '万円' }
   end
 end
