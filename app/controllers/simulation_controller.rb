@@ -8,10 +8,12 @@ class SimulationController < ApplicationController
   end
 
   def result
-    @result = Result.new(result_params)
+    @result = Result.new(Result.params_format(result_params))
     if @result.invalid?
       @errors = @result.errors.full_messages
       render :new
+    else
+      @result_params = Result.params_format(result_params)
     end
   end
 

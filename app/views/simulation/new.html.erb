@@ -43,7 +43,7 @@
                 ] %>
 
                 <% school_types.each do |school_type| %>
-                  <div class='form-group mb-5'>
+                  <div class="form-<%= school_type[:type] %>-group mb-5">
                     <p class='text-md text-amver-dark mb-3'><%= school_type[:label] %></p>
                     <div class='flex justify-center'>
                       <div class='mx-3'>
@@ -58,7 +58,7 @@
                   </div>
                 <% end %>
 
-                <div class='form-group mb-5'>
+                <div class='form-university-group mb-5'>
                   <p class='text-md text-amver-dark mb-3'>大学</p>
                   <div class='flex justify-center'>
                     <div class='mx-3'>
