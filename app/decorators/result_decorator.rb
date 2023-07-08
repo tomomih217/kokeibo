@@ -8,7 +8,6 @@ class ResultDecorator < ApplicationDecorator
   end
 
   def format_cost_per_month
-    cost_per_month = total_cost / duration
     cost_per_month.to_s(:delimited)
   end
 end

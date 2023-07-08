@@ -32,7 +32,11 @@ class Result < ApplicationRecord
   end
 
   def total_cost
-    cost_datas_hash(json_datas).values.sum
+    cost_datas_hash.values.sum
+  end
+
+  def cost_per_month
+    total_cost / duration
   end
 
   def cost_datas_hash
@@ -56,11 +60,13 @@ class Result < ApplicationRecord
     }
 
     schoolTypes.each do |schoolType|
+      total = 0
       school_type = schoolType.underscore.to_sym
       ageRange[school_type].each do |age|
         data = json_datas[schoolType][send(school_type)][age]
-        cost_datas[school_type] = data
+        total += data
       end
+      cost_datas[school_type] = total
     end
 
     cost_datas[:living_alone_funds] = living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize'] + living_alone_funds * 10000 * 12 * 4

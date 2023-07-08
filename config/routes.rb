@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   namespace :simulation do
     post 'result'
   end
+  resources :results, only: %i[create update]
 
   get '/login', to: 'user_sessions#new'
   post '/login', to: 'user_sessions#create'
