@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   resources :children, only: %i[new create]
   resources :save_schedules, only: %i[new create]
-  resources :simulation, only: %i[new create]
+  resources :simulation, only: %i[new]
   namespace :simulation do
     post 'result'
   end

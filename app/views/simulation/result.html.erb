@@ -22,6 +22,7 @@
     </p>
   </div>
 
+  <!--  >
   <div class='mt-5'>
     <%= form_with model:@result, local:true do |f| %>
       <%= f.hidden_field :age, value: @result.age %>
@@ -35,4 +36,6 @@
       <%= f.submit '登録する', class: 'px-3 py-2 rounded-md bg-green-300 text-white shadow-md' %>
     <% end %>
   </div>
+  <-->
+  <%= link_to '戻る', new_save_schedule_path, class: 'px-3 py-2 rounded-pill bg-gray-200 text-amber-dark shadow-md hover:shadow-sm' %>
 </div>

@@ -4,9 +4,6 @@ class SimulationController < ApplicationController
     @result = Result.new
   end
 
-  def create
-  end
-
   def result
     @result = Result.new(Result.params_format(result_params))
     if @result.invalid?

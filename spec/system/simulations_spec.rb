@@ -38,7 +38,7 @@ RSpec.describe "Simulations", type: :system do
         expect(page).to have_content "#{result.age}〜18才まで" # 積立期間が表示されること
         expect(page).to have_content '総額： 22,015,376円' # 積立総額が表示されること
         expect(page).to have_content '月額　約101,923円' # 月額の積立金額が表示されること
-        # expect(page).to have_selector 'canvas' # グラフが表示されること
+        expect(page).to have_selector 'canvas' # グラフが表示されること
       end
     end
   end 
