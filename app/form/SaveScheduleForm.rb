@@ -5,21 +5,24 @@ class SaveScheduleForm
   include ActiveModel::Validations::Callbacks
 
   FORM_COUNT = 3
-  attr_accessor :results
+  attr_accessor :save_schedules
 
   def initialize(attributes = {})
     super attributes
-    self.results = FORM_COUNT.times.map { Result.new() } unless self.results.present?
+    self.save_schedules = FORM_COUNT.times.map { SaveSchedule.new() } unless self.save_schedules.present?
   end
 
-  def results_attributes=(attributes)
-    self.results = attributes.map { |_, v| Result.new(v) }
+  def save_schedules_attributes=(attributes)
+    self.save_schedules = attributes.map { |_, v| SaveSchedule.new(v) }
   end
 
-  def save_schedule
-    Result.transaction do
-      self.results.map do |result|
-        result.save
+  def save(user)
+    child = user.children[0]
+    SaveSchedule.transaction do
+      self.save_schedules.map do |save_schedule|
+        save_schedule.child = child
+        binding.pry
+        save_schedule.save
       end
     end
       return true

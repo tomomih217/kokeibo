@@ -1,13 +1,12 @@
 class SaveSchedulesController < ApplicationController
   layout 'after_login_layout'
   def new
-    @save_schedule = SaveSchedule.new
+    @form = SaveScheduleForm.new
   end
 
   def create
-    child = current_user.children.first
-    @save_schedule = SaveSchedule.new(save_schedule_params.merge(child: child))
-    if @save_schedule.save
+    @form = SaveScheduleForm.new(save_schedule_params)
+    if @form.save(current_user)
       redirect_to mypage_url, success: '積立計画を登録しました'
     else
       flash.now[:danger] = '登録に失敗しました'
@@ -18,6 +17,6 @@ class SaveSchedulesController < ApplicationController
   private
 
   def save_schedule_params
-    params.require(:save_schedule).permit(:age_from, :age_to, :amount)
+    params.require(:save_schedule_form).permit(save_schedules_attributes: [:age_from, :age_to, :amount])
   end
 end
