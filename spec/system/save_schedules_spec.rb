@@ -10,9 +10,9 @@ RSpec.describe "SaveSchedules", type: :system do
         login(user)
         click_on '積立計画'
 
-        select save_schedule.age_from, from: 'save_schedule[age_from]'
-        select save_schedule.age_to, from: 'save_schedule[age_to]'
-        select save_schedule.amount, from: 'save_schedule[amount]'
+        select save_schedule.age_from, from: 'save_schedule_form[save_schedules_attributes][0][age_from]'
+        select save_schedule.age_to, from: 'save_schedule_form[save_schedules_attributes][0][age_to]'
+        select save_schedule.amount, from: 'save_schedule_form[save_schedules_attributes][0][amount]'
         click_button '保存'
       end
       it 'is successfull' do
