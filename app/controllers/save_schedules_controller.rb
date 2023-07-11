@@ -14,6 +14,12 @@ class SaveSchedulesController < ApplicationController
     end
   end
 
+  def edit
+    save_schedules = current_user.children[0].save_schedules
+    @form = SaveScheduleForm.new
+    @form.save_schedules = save_schedules
+  end
+
   private
 
   def save_schedule_params

@@ -2,57 +2,14 @@
   <p class='mb-3'>教育費シュミレーションの結果が登録されていません</p>
   <%= link_to '教育費シュミレーション', new_simulation_path, class: 'px-3 py-2 bg-amber-vivid rounded-md shadow text-white' %>
 </div>
-<div class='w-2/3 md:w-1/2 rounded-lg border border-amber-dark text-amber-dark bg-amber-card pt-2 m-auto'>
-  <h2 class="text-xl text-center mb-2">積立計画</h2>
-  <div class="bg-white rounded-b-lg px-4">
-    <%= form_with model: @form, url: save_schedules_path, class: 'm-0', local: true do |form| %>
-      <%= form.fields_for :save_schedules do |f| %>
-        <div class='mx-10 py-10 hidden'>
-          <div class='form-group flex justify-between mb-3'>
-            <%= f.label '期間' %>
-            <div>
-              <%= f.select :age_from, (0..17).to_a, { include_blank: true }, class: 'bg-white border-2 border-amber-dark rounded py-2 px-4 text-amber-dark focus:outline-none focus:border-purple-500' %>
-              <span>〜</span>
-              <%= f.select :age_to, (1..18).to_a, { include_blank: true }, class: 'bg-white border-2 border-amber-dark rounded py-2 px-4 text-amber-dark focus:outline-none focus:border-purple-500' %>
-              <span>才</span>
-            </div>
-          </div>
-          <div class='form-group flex justify-between'>
-            <%= f.label :amount %>
-            <div>
-              <%= f.select :amount, (1..20).to_a.map { |n| [n.to_s + '0,000', n] }, { include_blank: true }, class: 'bg-white border-2 border-amber-dark rounded w-4/5 py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %>
-              <span>円</span>
-            </div>
-          </div>
-          <div class='mt-3 text-right'>
-            <%= button_tag '追加', type: 'button', class: 'px-2 py-1 bg-gray-200 shadow-md' %>
-          </div>
-        </div>
-      <% end %>
-      <div class='text-center pb-5'>
-        <% if current_user.children[0].save_schedules.present? %>
-          <%= form.submit '更新する', class: 'px-3 py-2 rounded-md shadow-md bg-green-300 text-white cursor-pointer' %>
-        <% else %>
-          <%= form.submit '登録する', class: 'px-3 py-2 rounded-md shadow-md bg-green-300 text-white cursor-pointer' %>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-</div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const formElms = document.querySelectorAll('.hidden');
-    formElms[0].classList.remove('hidden');
-    const btns = document.querySelectorAll('button');
-    btns.forEach( function(btn) {
-      btn.addEventListener('click', function() {
-        const formElms = document.querySelectorAll('.hidden');
-        formElms[0].classList.remove('hidden');
-        if (formElms.length === 1){
-          btns[btns.length - 1].classList.add('hidden');
-        }
-      });
-    });
-  });
-</script>
+<% if current_user.children[0].save_schedules.present? %>
+  <div class='w-1/2 rounded-lg border border-amber-vivid text-amber-dark bg-yellow-300 p-4 m-auto'>
+    <div class='text-center'>
+      <p class=''>期間：0〜１８才</p>
+      <p class=''>月々５０,０００円</p>
+    </div>
+  </div>
+<% else %>
+  <%= render 'save_schedule', form: @form %>
+<% end %>
