@@ -3,8 +3,8 @@
     <%= link_to mypage_path do %>
       <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(mypage_path) %>">MyPage</li>
     <% end %>
-    <%= link_to new_save_schedule_path do %>
-      <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(new_save_schedule_path) || current_page?(new_simulation_path) %>">積立計画</li>
+    <%= link_to '#' do %>
+      <li class="px-5 py-3 hover:bg-gray-100">入金設定</li>
     <% end %>
     <!-- li class='mb-3'>カレンダーと履歴</li>
     <li class='mb-3'>お子様情報追加</li>
