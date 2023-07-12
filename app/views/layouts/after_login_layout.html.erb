@@ -22,6 +22,7 @@
             <%= render 'shared/submenu' %>
           </div>
           <div class='w-3/4'>
+            <p><%= current_user.current_child.name %>ちゃん</p>
             <%= yield %>
           </div>
         </div>

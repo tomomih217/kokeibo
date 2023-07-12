@@ -7,10 +7,9 @@ RSpec.describe "Plans", type: :system do
     context 'access' do
       before do
         login(user)
-        click_on '入金設定'
+        visit child_plan_collections_path(child.id)
       end
       it 'is successful' do
-        expect(current_path).to eq plans_path
         expect(page).to have_content '入金設定一覧'
       end
     end
@@ -21,7 +20,11 @@ RSpec.describe "Plans", type: :system do
   end
 
   describe 'create' do
-    xcontext 'with all attributes' do
+    before do
+      login(user)
+      visit new_child_plan_collection_path(child.id)
+    end
+    fcontext 'with all attributes' do
       it 'is successful' do
       end
     end

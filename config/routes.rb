@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   end
 
 
-  resources :children, only: %i[new create]
+  resources :children, only: %i[new create] do
+    resources :plan_collections, only: %i[index new create edit update]
+  end
   resources :simulation, only: %i[new]
   namespace :simulation do
     post 'result'

@@ -12,4 +12,8 @@ class User < ApplicationRecord
   def self.duplicated?(name)
     User.find_by(name: name).present?
   end
+
+  def current_child
+    children.first
+  end
 end

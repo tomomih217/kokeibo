@@ -1,6 +1,6 @@
 class Child < ApplicationRecord
   belongs_to :user
-  has_many :save_schedules
+  has_many :plans
   has_one :result
 
   validates :name, presence: true, length: { maximum: 255 }
