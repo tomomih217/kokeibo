@@ -3,8 +3,8 @@
     <%= link_to mypage_path do %>
       <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(mypage_path) %>">MyPage</li>
     <% end %>
-    <%= link_to child_plan_collections_path(current_user.current_child) do %>
-      <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(child_plan_collections_path(current_user.current_child)) || current_page?(new_child_plan_collection_path(current_user.current_child)) %>">入金設定</li>
+    <%= link_to child_plans_path(current_user.current_child) do %>
+      <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(child_plans_path(current_user.current_child)) || current_page?(new_child_plan_path(current_user.current_child)) %>">入金設定</li>
     <% end %>
     <!-- li class='mb-3'>カレンダーと履歴</li>
     <li class='mb-3'>お子様情報追加</li>

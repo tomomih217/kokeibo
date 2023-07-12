@@ -4,10 +4,10 @@ RSpec.describe "Plans", type: :system do
   let!(:user){ create(:user) }
   let!(:child){ create(:child, user: user) }
   describe 'index' do
-    context 'access' do
+    fcontext 'access' do
       before do
         login(user)
-        visit child_plan_collections_path(child.id)
+        visit child_plans_path(child.id)
       end
       it 'is successful' do
         expect(page).to have_content '入金設定一覧'
@@ -22,9 +22,9 @@ RSpec.describe "Plans", type: :system do
   describe 'create' do
     before do
       login(user)
-      visit new_child_plan_collection_path(child.id)
+      visit new_child_plan_path(child.id)
     end
-    fcontext 'with all attributes' do
+    context 'with all attributes' do
       it 'is successful' do
       end
     end

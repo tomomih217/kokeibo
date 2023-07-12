@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
 
   resources :children, only: %i[new create] do
-    resources :plan_collections, only: %i[index new create edit update]
+    resources :plans, only: %i[index new create edit update]
   end
   resources :simulation, only: %i[new]
   namespace :simulation do
