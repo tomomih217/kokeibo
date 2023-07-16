@@ -1,0 +1,15 @@
+<div class='bg-submenu h-full'>
+  <ul>
+    <%= link_to mypage_path do %>
+      <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(mypage_path) %>">MyPage</li>
+    <% end %>
+    <%= link_to child_plans_path(current_user.current_child) do %>
+      <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(child_plans_path(current_user.current_child)) || current_page?(new_child_plan_path(current_user.current_child)) %>">入金設定</li>
+    <% end %>
+    <!-- li class='mb-3'>カレンダーと履歴</li>
+    <li class='mb-3'>お子様情報追加</li>
+    <li class='mb-3'>パートナー追加</li>
+    <li class='mb-3'>会員情報変更</li>
+    <li class='mb-3'>退会手続き</li-->
+  </ul>
+</div>

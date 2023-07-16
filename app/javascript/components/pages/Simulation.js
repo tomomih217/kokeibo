@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import Container from '../components/Container';
-import Text from '../components/Text';
-import Card from '../components/Card';
-import AgeSelect from '../features/AgeSelect';
-import Label from '../components/Label';
-import SchoolButtons from '../features/SchoolButtons';
-import LivingAloneFundsSelectDropdown from '../features/LivingAloneFundsSelect';
 import Button from '../components/Button';
 import ResultValidation from '../features/ResultValidation';
+import SimulationForm from '../features/SimulationForm';
 
 const Simulation = () => {
   //ユーザーの入力値を格納
@@ -47,42 +42,7 @@ const Simulation = () => {
   return (
     <div>
       <Container title='教育費シュミレーション'>
-        <div className='mt-5'>
-          <Card widthSize='1/2' title='STEP1'>
-            <div className='py-5 text-center'>
-              <Text size='md' color='amber-dark'>お子様のご年齢は？</Text>
-              <AgeSelect identifier='age' selectedAge={selectedValues['age']} onChange={handleDropdownChange} />
-            </div>
-          </Card>
-        </div>
-
-        <div className='mt-10'>
-          <Card widthSize='1/2' title='STEP2'>
-            <div className='py-5 text-center'>
-              <Text size='md' color='amber-dark'>希望進路を選択してください。</Text>
-              <div className='lg:px-28 pt-8'>
-                { schoolTypes.map((schoolType, index) => {
-                  const selectedValue = schoolType.type;
-                  return (
-                    <div className='mb-5'>
-                      <Label size='md' color='amber-dark'>{schoolType.label}</Label>
-                      <SchoolButtons identifier={schoolType.type} selectedButton={selectedValues[selectedValue]} onChange={handleDropdownChange} />
-                    </div>
-                  )
-                }) }
-              </div>
-            </div>
-          </Card>
-        </div>
-
-        <div className='mt-10'>
-          <Card widthSize='1/2' title='STEP3'>
-            <div className='py-5 text-center'>
-              <Text size='md' color='amber-dark'>仕送り（自宅外通学）予定金額</Text>
-              <LivingAloneFundsSelectDropdown identifier='livingAloneFunds' onChange={handleDropdownChange} />
-            </div>
-          </Card>
-        </div>
+        <SimulationForm selectedValues={selectedValues} handleDropdownChange={handleDropdownChange} schoolTypes={schoolTypes} />
 
         <div className='text-center mt-5 mb-24'>
           <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='md' onClick={handleClick}>

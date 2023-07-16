@@ -1,0 +1,129 @@
+<div class='mb-24'>
+  <div class='mb-5 text-center'>
+    <p class='text-3xl text-amber-dark'>教育費シュミレーション</p>
+  </div>
+
+  <div class='m-auto'>
+    <div>
+      <%= form_with model: Result.new, url: simulation_result_path, local: true do |f| %>
+        <% if @errors.present? %>
+          <div class='text-red-500 text-center'>
+            <ul class='mb-0'>
+              <% @errors.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        
+        <div class='mt-5'>
+          <div class='w-1/2 md:w-2/3 rounded-lg border border-amber-dark text-amber-dark bg-amber-card pt-2 m-auto'>
+            <h2 class="text-xl text-center mb-2">STEP1</h2>
+            <div class="bg-white rounded-b-lg px-4">
+              <div class='py-5 text-center'>
+                <p class='text-md text-amber-dark'>お子様のご年齢は？</p>
+                <%= f.select :age, age_options, class: 'border-amber-dark' %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class='mt-10'>
+          <div class='w-1/2 md:w-2/3 rounded-lg border border-amber-dark text-amber-dark bg-amber-card pt-2 m-auto'>
+            <h2 class="text-xl text-center mb-2">STEP2</h2>
+            <div class="bg-white rounded-b-lg px-4">
+              <div class='py-5 text-center'>
+                <p class='text-md text-amber-dark mb-5'>希望進路を選択してください。</p>
+                <% school_types = [
+                  { type: 'nursery_school', label: '保育園' },
+                  { type: 'kindergarten', label: '幼稚園' },
+                  { type: 'primary_school', label: '小学校' },
+                  { type: 'junior_high_school', label: '中学校' },
+                  { type: 'high_school', label: '高校' },
+                ] %>
+
+                <% school_types.each do |school_type| %>
+                  <div class="form-<%= school_type[:type] %>-group mb-5">
+                    <p class='text-md text-amver-dark mb-3'><%= school_type[:label] %></p>
+                    <div class='flex justify-center'>
+                      <div class='mx-3'>
+                        <%= f.radio_button school_type[:type], 'public', id: "result_#{school_type[:type]}_public", class: 'sr-only' %>
+                        <%= label_tag "result_#{school_type[:type]}_public", '公立', class: 'school-type-label px-3 py-2 w-16 rounded-md text-amber-dark border border-yellow-300 hover:bg-yellow-300 hover:border-blue-400' %>
+                      </div>
+                      <div class='mx-3'>
+                        <%= f.radio_button school_type[:type], 'private', id: "result_#{school_type[:type]}_private", class: 'sr-only' %>
+                        <%= label_tag "result_#{school_type[:type]}_private", '私立', class: 'school-type-label px-3 py-2 w-16 rounded-md text-amber-dark border border-yellow-300 hover:bg-yellow-300 hover:border-blue-400' %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+
+                <div class='form-university-group mb-5'>
+                  <p class='text-md text-amver-dark mb-3'>大学</p>
+                  <div class='flex justify-center'>
+                    <div class='mx-3'>
+                      <%= f.radio_button :university, 'publicArts', id: "result_university_public_arts", class: 'sr-only' %>
+                      <%= label_tag "result_university_public_arts", '公立文系', class: 'school-type-label px-3 py-2 w-16 rounded-md text-amber-dark border border-yellow-300 hover:bg-yellow-300 hover:border-blue-400' %>
+                    </div>
+                    <div class='mx-3'>
+                      <%= f.radio_button :university, 'publicScience', id: "result_university_public_science", class: 'sr-only' %>
+                      <%= label_tag "result_university_public_science", '公立理系', class: 'school-type-label px-3 py-2 w-16 rounded-md text-amber-dark border border-yellow-300 hover:bg-yellow-300 hover:border-blue-400' %>
+                    </div>
+                    <div class='mx-3'>
+                      <%= f.radio_button :university, 'privateArts', id: "result_university_private_arts", class: 'sr-only' %>
+                      <%= label_tag "result_university_private_arts", '私立文系', class: 'school-type-label px-3 py-2 w-16 rounded-md text-amber-dark border border-yellow-300 hover:bg-yellow-300 hover:border-blue-400' %>
+                    </div>
+                    <div class='mx-3'>
+                      <%= f.radio_button :university, 'privateScience', id: "result_university_private_science", class: 'sr-only' %>
+                      <%= label_tag "result_university_private_science", '私立理系', class: 'school-type-label px-3 py-2 w-16 rounded-md text-amber-dark border border-yellow-300 hover:bg-yellow-300 hover:border-blue-400' %>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class='mt-10'>
+          <div class='w-1/2 md:w-2/3 rounded-lg border border-amber-dark text-amber-dark bg-amber-card pt-2 m-auto'>
+            <h2 class="text-xl text-center mb-2">STEP3</h2>
+            <div class="bg-white rounded-b-lg px-4">
+              <div class='py-5 text-center'>
+                <p class='text-md text-amber-dark mb-5'>仕送り（自宅外通学）予定金額</p>
+                <%= f.select :living_alone_funds, living_alone_funds_options, class: 'border-amber-dark' %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class='mt-10 text-center'>
+          <%= f.submit 'シュミレーション結果', class: 'px-3 py-2 rounded-md bg-amber-vivid text-white' %>
+        <div>
+      <% end %>
+        
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const labels = document.querySelectorAll('.school-type-label');
+
+    labels.forEach( function(label) {
+      const radioButton = document.getElementById(label.getAttribute('for'));
+      radioButton.addEventListener('change', function() {
+        const btn = document.getElementById(label.getAttribute('for'));
+        const schoolType = label.getAttribute('for').split('_')[1];
+        const otherlabels = document.querySelectorAll(`[for^="result_${schoolType}`);
+
+        if (btn.checked) {
+          otherlabels.forEach( function(otherlabel) {
+            otherlabel.classList.remove('bg-yellow-300');
+          });
+          label.classList.add('bg-yellow-300');
+        }
+      });
+    });
+  });
+</script>     

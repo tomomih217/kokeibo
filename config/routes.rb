@@ -10,10 +10,24 @@ Rails.application.routes.draw do
     get 'complete'
   end
 
+
+  resources :children, only: %i[new create] do
+    resources :plans, only: %i[index new create destroy], shallow: true
+    patch '/plans', to: 'plans#update'
+    put '/plans', to: 'plans#update'
+    get '/plans/edit', to: 'plans#edit'
+  end
+  resources :simulation, only: %i[new]
+  namespace :simulation do
+    post 'result'
+  end
+  resources :results, only: %i[create update]
+
   get '/login', to: 'user_sessions#new'
   post '/login', to: 'user_sessions#create'
   delete '/logout', to: 'user_sessions#destroy'
 
   get '/mypage', to: 'mypage#show'
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

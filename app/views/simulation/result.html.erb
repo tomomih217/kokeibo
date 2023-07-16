@@ -1,0 +1,41 @@
+<h1 class='text-3xl text-amber-dark text-center mb-5'>シュミレーション結果</h1>
+
+<div class='w-1/2 rounded-lg border border-blue-500 text-amber-dark bg-blue-100 p-4 m-auto'>
+  <div class='text-center'>
+    <p class='text-lg text-amber-dark mb-3'><%= @result.age %>〜18才まで　<%= @result.duration %>ヶ月</p>
+    <p class='text-3xl text-amber-dark mb-3'>総額： <%= @result.decorate.format_total_cost %>円</p>
+    <p class='text-lg text-amber-dark'>月額　約<%= @result.decorate.format_cost_per_month %>円</p>
+  </div>
+</div>
+
+<div class='w-2/3 m-auto'>
+  <%= react_component('features/ResultGraph', { monthlyAmount: @result.cost_per_month, age: @result.age, costArray: @result.cost_datas_hash.values }) %>
+</div>
+
+<div class='text-center' >
+  <div className='mt-3'>
+    <p class='text-xs text-amber-dark'>
+      『令和3年度子供の学習費調査の結果について（文部科学省より・令和4年12月発行）』
+    </a>
+    <p class='text-xs text-amber-dark'>
+      『令和3年度「教育費負担の実態調査結果」（日本政策金融公庫より・令和3年12月発行）』
+    </p>
+  </div>
+
+  <!--  >
+  <div class='mt-5'>
+    <%= form_with model:@result, local:true do |f| %>
+      <%= f.hidden_field :age, value: @result.age %>
+      <%= f.hidden_field :nursery_school, value: @result.nursery_school%>
+      <%= f.hidden_field :kindergarten, value: @result.kindergarten %>
+      <%= f.hidden_field :primary_school, value: @result.primary_school %>
+      <%= f.hidden_field :junior_high_school, value: @result.junior_high_school %>
+      <%= f.hidden_field :high_school, value: @result.high_school %>
+      <%= f.hidden_field :university, value: @result.university %>
+      <%= f.hidden_field :living_alone_funds, value: @result.living_alone_funds %>
+      <%= f.submit '登録する', class: 'px-3 py-2 rounded-md bg-green-300 text-white shadow-md' %>
+    <% end %>
+  </div>
+  <-->
+  <%= link_to '戻る', new_save_schedule_path, class: 'px-3 py-2 rounded-pill bg-gray-200 text-amber-dark shadow-md hover:shadow-sm' %>
+</div>
