@@ -24,11 +24,13 @@
           <td class='px-5 py-3'>毎月<%= plan.payment_day %>日</td>
           <td class='px-5 py-3'><%= plan.is_auto ? 'on' : 'off' %></td>
           <td class='px-5 py-3'>
-            <%= link_to '編集', '#', class: 'px-2 py-2 bg-green-300 text-white rounded-md shadow-md hover:shadow-sm' %>
             <%= link_to '削除', plan_path(plan.id), method: :delete, id: "delete_button_for_plan_#{plan.id}", class: 'px-2 py-2 bg-red-500 text-white rounded-md shadow-md hover:shadow-sm' %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
+  <div class='mt-5 text-center'>
+    <%= link_to '編集', child_plans_edit_path(current_user.current_child), class: 'px-3 py-2 bg-green-300 text-white rounded-md shadow-md hover:shadow-sm' %>
+  </div>
 <% end %>

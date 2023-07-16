@@ -146,17 +146,47 @@ RSpec.describe "Plans", type: :system do
   end
 
   describe 'update' do
-    xcontext 'with all attributes' do
+    let!(:plan){ create(:plan, child: child) }
+    let(:add_plan){ build(:plan, child: child) }
+    before do
+      login(user)
+      visit child_plans_edit_path(child.id)
+    end
+    context 'with all attributes of new plan' do
+      before do
+        fill_in 'plan_form[plans_attributes][1][item]', with: add_plan.item
+        fill_in 'plan_form[plans_attributes][1][amount]', with: add_plan.amount
+        select add_plan.payment_day, from: 'plan_form[plans_attributes][1][payment_day]'
+        click_on '登録する'
+      end
       it 'is successful' do
-        
+        expect(page).to have_content '入金設定を編集しました'
+        expect(current_path).to eq child_plans_path(child.id)
+        expect(page).to have_content plan.item
+        expect(page).to have_content add_plan.item
       end
     end
-    xcontext 'with deleting saved plan' do
+    context 'with other attribute of saved plan' do
+      before do
+        fill_in 'plan_form[plans_attributes][0][item]', with: add_plan.item
+        click_on '登録する'
+      end
       it 'is successful' do
+        expect(page).to have_content '入金設定を編集しました'
+        expect(page).to have_content add_plan.item
+        expect(page).to have_no_content plan.item
+        expect(page).to have_content plan.amount.to_s(:delimited)
       end
     end
-    xcontext 'without saved plans' do
+    context 'without plans' do
+      before do
+        fill_in 'plan_form[plans_attributes][0][item]', with: ''
+        fill_in 'plan_form[plans_attributes][0][amount]', with: ''
+        select '', from: 'plan_form[plans_attributes][0][payment_day]'
+        click_on '登録する'
+      end
       it 'is failed' do
+        expect(page).to have_content '入力項目を確認してください'
       end
     end
   end
