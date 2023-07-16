@@ -22,7 +22,7 @@ RSpec.describe "Plans", type: :system do
       it 'can be displayed' do
         expect(page).to have_content '入金設定一覧'
         expect(page).to have_content plan.item
-        expect(page).to have_content plan.amount
+        expect(page).to have_content plan.amount.to_s(:delimited)
       end
     end
   end
@@ -155,19 +155,35 @@ RSpec.describe "Plans", type: :system do
       it 'is successful' do
       end
     end
-    xcontent 'without saved plans' do
+    xcontext 'without saved plans' do
       it 'is failed' do
       end
     end
   end
 
-  describe 'delete' do
-    xcontext 'a plan' do
+  describe 'destroy' do
+    let!(:plan){ create(:plan, child: child) }
+    before { login(user) }
+    context 'a plan' do
+      let!(:delete_plan){ create(:plan, child: child) }
+      before do
+        visit child_plans_path(child.id)
+        find("#delete_button_for_plan_#{delete_plan.id}").click
+      end
       it 'is successful' do
+        expect(page).to have_content '入金設定を削除しました'
+        expect(page).to have_no_content delete_plan.item
       end
     end
-    xcontext 'last plan' do
+    context 'last plan' do
+      before do
+        visit child_plans_path(child.id)
+        find("#delete_button_for_plan_#{plan.id}").click
+      end
       it 'is successful' do
+        expect(page).to have_content '入金設定を削除しました'
+        expect(page).to have_no_content plan.item
+        expect(page).to have_content '何もデータはありません'
       end
     end
   end

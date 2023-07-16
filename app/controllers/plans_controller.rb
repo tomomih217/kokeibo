@@ -19,9 +19,16 @@ class PlansController < ApplicationController
   end
 
   def edit
+    
   end
 
   def update
+  end
+
+  def destroy
+    plan = current_user.current_child.plans.find(params[:id])
+    plan.destroy!
+    redirect_to child_plans_path(current_user.current_child), success: '入金設定を削除しました'
   end
 
   private
