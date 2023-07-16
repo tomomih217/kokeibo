@@ -9,6 +9,8 @@ RSpec.describe "Users", type: :system do
           fill_in 'ユーザー名', with: 'Test_1'
           fill_in 'パスワード', with: 'password'
           fill_in 'パスワード（確認用）', with: 'password'
+          fill_in 'お子様のお名前', with: 'child_1'
+          select '出産前', from: '学年'
           check '利用規約とプライバシーポリシーに同意する'
 
           click_button '確認画面へ'

@@ -4,6 +4,8 @@
   <div class="bg-white rounded-b-lg px-4 md:px-16 lg:px-36 py-12">
     <p class='mb-3'>ユーザー名：<%= @form.name %></p>
     <p class='mb-3'>パスワード：*****</p>
+    <p class='mb-3'>お子様のお名前：<%= @form.child_name %></p>
+    <p class='mb-3'>お子様の学年：<%= t("enum.child.stage.#{@form.child_stage}") %></p>
     <p>利用規約とプライバシーポリシーに同意する</p>
 
     <div class='flex justify-around items-center mt-12'>

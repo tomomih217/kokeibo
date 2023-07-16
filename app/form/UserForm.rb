@@ -3,13 +3,15 @@ class UserForm
   include ActiveModel::Model
 
   # 属性を設定
-  attr_accessor :name, :password, :password_confirmation, :term_of_service
+  attr_accessor :name, :password, :password_confirmation, :child_name, :child_stage, :term_of_service
 
   # バリデーションを設定
   validates :name, presence: true, length: { maximum: 255 }
   validates :password, presence: true
   validates :password, confirmation: true # passwordとpassword_confirmationが同じか判定
   validates :password_confirmation, presence: true
+  validates :child_name, presence: true, length: { maximum: 255 }
+  validates :child_stage, presence: true
   validates :term_of_service, acceptance: true # term_of_serviceの値がtrueかどうかを判定
   
   # Userのpersisted?を委譲し、createかupdateかを判断
@@ -27,6 +29,7 @@ class UserForm
     return if invalid?
     
     user.update!(name: name, password: password, password_confirmation: password_confirmation)
+    Child.create(name: child_name, stage: child_stage, user: user)
   rescue ActiveRecord::RecordInvalid
     false
   end
