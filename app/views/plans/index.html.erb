@@ -1,10 +1,10 @@
 <h1 class='mb-5 text-3xl text-amber-dark text-center'>入金設定一覧</h1>
 
-<% if current_user.current_child.plans.empty? %>
+<% if @child.plans.empty? %>
   <div class='text-center'>
     <p class='text-amber-dark'>何もデータはありません</p>
     <div class='mt-3'>
-      <%= link_to '入金設定の新規登録', new_child_plan_path(current_user.current_child), class: 'px-3 py-2 bg-amber-vivid text-white rounded-md shadow-md hover:shadow-sm' %>
+      <%= link_to '入金設定の新規登録', new_child_plan_path(@child), class: 'px-3 py-2 bg-amber-vivid text-white rounded-md shadow-md hover:shadow-sm' %>
     </div>
   </div>
 <% else %>
@@ -31,6 +31,6 @@
     </tbody>
   </table>
   <div class='mt-5 text-center'>
-    <%= link_to '編集', child_plans_edit_path(current_user.current_child), class: 'px-3 py-2 bg-green-300 text-white rounded-md shadow-md hover:shadow-sm' %>
+    <%= link_to '編集', child_plans_edit_path(@child), class: 'px-3 py-2 bg-green-300 text-white rounded-md shadow-md hover:shadow-sm' %>
   </div>
 <% end %>
