@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   layout 'before_login_layout'
   skip_before_action :require_login, only: %i[new confirm create complete]
   skip_before_action :delete_session, only: %i[create]
+  skip_before_action :set_current_child
   after_action :delete_session, only: %i[create]
 
   def new
@@ -33,6 +34,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :password, :password_confirmation, :term_of_service)
+    params.require(:user).permit(:name, :password, :password_confirmation, :child_name, :child_stage, :term_of_service)
   end
 end

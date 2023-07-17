@@ -4,7 +4,7 @@ import Link from './Link';
 
 const Footer = () => {
   return (
-    <footer className='relative bottom-0 w-full'>
+    <footer className='w-full py-5 bg-gray-200'>
       <div className='w-4/5 m-auto'>
         <div className='flex justify-around'>
           <Link page='/privacypolicy'>
@@ -15,7 +15,7 @@ const Footer = () => {
           </Link>
           <Text size='sm' color='blue-500'>お問い合わせ</Text>
         </div>
-        <div className='text-center my-3'>
+        <div className='text-center'>
           <Text size='sm' color='amber-dark'>＠ Tomomi Hashimoto All Rights reserved.</Text>
         </div>
       </div>

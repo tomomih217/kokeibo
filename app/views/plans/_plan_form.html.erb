@@ -7,7 +7,7 @@
     </thead>
     <tbody>
       <%= form.fields_for :plans do |f| %>
-        <%= f.hidden_field :child_id, value: current_user.current_child.id %>
+        <%= f.hidden_field :child_id, value: @child.id %>
         <tr class='align-text-top'>
           <td class='text-center'><%= f.text_field :item, class: 'bg-white border-2 border-amber-dark rounded w-2/3 py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %></td>
           <td class='text-center'><%= f.number_field :amount, class: 'bg-white border-2 border-amber-dark rounded w-2/3 py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %>円</td>
