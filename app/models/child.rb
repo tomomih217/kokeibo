@@ -2,7 +2,7 @@ class Child < ApplicationRecord
   belongs_to :user
   has_many :plans, dependent: :destroy
   has_one :result
-  has_many :payments, dependent: :destroy
+  has_many :payment_collections, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 255 }
   validates :stage, presence: true
