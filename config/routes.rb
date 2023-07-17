@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     patch '/plans', to: 'plans#update'
     put '/plans', to: 'plans#update'
     get '/plans/edit', to: 'plans#edit'
+    resources :payments, shallow: true
   end
   resources :simulation, only: %i[new]
   namespace :simulation do

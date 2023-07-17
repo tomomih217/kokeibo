@@ -4,7 +4,7 @@
   <div class='w-2/3 rounded-lg border border-yellow-200 text-amber-dark bg-yellow-200 p-4 m-auto'>
     <div class='flex justify-between mb-3'>
       <h1 class='text-3xl text-amber-dark'><%= Date.today.year %>年<%= Date.today.month %>月</h1>
-      <%= link_to '入 金', '#', class: 'px-10 py-1 bg-amber-vivid text-white text-md text-align-center rounded-md shadow-md hover:shadow-sm' %>
+      <%= link_to '入 金', new_child_payment_path(@child.id), class: 'px-10 py-1 bg-amber-vivid text-white text-md text-align-center rounded-md shadow-md hover:shadow-sm' %>
     </div>
     <table class='w-full m-auto'>
       <tbody>
