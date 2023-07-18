@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_17_143919) do
+ActiveRecord::Schema.define(version: 2023_07_18_145526) do
 
   create_table "children", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -32,10 +32,8 @@ ActiveRecord::Schema.define(version: 2023_07_17_143919) do
   create_table "payments", charset: "utf8mb4", force: :cascade do |t|
     t.string "item", null: false
     t.integer "amount", null: false
-    t.bigint "child_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["child_id"], name: "index_payments_on_child_id"
   end
 
   create_table "plans", charset: "utf8mb4", force: :cascade do |t|
