@@ -10,7 +10,6 @@ class PaymentCollectionsController < ApplicationController
 
   def create
     @payment_collection = PaymentCollection.new(payment_collection_params)
-    binding.pry
     if @payment_collection.save
       redirect_to mypage_path(params[:child_id]), success: '入金しました'
     else
