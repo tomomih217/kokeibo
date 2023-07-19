@@ -23,9 +23,11 @@ class PaymentCollectionsController < ApplicationController
   end
 
   def edit
+    @payment_collection = PaymentCollection.find(params[:id])
   end
 
   def update
+    @payment_collection.update(update_payment_collection_params)
   end
 
   def destroy
@@ -37,7 +39,7 @@ class PaymentCollectionsController < ApplicationController
     params.require(:payment_collection).permit(
       :paymented_at,
       :child_id,
-      payments_attributes: [:id, :item, :amount]
+      payments_attributes: [:id, :item, :amount, :_destroy]
     )
   end
 end
