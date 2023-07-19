@@ -20,6 +20,7 @@
         </div>
       </div>
     <% end %>
+    <%= form.hidden_field :child_id, value: @child.id %>
     <%= form.submit '登録する', class: 'py-2 px-3 ml-5 rounded-3xl bg-green-300 shadow-md hover:shadow-sm transition-all outline-none text-white text-lg' %>
   <% end %>
 </div>

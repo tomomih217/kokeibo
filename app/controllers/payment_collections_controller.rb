@@ -5,16 +5,17 @@ class PaymentCollectionsController < ApplicationController
 
   def new
     @payment_collection = PaymentCollection.new
-    3.times { @payment_collection.payments.push(Payment.new) }
+    3.times.each { @payment_collection.payments.push(Payment.new) }
   end
 
   def create
-    @payment_collection = Child.find(params[:child_id]).payment_collections.build(payment_collection_params)
+    @payment_collection = PaymentCollection.new(payment_collection_params)
+    binding.pry
     if @payment_collection.save
       redirect_to mypage_path(params[:child_id]), success: '入金しました'
     else
       flash.now[:danger] = '入金に失敗しました'
-      render mypage_path(params[:child_id])
+      render :new
     end
   end
 
@@ -35,7 +36,8 @@ class PaymentCollectionsController < ApplicationController
   def payment_collection_params
     params.require(:payment_collection).permit(
       :paymented_at,
-      payment_attributes: [:item, :amount]
+      :child_id,
+      payments_attributes: [:id, :item, :amount]
     )
   end
 end
