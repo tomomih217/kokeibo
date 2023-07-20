@@ -30,5 +30,8 @@ module Kokeibo
       g.helper false #helper生成しない
       g.test_framework false #test生成しない
     end
+
+    # field_with_errorsタグを自動挿入しないように設定する
+    config.action_view.field_error_proc = Proc.new{|html_tag, instance| html_tag}
   end
 end

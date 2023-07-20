@@ -1,0 +1,32 @@
+<h1 class='text-3xl text-amber-dark text-center mb-5'>入金履歴</h1>
+
+<% if @payment_collections.present? %>
+
+  <% @payment_collections.each do |payment_collection| %>
+    <div class='mb-5'>
+      <div class='w-2/3 rounded-lg border border-amber-dark text-amber-dark p-4 m-auto'>
+        <div class='flex justify-between'>
+          <div class='text-xl'><%= payment_collection.decorate.format_paymented_at %></div>
+          <div>
+            <%= link_to '編集', edit_payment_collection_path(payment_collection.id), class: 'px-2 py-1 bg-green-300 text-white rounded-md shadow-md hover:shadow-sm' %>
+            <%= link_to '削除', payment_collection_path(payment_collection.id), method: :delete, data: { confirm: '本当に削除しますか?' }, class: 'px-2 py-1 mr-2 bg-red-500 text-white rounded-md shadow-md hover:shadow-sm' %>
+          </div>
+        </div>
+        
+        <div class='w-4/5 m-auto'>
+          <div class='text-2xl font-bold text-right mb-1'><%= payment_collection.decorate.total_amount %></div>
+          <ul>
+            <% payment_collection.payments.each do |payment| %>
+              <li class='flex justify-between'>
+                <div><%= payment.item %></div>
+                <div>¥<%= payment.amount.to_s(:delimited) %></div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p class='text-center text-amber-dark'>データはありません</div>
+<% end %>

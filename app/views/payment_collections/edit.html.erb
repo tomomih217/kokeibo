@@ -1,0 +1,4 @@
+<h1 class='text-3xl text-amber-dark text-center mb-5'>入金情報編集</h1>
+
+<%= render 'payment_form', payment_collection: @payment_collection, path: payment_collection_path(@payment_collection.id), child: @child %>
+<%= link_to '戻る', child_payment_collections_path(@child), class: 'px-2 py-1 ml-3 bg-gray-200 text-amber-dark rounded-md shadow-md hover:shadow-sm' %>

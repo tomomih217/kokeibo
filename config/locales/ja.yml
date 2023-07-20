@@ -10,6 +10,11 @@ ja:
         stage: 'ステージ'
       save_schedule:
         amount: '金額'
+      payment_collection:
+        paymented_at: '入金日'
+      payment:
+        item: '費目'
+        amount: '金額'
   enum:
     child:
       stage:

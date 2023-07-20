@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_11_145903) do
+ActiveRecord::Schema.define(version: 2023_07_18_145937) do
 
   create_table "children", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -19,6 +19,23 @@ ActiveRecord::Schema.define(version: 2023_07_11_145903) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_children_on_user_id"
+  end
+
+  create_table "payment_collections", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "child_id"
+    t.datetime "paymented_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["child_id"], name: "index_payment_collections_on_child_id"
+  end
+
+  create_table "payments", charset: "utf8mb4", force: :cascade do |t|
+    t.string "item", null: false
+    t.integer "amount", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "payment_collection_id", null: false
+    t.index ["payment_collection_id"], name: "index_payments_on_payment_collection_id"
   end
 
   create_table "plans", charset: "utf8mb4", force: :cascade do |t|
@@ -59,5 +76,6 @@ ActiveRecord::Schema.define(version: 2023_07_11_145903) do
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
   end
 
+  add_foreign_key "payments", "payment_collections"
   add_foreign_key "results", "children"
 end
