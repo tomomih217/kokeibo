@@ -5,17 +5,23 @@
       <%= form.date_field :paymented_at, class: 'bg-white border-2 border-amber-dark rounded py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %>
     </div>
     <%= form.fields_for :payments do |f| %>
-      <div class='flex justify-center mb-5'>
-        <div class='mr-5'>
-          <%= f.label :item %>
+      <div class='flex justify-center items-center mb-5'>
+        <div class='mr-5 flex items-center'>
+          <%= f.label :item, class: 'mr-2' %>
           <%= f.text_field :item, class: 'bg-white border-2 border-amber-dark rounded w-2/3 py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %>
         </div>
-        <div>
-          <%= f.label :amount %>
-          <span>
-            <%= f.text_field :amount, class: 'bg-white border-2 border-amber-dark rounded w-2/3 py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %>円
-          </span>
+        <div class='flex items-center'>
+          <%= f.label :amount, class: 'mr-2' %> 
+          <div class='flex items-center'>
+            <%= f.text_field :amount, class: 'bg-white border-2 border-amber-dark rounded w-2/3 py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %><span>円</span>
+          </div>
         </div>
+        <% unless current_page?(new_child_payment_collection_path(@child)) %>
+          <div class='flex items-center'>
+            <%= f.check_box :_destroy %>
+            <%= f.label :_destroy, '削除', class: 'ml-2' %>
+          </div>
+        <% end %>
       </div>
     <% end %>
     <%= form.hidden_field :child_id, value: child.id %>

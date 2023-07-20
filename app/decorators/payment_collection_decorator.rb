@@ -10,4 +10,11 @@ class PaymentCollectionDecorator < ApplicationDecorator
   #     end
   #   end
 
+  def format_paymented_at
+    "#{paymented_at.year}年#{paymented_at.month}月#{paymented_at.day}日"
+  end
+
+  def total_amount
+    "¥#{payments.pluck(:amount).sum.to_s(:delimited)}"
+  end
 end
