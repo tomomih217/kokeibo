@@ -3,6 +3,7 @@ class Child < ApplicationRecord
   has_many :plans, dependent: :destroy
   has_one :result
   has_many :payment_collections, dependent: :destroy
+  has_many :payments, through: :payment_collections
 
   validates :name, presence: true, length: { maximum: 255 }
   validates :stage, presence: true
@@ -28,4 +29,25 @@ class Child < ApplicationRecord
     high_2: 17,
     high_3: 18
   }
+
+  def age
+    Child.stages[stage]
+  end
+
+  def start_day
+    payment_collections.order(paymented_at: :asc).pluck(:paymented_at)[0]
+  end
+
+  def rest_duration
+    if start_day.month > 3
+      (12 - (start_day.month - 3)) + (18 - age) * 12
+    else
+      (12 - start_day.month + 9) + (18 - age) * 12
+    end
+  end
+
+  def estimated_amount
+    amount_per_month = plans.sum(:amount)
+    now_amount = payments.sum(:amount)
+  end
 end
