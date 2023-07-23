@@ -48,6 +48,13 @@ class Child < ApplicationRecord
 
   def estimated_amount
     amount_per_month = plans.sum(:amount)
-    now_amount = payments.sum(:amount)
+    t = Date.today.year * 12 + Date.today.month
+    s = start_day.year * 12 + start_day.month
+    duration = t - s
+    amount_per_month * duration
+  end
+
+  def diff_amount
+    payments.sum(:amount) - estimated_amount
   end
 end

@@ -30,7 +30,7 @@ const PieChart = ({ items, amounts }) => {
   };
 
   return (
-    <div>
+    <div id='savings_amount_pie_chart'>
       <Pie data={data} options={options} />
     </div>
   );

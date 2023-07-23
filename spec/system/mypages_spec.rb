@@ -1,16 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe "Mypage", type: :system do
-  describe 'dashboard' do
+  describe 'in dashboard' do
     let!(:user){ create(:user) }
     let!(:child){ create(:child, user: user) }
     context 'with child name' do
       before { login(user) }
       it 'can be displayed' do
         expect(page).to have_content child.name
+        expect(page).to have_content 'データはありません'
       end
     end
-    fcontext 'with plans' do
+    context 'with plans' do
       let!(:plan_1){ create(:plan, child: child) }
       let!(:plan_2){ create(:plan, child: child) }
       before { login(user) }
@@ -20,6 +21,19 @@ RSpec.describe "Mypage", type: :system do
         expect(page).to have_content plan_2.item
         expect(page).to have_content plan_2.amount.to_s(:delimited)
         expect(page).to have_link '入 金', href: '#'
+      end
+    end
+    context 'pie chart for savings amount with payment' do
+      let!(:payment_collection_1){ create(:payment_collection, child: child) }
+      let!(:payment_collection_2){ create(:payment_collection, child: child) }
+      let!(:payment_1){ create(:payment, :insurance, payment_collection: payment_collection_1) }
+      let!(:payment_2){ create(:payment, :investment, payment_collection: payment_collection_2) }
+      before { login(user) }
+      it 'can be displayed' do
+        expect(page).to have_selector '#savings_amount_pie_chart'
+        expect(page).to have_content child.payments.sum(:amount).to_s(:delimited)
+        expect(page).to have_content child.diff_amount.to_s(:delimited)
+        expect(page).to have_content child.estimated_amount.to_s(:delimited)
       end
     end
   end
