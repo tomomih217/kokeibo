@@ -1,0 +1,22 @@
+<div class='w-4/5 m-auto mt-5 p-3 border-amber-dark border-2 text-amber-dark rounded-lg'>
+  <div class='flex'>
+    <%= image_tag image, size: '100x100' %>
+    <div class='ml-5'>
+      <p><%= event %>時</p>
+      <div class='flex'>
+        <div class='mr-10'>
+          <p>必要な額：</p>
+          <p class='text-2xl'><%= child.result.each_stage_cost[event_sym].to_s(:delimited) %></p>
+        </div>
+        <div class='mr-10'>
+          <p>見込み積立額：</p>
+          <p class='text-2xl'><%= child.culculated_amount(age).to_s(:delimited) %></p>
+        </div>
+        <div>
+          <p>差額：</p>
+          <p class="text-<%= (child.culculated_amount(age) - child.result.each_stage_cost[event_sym]).negative? ? 'red-500' : 'green-500' %>"><%= '+' if (child.culculated_amount(age) - child.result.each_stage_cost[event_sym]).positive? %><%= (child.culculated_amount(age) - child.result.each_stage_cost[event_sym]).to_s(:delimited) %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

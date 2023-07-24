@@ -42,7 +42,7 @@ class Child < ApplicationRecord
     amount_per_month = plans.sum(:amount)
     t = Date.today.year * 12 + Date.today.month
     s = start_day.year * 12 + start_day.month
-    duration = t - s
+    duration = t - s + 1
     amount_per_month * duration
   end
 

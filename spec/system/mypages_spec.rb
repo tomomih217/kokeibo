@@ -20,7 +20,7 @@ RSpec.describe "Mypage", type: :system do
         expect(page).to have_content plan_1.amount.to_s(:delimited)
         expect(page).to have_content plan_2.item
         expect(page).to have_content plan_2.amount.to_s(:delimited)
-        expect(page).to have_link '入 金', href: '#'
+        expect(page).to have_link '入 金', href: new_child_payment_collection_path(child.id)
       end
     end
     context 'pie chart for savings amount with payment' do
@@ -34,6 +34,22 @@ RSpec.describe "Mypage", type: :system do
         expect(page).to have_content child.payments.sum(:amount).to_s(:delimited)
         expect(page).to have_content child.diff_amount.to_s(:delimited)
         expect(page).to have_content child.estimated_amount.to_s(:delimited)
+      end
+    end
+    context 'with difference between cost and savings' do
+      let!(:result){ create(:result, child: child) }
+      let!(:plan_1){ create(:plan, child: child) }
+      let!(:plan_2){ create(:plan, child: child) }
+      before { login(user) }
+      it 'can be displayed' do
+        expect(page).to have_content '高校入学時'
+        expect(page).to have_content child.result.each_stage_cost[:high_school_cost].to_s(:delimited)
+        expect(page).to have_content child.culculated_amount(15).to_s(:delimited)
+        expect(page).to have_content (child.result.each_stage_cost[:high_school_cost] - child.culculated_amount(15)).to_s(:delimited)
+        expect(page).to have_content '大学入学時'
+        expect(page).to have_content child.result.each_stage_cost[:university_cost].to_s(:delimited)
+        expect(page).to have_content child.culculated_amount(18).to_s(:delimited)
+        expect(page).to have_content (child.result.each_stage_cost[:university_cost] - child.culculated_amount(18)).to_s(:delimited)
       end
     end
   end
