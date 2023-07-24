@@ -52,5 +52,20 @@ RSpec.describe "Mypage", type: :system do
         expect(page).to have_content (child.result.each_stage_cost[:university_cost] - child.culculated_amount(18)).to_s(:delimited)
       end
     end
+    context 'with payed amount in this month' do
+      let!(:plan_1){ create(:plan, amount: 10000, child: child) }
+      let!(:plan_2){ create(:plan, amount: 20000, child: child) }
+      let!(:payment_collection_1){ create(:payment_collection, paymented_at: Date.today, child: child) }
+      let!(:payment_1){ create(:payment, item: plan_1.item, amount: plan_1.amount, payment_collection: payment_collection_1) }
+      let!(:payment_collection_2){ create(:payment_collection, paymented_at: Date.today + 1.month, child: child) }
+      let!(:payment_2){ create(:payment, item: plan_2.item, amount: plan_2.amount, payment_collection: payment_collection_2) }
+      before { login(user) }
+      it 'can be displayed checkmark' do
+        expect(page).to have_content plan_1.item
+        expect(page).to have_content plan_1.amount.to_s(:delimited)
+        expect(page).to have_selector "#check_for_#{plan_1.id}"
+        expect(page).to have_no_selector "#check_for_#{plan_2.id}"
+      end
+    end
   end
 end
