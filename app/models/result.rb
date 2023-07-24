@@ -73,4 +73,17 @@ class Result < ApplicationRecord
     cost_datas
   end
 
+  def each_stage_cost
+    result_hash = {}
+    datas = Result.json_cost_datas
+    cost_hash = cost_datas_hash
+
+    high_school_cost = cost_hash[:nursery_school] + cost_hash[:kindergarten] + cost_hash[:primary_school] + cost_hash[:junior_high_school] + 350000
+    result_hash[:high_school_cost] = high_school_cost
+    
+    university_entry_cost = { publicArts: 672000, publicScience: 672000, privateArts: 818000, privateScience: 888000 }
+    university_cost = high_school_cost + cost_hash[:high_school] + university_entry_cost[university.to_sym]
+    result_hash[:university_cost] = university_cost
+    result_hash
+  end
 end
