@@ -13,7 +13,11 @@
             <tr>
               <td class='w-1/3 text-amber-dark text-left pb-2'><%= plan.item %></td>
               <td class='w-1/3 text-amber-dark text-center pb-2'><%= plan.amount.to_s(:delimited) %>円</td>
-              <td class='w-1/3 text-amber-dark text-right pb-2'><%= plan.payment_day %>日入金予定</td>
+              <% if Payment.joins(:payment_collection).where(payment_collection: {paymented_at: Date.today.all_month, child_id: @child.id}).find_by(item: plan.item) %>
+                <td><%= image_tag 'check.png', size: '25x25', class: 'm-auto', id: "check_for_#{plan.id}" %></td>
+              <% else %>
+                <td class='w-1/3 text-amber-dark text-right pb-2'><%= plan.payment_day %>日入金予定</td>
+              <% end %>
             </tr>
           <% end %>
         </tbody>
