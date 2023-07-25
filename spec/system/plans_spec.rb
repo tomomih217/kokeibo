@@ -10,7 +10,7 @@ RSpec.describe "Plans", type: :system do
         visit child_plans_path(child.id)
       end
       it 'is successful' do
-        expect(page).to have_content '積立設定一覧'
+        expect(page).to have_content '積立情報設定一覧'
       end
     end
     context 'with registered plan' do
@@ -20,7 +20,7 @@ RSpec.describe "Plans", type: :system do
         visit child_plans_path(child.id)
       end
       it 'can be displayed' do
-        expect(page).to have_content '積立設定一覧'
+        expect(page).to have_content '積立情報設定一覧'
         expect(page).to have_content plan.item
         expect(page).to have_content plan.amount.to_s(:delimited)
       end
@@ -45,7 +45,7 @@ RSpec.describe "Plans", type: :system do
         click_on '登録する'
       end
       it 'is successful' do
-        expect(page).to have_content '積立設定しました'
+        expect(page).to have_content '積立情報設定しました'
         expect(current_path).to eq child_plans_path(child.id)
       end
     end
@@ -61,7 +61,7 @@ RSpec.describe "Plans", type: :system do
       end
       it 'is failed' do
         expect(page).to have_content '入力項目を確認してください'
-        expect(page).to have_content '積立設定登録'
+        expect(page).to have_content '積立情報設定登録'
       end
     end
     context 'without amount' do
@@ -76,7 +76,7 @@ RSpec.describe "Plans", type: :system do
       end
       it 'is failed' do
         expect(page).to have_content '入力項目を確認してください'
-        expect(page).to have_content '積立設定登録'
+        expect(page).to have_content '積立情報設定登録'
       end
     end
     context 'without checking auto payment status' do
@@ -90,7 +90,7 @@ RSpec.describe "Plans", type: :system do
         click_on '登録する'
       end
       it 'is successful' do
-        expect(page).to have_content '積立設定しました'
+        expect(page).to have_content '積立情報設定しました'
         expect(current_path).to eq child_plans_path(child.id)
       end
     end
@@ -114,7 +114,7 @@ RSpec.describe "Plans", type: :system do
         click_on '登録する'
       end
       it 'is successful' do
-        expect(page).to have_content '積立設定しました'
+        expect(page).to have_content '積立情報設定しました'
         expect(current_path).to eq child_plans_path(child.id)
       end
     end
@@ -140,7 +140,7 @@ RSpec.describe "Plans", type: :system do
       end
       it 'is failed' do
         expect(page).to have_content '入力項目を確認してください'
-        expect(page).to have_content '積立設定登録'
+        expect(page).to have_content '積立情報設定登録'
       end
     end
   end
@@ -160,7 +160,7 @@ RSpec.describe "Plans", type: :system do
         click_on '登録する'
       end
       it 'is successful' do
-        expect(page).to have_content '積立設定を編集しました'
+        expect(page).to have_content '積立情報設定を編集しました'
         expect(current_path).to eq child_plans_path(child.id)
         expect(page).to have_content plan.item
         expect(page).to have_content add_plan.item
@@ -172,7 +172,7 @@ RSpec.describe "Plans", type: :system do
         click_on '登録する'
       end
       it 'is successful' do
-        expect(page).to have_content '積立設定を編集しました'
+        expect(page).to have_content '積立情報設定を編集しました'
         expect(page).to have_content add_plan.item
         expect(page).to have_no_content plan.item
         expect(page).to have_content plan.amount.to_s(:delimited)
@@ -201,7 +201,7 @@ RSpec.describe "Plans", type: :system do
         find("#delete_button_for_plan_#{delete_plan.id}").click
       end
       it 'is successful' do
-        expect(page).to have_content '積立設定を削除しました'
+        expect(page).to have_content '積立情報設定を削除しました'
         expect(page).to have_no_content delete_plan.item
       end
     end
@@ -211,7 +211,7 @@ RSpec.describe "Plans", type: :system do
         find("#delete_button_for_plan_#{plan.id}").click
       end
       it 'is successful' do
-        expect(page).to have_content '積立設定を削除しました'
+        expect(page).to have_content '積立情報設定を削除しました'
         expect(page).to have_no_content plan.item
         expect(page).to have_content '何もデータはありません'
       end

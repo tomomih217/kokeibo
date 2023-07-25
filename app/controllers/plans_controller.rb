@@ -11,7 +11,7 @@ class PlansController < ApplicationController
   def create
     @form = PlanForm.new(plan_form_params)
     if @form.save
-      redirect_to child_plans_path, success: '入金設定しました'
+      redirect_to child_plans_path, success: '積立情報設定しました'
     else
       flash.now[:danger] = '入力項目を確認してください'
       render :new
@@ -30,7 +30,7 @@ class PlansController < ApplicationController
       plan_ids.each do |id|
         Plan.destroy(id)
       end
-      redirect_to child_plans_path, success: '入金設定を編集しました'
+      redirect_to child_plans_path, success: '積立情報設定を編集しました'
     else
       flash.now[:danger] = '入力項目を確認してください'
       render :edit
@@ -40,7 +40,7 @@ class PlansController < ApplicationController
   def destroy
     plan = current_user.current_child.plans.find(params[:id])
     plan.destroy!
-    redirect_to child_plans_path(current_user.current_child), success: '入金設定を削除しました'
+    redirect_to child_plans_path(current_user.current_child), success: '積立情報設定を削除しました'
   end
 
   private
