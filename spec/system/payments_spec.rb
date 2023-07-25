@@ -106,6 +106,16 @@ RSpec.describe "Payments", type: :system do
         expect(page).to have_content '入金に失敗しました'
       end
     end
+    fcontext 'form with registered plans' do
+      let!(plan_1){ create(:plan, item: '保険', amount: 20000, child: child) }
+      let!(plan_2){ create(:plan, item: '投資', amount: 10000, child: child) }
+      it 'can be displayed' do
+        expect(page).to have_content plan_1.item
+        expect(page).to have_content plan_1.amount
+        expect(page).to have_content plan_2.item
+        expect(page).to have_content plan_2.amount
+      end
+    end
   end
 
   describe 'update' do
