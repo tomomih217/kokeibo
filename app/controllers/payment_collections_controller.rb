@@ -5,8 +5,8 @@ class PaymentCollectionsController < ApplicationController
   end
 
   def new
-    @payment_collection = PaymentCollection.new
-    3.times.each { @payment_collection.payments.push(Payment.new) }
+    @payment_collection = PaymentCollection.new(paymented_at: Date.today)
+    @payment_collection.get_payments_with_plans(@child)
   end
 
   def create

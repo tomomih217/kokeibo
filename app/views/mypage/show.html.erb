@@ -58,7 +58,10 @@
       </div>
     </div>
   <% else %>
-    <p class='text-center text-amber-dark'>データはありません</p>
+    <div class='text-center'>
+      <p class='text-center text-amber-dark mb-3'>データはありません</p>
+      <%= link_to '積立情報設定の新規登録', new_child_plan_path(@child), class: 'px-3 py-2 bg-amber-vivid text-white rounded-md shadow-md hover:shadow-sm' unless @child.plans.present? %>
+    </div>
   <% end %>
   <% if @child.result.present? %>
       <div class='mb-10'>

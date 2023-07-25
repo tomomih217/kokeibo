@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe "Payments", type: :system do
   let!(:user){ create(:user) }
   let!(:child){ create(:child, user: user) }
+  let!(:plan_1){ create(:plan, item: '保険', amount: 20000, child: child) }
+  let!(:plan_2){ create(:plan, item: '投資', amount: 10000, child: child) }
   before { login(user) }
   describe 'index' do
     let!(:payment_collection){ create(:payment_collection, child: child) }
@@ -74,6 +76,8 @@ RSpec.describe "Payments", type: :system do
 
         fill_in 'payment_collection[payments_attributes][0][item]', with: payment_1.item
         fill_in 'payment_collection[payments_attributes][0][amount]', with: payment_1.amount
+        fill_in 'payment_collection[payments_attributes][1][item]', with: ''
+        fill_in 'payment_collection[payments_attributes][1][amount]', with: ''
         click_on '登録する'
       end
       it 'is successful' do
@@ -85,7 +89,7 @@ RSpec.describe "Payments", type: :system do
         fill_in 'payment_collection[paymented_at]', with: Date.today
 
         # 費目を入力しません
-        # fill_in 'payment_collection[payments_attributes][0][item]', with: payment_1.item
+        fill_in 'payment_collection[payments_attributes][0][item]', with: ''
         fill_in 'payment_collection[payments_attributes][0][amount]', with: payment_1.amount
         click_on '登録する'
       end
@@ -99,11 +103,24 @@ RSpec.describe "Payments", type: :system do
 
         fill_in 'payment_collection[payments_attributes][0][item]', with: payment_1.item
         # 金額を入力しない
-        # fill_in 'payment_collection[payments_attributes][0][amount]', with: payment_1.amount
+        fill_in 'payment_collection[payments_attributes][0][amount]', with: ''
         click_on '登録する'
       end
       it 'is failed' do
         expect(page).to have_content '入金に失敗しました'
+      end
+    end
+    context 'form with registered plans' do
+      before do
+        fill_in 'payment_collection[paymented_at]', with: Date.today
+      end
+      it 'can be displayed' do
+        expect(page).to have_field 'payment_collection[payments_attributes][0][item]', with: plan_1.item
+        expect(page).to have_field 'payment_collection[payments_attributes][0][amount]', with:  plan_1.amount
+        expect(page).to have_field 'payment_collection[payments_attributes][1][item]', with: plan_2.item
+        expect(page).to have_field 'payment_collection[payments_attributes][1][amount]', with: plan_2.amount
+        expect(page).to have_field 'payment_collection[payments_attributes][2][item]', with: ''
+        expect(page).to have_field 'payment_collection[payments_attributes][2][amount]', with: ''
       end
     end
   end

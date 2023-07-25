@@ -6,4 +6,13 @@ class PaymentCollection < ApplicationRecord
   validates :paymented_at, presence: true
 
   scope :by_recently_paymented_at, -> { order(paymented_at: :desc) }
+
+  def get_payments_with_plans(child)
+    3.times.each { payments.push(Payment.new) }
+    plans = child.plans
+    plans.each_with_index do |plan, idx|
+      payments[idx].item = plan.item
+      payments[idx].amount = plan.amount
+    end
+  end
 end
