@@ -17,12 +17,10 @@ Rails.application.routes.draw do
     put '/plans', to: 'plans#update'
     get '/plans/edit', to: 'plans#edit'
     resources :payment_collections, only: %i[index new create edit update destroy], shallow: true
+    resources :simulation, only: %i[new edit]
+    post 'result', to: 'simulation#result'
+    resources :results, only: %i[show create update], shallow: true
   end
-  resources :simulation, only: %i[new]
-  namespace :simulation do
-    post 'result'
-  end
-  resources :results, only: %i[create update]
 
   get '/login', to: 'user_sessions#new'
   post '/login', to: 'user_sessions#create'
