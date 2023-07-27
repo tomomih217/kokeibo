@@ -17,9 +17,9 @@ Rails.application.routes.draw do
     put '/plans', to: 'plans#update'
     get '/plans/edit', to: 'plans#edit'
     resources :payment_collections, only: %i[index new create edit update destroy], shallow: true
-    resources :simulation, only: %i[new edit]
+    resources :simulation, only: %i[new edit], shallow: true
     post 'result', to: 'simulation#result'
-    resources :results, only: %i[show create update], shallow: true
+    resources :results, only: %i[index create update], shallow: true
   end
 
   get '/login', to: 'user_sessions#new'

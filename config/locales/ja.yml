@@ -15,6 +15,20 @@ ja:
       payment:
         item: '費目'
         amount: '金額'
+      result:
+        age: '年齢'
+        nursery_school: '保育園'
+        kindergarten: '幼稚園'
+        primary_school: '小学校'
+        junior_high_school: '中学校'
+        high_school: '高校'
+        university: '大学'
+        living_alone_funds: '仕送り金額'
+    errors:
+      models:
+        result:
+          greater_than_or_equal_to: 'を選択してください'
+          blank: 'を選択してください'
   enum:
     child:
       stage:

@@ -1,20 +1,28 @@
 class Result < ApplicationRecord
   belongs_to :child
 
-  validates :age, presence: true
+  validates :age, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :nursery_school, presence: true
   validates :kindergarten, presence: true
   validates :primary_school, presence: true
   validates :junior_high_school, presence: true
   validates :high_school, presence: true
   validates :university, presence: true
-  validates :living_alone_funds, presence: true
+  validates :living_alone_funds, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   def self.params_format(result_params)
     age = result_params[:age]
-    age == '出産前' ? result_params[:age] = 0 : result_params[:age] = age.to_i
+    if age == '選択してください'
+      result_params[:age] = -1
+    else
+      age == '出産前' ? result_params[:age] = 0 : result_params[:age] = age.to_i
+    end
     living_alone_funds = result_params[:living_alone_funds]
-    living_alone_funds == '仕送りの予定はない' ? result_params[:living_alone_funds] = 0 : result_params[:living_alone_funds] = living_alone_funds.delete(',').to_i
+    if living_alone_funds == '選択してください'
+      result_params[:living_alone_funds] = -1
+    else
+      living_alone_funds == '仕送りの予定はない' ? result_params[:living_alone_funds] = 0 : result_params[:living_alone_funds] = living_alone_funds.delete(',').to_i
+    end
 
     result_params
   end

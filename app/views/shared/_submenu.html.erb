@@ -9,8 +9,8 @@
     <%= link_to child_plans_path(@child) do %>
       <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(child_plans_path(@child)) || current_page?(new_child_plan_path(@child)) %>">積立情報設定</li>
     <% end %>
-    <%= link_to result_path(@child.result) do %>
-      <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(result_path(@child.result)) %>">希望進路</li>
+    <%= link_to child_results_path(@child) do %>
+      <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(child_results_path(@child)) %>">希望進路</li>
     <% end %>
     <!-- li class='mb-3'>お子様情報追加</li>
     <li class='mb-3'>パートナー追加</li>

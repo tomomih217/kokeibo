@@ -1,6 +1,6 @@
 class ResultsController < ApplicationController
   layout 'after_login_layout'
-  def show
+  def index
     @result = @child.result
   end
 

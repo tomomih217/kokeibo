@@ -1,0 +1,23 @@
+<h1 class='text-3xl text-amber-dark text-center mb-5'>希望進路</h1>
+<% if @result.present? %>
+  <div class='w-2/3 rounded-lg border border-yellow-200 bg-yellow-100 text-amber-dark p-4 m-auto'>
+    <ul>
+      <li class='mb-5'>積立開始年齢： <%= @result.age %>才</li>
+      <li>保育園： <%= @result.nursery_school %></li>
+      <li>幼稚園： <%= @result.kindergarten %></li>
+      <li>小学校： <%= @result.primary_school %></li>
+      <li>中学校： <%= @result.junior_high_school %></li>
+      <li>高校： <%= @result.high_school %></li>
+      <li>大学： <%= @result.university %></li>
+      <li>一人暮らしの仕送り： <%= @result.living_alone_funds.to_s(:delimited) %>円</li>
+    </ul>
+  </div>
+  <div class='mt-5 text-center'>
+    <%= link_to '希望進路の変更', edit_simulation_path(@child.result.id), class: 'px-3 py-2 bg-amber-vivid text-white rounded-md shadow-md hover:shadow-sm' %>
+  </div>
+<% else %>
+  <p>データはありません</p>
+  <div class='mt-5 text-center'>
+    <%= link_to '希望進路の登録', new_child_simulation_path(@child), class: 'px-3 py-2 bg-amber-vivid text-white rounded-md shadow-md hover:shadow-sm' %>
+  </div>
+<% end %>
