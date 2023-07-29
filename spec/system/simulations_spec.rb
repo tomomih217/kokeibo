@@ -52,18 +52,18 @@ RSpec.describe "Simulations", type: :system do
         expect(page).to have_link '希望進路の登録', href: new_child_simulation_path(child)
       end
     end
-    context 'with registerd result' do
+    fcontext 'with registerd result' do
       let!(:result){ create(:result, child: child) }
       before { visit child_results_path(child) }
       it 'has button to link to simulation#edit' do
         expect(page).to have_content result.age
-        expect(page).to have_content result.nursery_school
-        expect(page).to have_content result.kindergarten
-        expect(page).to have_content result.primary_school
-        expect(page).to have_content result.junior_high_school
-        expect(page).to have_content result.high_school
-        expect(page).to have_content result.university
-        expect(page).to have_content result.living_alone_funds
+        expect(page).to have_content '保育園: 私立'
+        expect(page).to have_content '幼稚園: 私立'
+        expect(page).to have_content '小学校: 公立'
+        expect(page).to have_content '中学校: 公立'
+        expect(page).to have_content '高校: 私立'
+        expect(page).to have_content '大学: 私立理系'
+        expect(page).to have_content (result.living_alone_funds * 10000).to_s(:delimited)
         expect(page).to have_link '希望進路の変更'
       end
     end
@@ -194,5 +194,8 @@ RSpec.describe "Simulations", type: :system do
         expect(page).to have_content '仕送り金額を選択してください'
       end
     end
+  end
+
+  describe 'edit' do
   end
 end

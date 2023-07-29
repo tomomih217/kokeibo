@@ -1,19 +1,50 @@
 <h1 class='text-3xl text-amber-dark text-center mb-5'>希望進路</h1>
 <% if @result.present? %>
-  <div class='w-2/3 rounded-lg border border-yellow-200 bg-yellow-100 text-amber-dark p-4 m-auto'>
-    <ul>
-      <li class='mb-5'>積立開始年齢： <%= @result.age %>才</li>
-      <li>保育園： <%= @result.nursery_school %></li>
-      <li>幼稚園： <%= @result.kindergarten %></li>
-      <li>小学校： <%= @result.primary_school %></li>
-      <li>中学校： <%= @result.junior_high_school %></li>
-      <li>高校： <%= @result.high_school %></li>
-      <li>大学： <%= @result.university %></li>
-      <li>一人暮らしの仕送り： <%= @result.living_alone_funds.to_s(:delimited) %>円</li>
-    </ul>
+  <div class='w-2/3 rounded-lg border border-yellow-200 bg-yellow-100 text-amber-dark p-10 m-auto'>
+    <div class='mb-10 flex justify-between items-center'>
+      <span>必要な教育資金</span>
+      <h1 class='text-3xl text-green-300'><%= @result.decorate.format_total_cost %><span class='text-sm'>円</span></h1>
+    </div>
+    <div>
+      <div class='mb-5'>積立開始年齢： <%= @result.age %>才</div>
+      <% Result.school_types.each do |school_type| %>
+        <div class='mb-5'>
+          <div class='flex justify-between'>
+            <div><%= t(Result.human_attribute_name(school_type.to_sym)) %>: <%= @result.decorate.translated_school_type(school_type)%></div>
+            <div class='text-xl'>約<%= @cost_datas[school_type.to_sym].to_s(:delimited) %><span class='text-sm'>円</span></div>
+          </div>
+          <hr>
+          <div class='text-right'>
+            <% Result.age_range[school_type.to_sym].each do |age| %>
+              <p><%= @result.decorate.formated_age(age) %>   <%= @cost_by_ages[age.to_sym].to_s(:delimited) %><span class='text-xs'>円</span></p>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <div class='mb-5'>
+        <div class='flex justify-between'>
+          <span>一人暮らしの仕送り:</span>
+          <span class='text-xl'>約<%= @cost_datas[:living_alone_funds].to_s(:delimited) %><span class='text-sm'>円</span></span>
+        </div>
+        <hr>
+        <div class='text-right'>
+          <% if @result.living_alone_funds.zero? %>
+            <p>仕送りの予定はない</p>
+          <% else %>
+            <p>初期費用: 約<%= @cost_by_ages[:living_alone_initialize].to_s(:delimited) %><span class='text-xs'>円</span></p>
+            <p>月々: <%= (@result.living_alone_funds * 10000).to_s(:delimited) %><span class='text-xs'>円</span></p>
+            <p>(12ヶ月×4年間: <%= @cost_by_ages[:living_alone_funds].to_s(:delimited) %>)<span class='text-xs'>円</span></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
   <div class='mt-5 text-center'>
     <%= link_to '希望進路の変更', edit_simulation_path(@child.result.id), class: 'px-3 py-2 bg-amber-vivid text-white rounded-md shadow-md hover:shadow-sm' %>
+  </div>
+  <div class='w-2/3 text-amber-dark text-xs m-auto my-10'>
+    <p>※学校教育費・給食費・学校外活動費を含みます</p>
+    <p>参照：『平成30年度子供の学習費調査の結果について（文部科学省より・令和元年１２月発行）』,『令和３年度「教育費負担の実態調査結果」（日本政策金融公庫より・令和３年１２月発行）』 </p>
   </div>
 <% else %>
   <p>データはありません</p>

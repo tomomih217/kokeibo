@@ -2,6 +2,8 @@ class ResultsController < ApplicationController
   layout 'after_login_layout'
   def index
     @result = @child.result
+    @cost_datas = @result.cost_datas_hash
+    @cost_by_ages = @result.cost_datas_by_age
   end
 
   def create
@@ -15,11 +17,12 @@ class ResultsController < ApplicationController
   end
 
   def update
-    @result = @child.result.find(params[:id])
+    @result = @child.result
     if @result.update(result_params)
       redirect_to mypage_path, success: '希望進路を編集しました'
     else
-      flash.now[:danger] = '登録に失敗しました'
+      flash.now[:danger] = '編集に失敗しました'
+      render edit_simulation_path(@result)
     end
   end
 

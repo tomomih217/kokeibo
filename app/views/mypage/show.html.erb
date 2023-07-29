@@ -34,11 +34,12 @@
       </div>
       <div class='w-1/2 text-center text-amber-dark bg-yellow-100 rounded-lg'>
         <div>
-          <p class='mt-5 text-4xl'><%= @savings_datas.values.sum.to_s(:delimited) %></p>
-          <p class='text-sm'>積立予定額：　<%= @child.estimated_amount.to_s(:delimited) %></p>
+          <p class='mt-5'>積立額</p>
+          <p class='text-4xl'><%= @savings_datas.values.sum.to_s(:delimited) %></p>
+          <p class='text-sm mt-3'>積立予定額：　<%= @child.estimated_amount.to_s(:delimited) %></p>
+          <p class="text-xl text-<%= @child.diff_amount.negative? ? 'red-500' : 'green-500' %>">(<%= '+' if @child.diff_amount.positive? %><%= @child.diff_amount.to_s(:delimited) %>)</p>
         </div>
         <div class='mt-10'>
-          <p class="text-3xl text-<%= @child.diff_amount.negative? ? 'red-500' : 'green-500' %>"><%= '+' if @child.diff_amount.positive? %><%= @child.diff_amount.to_s(:delimited) %></p>
           <div>
             <% if @child.diff_amount.negative? && @child.diff_amount < -100000 %>
               <p>計画の見直しを検討してください。</p>

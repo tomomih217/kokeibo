@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :payment_collections, only: %i[index new create edit update destroy], shallow: true
     resources :simulation, only: %i[new edit], shallow: true
     post 'result', to: 'simulation#result'
+    patch 'result', to: 'simulation#result'
     resources :results, only: %i[index create update], shallow: true
   end
 
