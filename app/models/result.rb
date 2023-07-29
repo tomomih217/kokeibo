@@ -1,20 +1,28 @@
 class Result < ApplicationRecord
   belongs_to :child
 
-  validates :age, presence: true
+  validates :age, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :nursery_school, presence: true
   validates :kindergarten, presence: true
   validates :primary_school, presence: true
   validates :junior_high_school, presence: true
   validates :high_school, presence: true
   validates :university, presence: true
-  validates :living_alone_funds, presence: true
+  validates :living_alone_funds, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   def self.params_format(result_params)
     age = result_params[:age]
-    age == '出産前' ? result_params[:age] = 0 : result_params[:age] = age.to_i
+    if age == '選択してください'
+      result_params[:age] = -1
+    else
+      age == '出産前' ? result_params[:age] = 0 : result_params[:age] = age.to_i
+    end
     living_alone_funds = result_params[:living_alone_funds]
-    living_alone_funds == '仕送りの予定はない' ? result_params[:living_alone_funds] = 0 : result_params[:living_alone_funds] = living_alone_funds.delete(',').to_i
+    if living_alone_funds == '選択してください'
+      result_params[:living_alone_funds] = -1
+    else
+      living_alone_funds == '仕送りの予定はない' ? result_params[:living_alone_funds] = 0 : result_params[:living_alone_funds] = living_alone_funds.delete(',').to_i
+    end
 
     result_params
   end
@@ -25,6 +33,28 @@ class Result < ApplicationRecord
     File.open('./public/education_cost.json') do |file|
       cost_datas = JSON.load(file)
     end
+  end
+
+  def self.school_types
+    schoolTypes = [
+      'nursery_school',
+      'kindergarten',
+      'primary_school',
+      'junior_high_school',
+      'high_school',
+      'university'
+    ]
+  end
+
+  def self.age_range
+    ageRange = {
+      nursery_school: ["age1", "age2"],
+      kindergarten: ["age3", "age4", "age5"],
+      primary_school: ["age6", "age7", "age8", "age9", "age10", "age11"],
+      junior_high_school: ["age12", "age13", "age14"],
+      high_school: ["age15", "age16", "age17"],
+      university: ["age18", "age19", "age20", "age21"]
+    }
   end
 
   def duration
@@ -50,14 +80,7 @@ class Result < ApplicationRecord
       'highSchool',
       'university'
     ]
-    ageRange = {
-      nursery_school: ["age1", "age2"],
-      kindergarten: ["age3", "age4", "age5"],
-      primary_school: ["age6", "age7", "age8", "age9", "age10", "age11"],
-      junior_high_school: ["age12", "age13", "age14"],
-      high_school: ["age15", "age16", "age17"],
-      university: ["age18", "age19", "age20", "age21"]
-    }
+    ageRange = Result.age_range
 
     schoolTypes.each do |schoolType|
       total = 0
@@ -72,6 +95,32 @@ class Result < ApplicationRecord
     cost_datas[:living_alone_funds] = living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize'] + living_alone_funds * 10000 * 12 * 4
     cost_datas
   end
+
+  def cost_datas_by_age
+    json_datas = Result.json_cost_datas
+    cost_datas = {}
+    schoolTypes = [
+      'nurserySchool',
+      'kindergarten',
+      'primarySchool',
+      'juniorHighSchool',
+      'highSchool',
+      'university'
+    ]
+    ageRange = Result.age_range
+
+    schoolTypes.each do |schoolType|
+      school_type = schoolType.underscore.to_sym
+      ageRange[school_type].each do |age|
+        data = json_datas[schoolType][send(school_type)][age]
+        cost_datas[age.to_sym] = data
+      end
+    end
+    cost_datas[:living_alone_initialize] = living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize']
+    cost_datas[:living_alone_funds] = living_alone_funds * 10000 * 12 * 4
+    cost_datas
+  end
+
 
   def each_stage_cost
     result_hash = {}

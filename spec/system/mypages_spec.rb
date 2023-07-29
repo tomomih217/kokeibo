@@ -9,6 +9,8 @@ RSpec.describe "Mypage", type: :system do
       it 'can be displayed' do
         expect(page).to have_content child.name
         expect(page).to have_content 'データはありません'
+        expect(page).to have_link '積立情報設定の新規登録', href: new_child_plan_path(child)
+        expect(page).to have_link '希望進路を登録する'
       end
     end
     context 'with plans' do
@@ -21,6 +23,7 @@ RSpec.describe "Mypage", type: :system do
         expect(page).to have_content plan_2.item
         expect(page).to have_content plan_2.amount.to_s(:delimited)
         expect(page).to have_link '入 金', href: new_child_payment_collection_path(child.id)
+        expect(page).to have_no_link '積立情報設定の新規登録'
       end
     end
     context 'pie chart for savings amount with payment' do
@@ -42,6 +45,7 @@ RSpec.describe "Mypage", type: :system do
       let!(:plan_2){ create(:plan, child: child) }
       before { login(user) }
       it 'can be displayed' do
+        expect(page).to have_no_link '希望進路を登録する'
         expect(page).to have_content '高校入学時'
         expect(page).to have_content child.result.each_stage_cost[:high_school_cost].to_s(:delimited)
         expect(page).to have_content child.culculated_amount(15).to_s(:delimited)

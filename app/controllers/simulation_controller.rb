@@ -14,6 +14,10 @@ class SimulationController < ApplicationController
     end
   end
 
+  def edit
+    @result = @child.result
+  end
+
   private
 
   def result_params

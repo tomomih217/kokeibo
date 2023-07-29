@@ -7,7 +7,7 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <% if current_page?(new_simulation_path) %>
+    <% if current_page?(new_child_simulation_path(@child)) %>
       <meta name="turbolinks-visit-control" content="reload">
     <% end %>
   </head>

@@ -22,20 +22,36 @@
     </p>
   </div>
 
-  <!--  >
-  <div class='mt-5'>
-    <%= form_with model:@result, local:true do |f| %>
-      <%= f.hidden_field :age, value: @result.age %>
-      <%= f.hidden_field :nursery_school, value: @result.nursery_school%>
-      <%= f.hidden_field :kindergarten, value: @result.kindergarten %>
-      <%= f.hidden_field :primary_school, value: @result.primary_school %>
-      <%= f.hidden_field :junior_high_school, value: @result.junior_high_school %>
-      <%= f.hidden_field :high_school, value: @result.high_school %>
-      <%= f.hidden_field :university, value: @result.university %>
-      <%= f.hidden_field :living_alone_funds, value: @result.living_alone_funds %>
-      <%= f.submit '登録する', class: 'px-3 py-2 rounded-md bg-green-300 text-white shadow-md' %>
-    <% end %>
-  </div>
-  <-->
-  <%= link_to '戻る', new_save_schedule_path, class: 'px-3 py-2 rounded-pill bg-gray-200 text-amber-dark shadow-md hover:shadow-sm' %>
+  <% if @child.result.present? %>
+    <div class='mt-5'>
+      <%= form_with model: @result, url: result_path(@child.result), method: :patch, local: true do |f| %>
+        <%= f.hidden_field :age, value: @result.age %>
+        <%= f.hidden_field :nursery_school, value: @result.nursery_school%>
+        <%= f.hidden_field :kindergarten, value: @result.kindergarten %>
+        <%= f.hidden_field :primary_school, value: @result.primary_school %>
+        <%= f.hidden_field :junior_high_school, value: @result.junior_high_school %>
+        <%= f.hidden_field :high_school, value: @result.high_school %>
+        <%= f.hidden_field :university, value: @result.university %>
+        <%= f.hidden_field :living_alone_funds, value: @result.living_alone_funds %>
+        <%= f.submit '編集する', class: 'px-3 py-2 rounded-md bg-green-300 text-white shadow-md' %>
+      <% end %>
+    </div>
+    <%= link_to '戻る', edit_simulation_path(@child.result), class: 'px-3 py-2 rounded-pill bg-gray-200 text-amber-dark shadow-md hover:shadow-sm' %>
+  <% else %>
+     <div class='mt-5'>
+      <%= form_with model: @result, url: child_results_path(@child), local: true do |f| %>
+        <%= f.hidden_field :age, value: @result.age %>
+        <%= f.hidden_field :nursery_school, value: @result.nursery_school%>
+        <%= f.hidden_field :kindergarten, value: @result.kindergarten %>
+        <%= f.hidden_field :primary_school, value: @result.primary_school %>
+        <%= f.hidden_field :junior_high_school, value: @result.junior_high_school %>
+        <%= f.hidden_field :high_school, value: @result.high_school %>
+        <%= f.hidden_field :university, value: @result.university %>
+        <%= f.hidden_field :living_alone_funds, value: @result.living_alone_funds %>
+        <%= f.submit '登録する', class: 'px-3 py-2 rounded-md bg-green-300 text-white shadow-md' %>
+      <% end %>
+    </div>
+    <%= link_to '戻る', new_child_simulation_path, class: 'px-3 py-2 rounded-pill bg-gray-200 text-amber-dark shadow-md hover:shadow-sm' %>
+  <% end %>
+
 </div>
