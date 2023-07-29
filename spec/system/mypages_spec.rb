@@ -71,5 +71,13 @@ RSpec.describe "Mypage", type: :system do
         expect(page).to have_no_selector "#check_for_#{plan_2.id}"
       end
     end
+    fcontext 'with both plans and result' do
+      let!(:result){ create(:result, child: child) }
+      let!(:plan){ create(:plan, child: child) }
+      before { login(user) }
+      it 'can be displayed saving_plan_graph' do
+        expect(page).to have_selector '#saving_plan_graph'
+      end
+    end
   end
 end
