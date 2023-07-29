@@ -2,8 +2,8 @@ class ResultsController < ApplicationController
   layout 'after_login_layout'
   def index
     @result = @child.result
-    @cost_datas = @result.cost_datas_hash
-    @cost_by_ages = @result.cost_datas_by_age
+    @cost_datas = @result.cost_datas_hash if @result
+    @cost_by_ages = @result.cost_datas_by_age if @result
   end
 
   def create

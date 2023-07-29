@@ -41,6 +41,22 @@ RSpec.describe "Simulations", type: :system do
     end
     
     describe 'update' do
+      describe 'create' do
+        let!(:result){ create(:result, child: child) }
+        before { visit edit_simulation_path(result) }
+        context 'with all attributes' do
+          before do
+            within '.form-high_school-group' do
+              find('label', text: '公立').click
+            end
+            click_button 'シュミレーション結果'
+            click_button '編集する'
+          end
+          it 'is successful' do
+            expect(page).to have_content '希望進路を編集しました'
+            expect(current_path).to eq child_results_path(child)
+          end
+        end
     end
   end
   
@@ -197,5 +213,68 @@ RSpec.describe "Simulations", type: :system do
   end
 
   describe 'edit' do
+    let!(:result){ create(:result, child: child) }
+    before { visit edit_simulation_path(result) }
+    context 'with registerd result content' do
+      it 'can be displayed' do
+        expect(page).to have_field 'result[age]' with: result.age
+        within '.form-nursery_school-group' do
+          expect(page).to have_checked_field 'private'
+        end
+        within '.form-kindergarten-group' do
+          expect(page).to have_checked_field 'private'
+        end
+        within '.form-primary_school-group' do
+          expect(page).to have_checked_field 'public'
+        end
+        within '.form-junior_high_school-group' do
+          expect(page).to have_checked_field 'public'
+        end
+        within '.form-high_school-group' do
+          expect(page).to have_checked_field 'private'
+        end
+        within '.form-university-group' do
+          expect(page).to have_checked_field 'privateScience'
+        end
+        expect(page).to have_field 'result[living_alone_funds]', with: result.living_alone_funds
+      end
+    end
+    context 'with all attributes' do
+      before do
+        within '.form-high_school-group' do
+          find('label', text: '公立').click
+        end
+        click_button 'シュミレーション結果'
+      end
+      it 'is successful' do
+        expect(current_path).to eq child_result_path(child) # シュミレーション結果画面への遷移を確認
+        expect(page).to have_content "#{result.age}〜18才まで" # 積立期間が表示されること
+        expect(page).to have_content '総額： 17.072,091円' # 積立総額が表示されること
+        expect(page).to have_content '月額　約79,037円' # 月額の積立金額が表示されること
+        expect(page).to have_selector 'canvas' # グラフが表示されること
+      end
+    end
+    context 'without age' do
+      before do
+        # ageを選択しない
+        find("option[value='選択してください']").select_option
+        click_button 'シュミレーション結果'
+      end
+      it 'is failed' do
+        expect(page).to have_content '教育費シュミレーション'
+        expect(page).to have_content '年齢を選択してください'
+      end
+    end
+    context 'without selected living_alone_fund' do
+      before do
+        # 仕送り金額を選択しない
+        find("option[value='選択してください']").select_option
+        click_button 'シュミレーション結果'
+      end
+      it 'is failed' do
+        expect(page).to have_content '教育費シュミレーション'
+        expect(page).to have_content '仕送り金額を選択してください'
+      end
+    end
   end
 end
