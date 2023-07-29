@@ -11,6 +11,7 @@ RSpec.describe "Plans", type: :system do
       end
       it 'is successful' do
         expect(page).to have_content '積立情報設定一覧'
+        expect(page).to have_content child.result.cost_per_month.to_s(:delimited)
       end
     end
     context 'with registered plan' do
@@ -40,7 +41,7 @@ RSpec.describe "Plans", type: :system do
         fill_in 'plan_form[plans_attributes][0][item]', with: plan.item
         fill_in 'plan_form[plans_attributes][0][amount]', with: plan.amount
         select plan.payment_day, from: 'plan_form[plans_attributes][0][payment_day]'
-        check 'plan_form_plans_attributes_0_is_auto'
+        # check 'plan_form_plans_attributes_0_is_auto'
 
         click_on '登録する'
       end
@@ -55,7 +56,7 @@ RSpec.describe "Plans", type: :system do
         # fill_in 'plan_form[plans_attributes][0][item]', with: plan.item
         fill_in 'plan_form[plans_attributes][0][amount]', with: plan.amount
         select plan.payment_day, from: 'plan_form[plans_attributes][0][payment_day]'
-        check 'plan_form_plans_attributes_0_is_auto'
+        # check 'plan_form_plans_attributes_0_is_auto'
 
         click_on '登録する'
       end
@@ -70,7 +71,7 @@ RSpec.describe "Plans", type: :system do
         # 金額を入力しない
         # fill_in 'plan_form[plans_attributes][0][amount]', with: plan.amount
         select plan.payment_day, from: 'plan_form[plans_attributes][0][payment_day]'
-        check 'plan_form_plans_attributes_0_is_auto'
+        # check 'plan_form_plans_attributes_0_is_auto'
 
         click_on '登録する'
       end
@@ -99,7 +100,7 @@ RSpec.describe "Plans", type: :system do
         fill_in 'plan_form[plans_attributes][0][item]', with: plan.item
         fill_in 'plan_form[plans_attributes][0][amount]', with: plan.amount
         select plan.payment_day, from: 'plan_form[plans_attributes][0][payment_day]'
-        check 'plan_form_plans_attributes_0_is_auto'
+        # check 'plan_form_plans_attributes_0_is_auto'
 
         fill_in 'plan_form[plans_attributes][1][item]', with: plan_1.item
         fill_in 'plan_form[plans_attributes][1][amount]', with: plan_1.amount
@@ -129,12 +130,12 @@ RSpec.describe "Plans", type: :system do
         # fill_in 'plan_form[plans_attributes][1][item]', with: plan_1.item
         fill_in 'plan_form[plans_attributes][1][amount]', with: plan_1.amount
         select plan_1.payment_day, from: 'plan_form[plans_attributes][1][payment_day]'
-        check 'plan_form_plans_attributes_1_is_auto'
+        # check 'plan_form_plans_attributes_1_is_auto'
 
         fill_in 'plan_form[plans_attributes][2][item]', with: plan_2.item
         fill_in 'plan_form[plans_attributes][2][amount]', with: plan_2.amount
         select plan_2.payment_day, from: 'plan_form[plans_attributes][2][payment_day]'
-        check 'plan_form_plans_attributes_2_is_auto'
+        # check 'plan_form_plans_attributes_2_is_auto'
 
         click_on '登録する'
       end

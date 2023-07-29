@@ -3,6 +3,8 @@ import json from '../../../../public/education_cost.json';
 import WithoutTitleCard from '../components/WithoutTitleCard';
 import Text from '../components/Text';
 import ResultGraph from './ResultGraph';
+import Link from '../components/Link';
+import Button from '../components/Button';
 
 const Result = ({ props }) => {
   //積立期間
@@ -70,7 +72,12 @@ const Result = ({ props }) => {
           『令和3年度「教育費負担の実態調査結果」（日本政策金融公庫より・令和3年12月発行）』
         </Text>
       </div>
-
+      <div class='mt-10'>
+        <p class='text-center text-amber-dark'>会員登録をして、教育費を貯めましょう。</p>
+        <Link page='/users/new'>
+          <Button pxSize='3' pySize='2' color='green-300' fontColor='white' roundType='full'>会員登録（無料）</Button>
+        </Link>
+      </div>
     </div>
   );
 }
