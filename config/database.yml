@@ -53,3 +53,4 @@ production:
   database: clkr4p7km00jd9tp5fosj9sei
   username: clkr4p7kl00jb9tp5hfao4xiw
   password: <%= ENV['KOKEIBO_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %> 
