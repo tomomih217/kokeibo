@@ -32,7 +32,7 @@ const Top = () => {
       </div>
       <div className='w-4/12'>
         <div>
-          <Image src='/assets/top_image.png' alt='top_image' width='300' height='200' />
+          <Image src='/app/assets/images/top_image.png' alt='top_image' width='300' height='200' />
         </div>
       </div>
     </div>
