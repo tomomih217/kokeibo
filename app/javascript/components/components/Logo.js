@@ -5,7 +5,7 @@ import Label from './Label';
 const Logo = () => {
   return(
     <div className='flex flex-row items-center' data-testid='logo'>
-      <Image width='10' height='10' src='/assets/logo.png' alt='logo_image' />
+      <Image width='10' height='10' src='/images/logo.png' alt='logo_image' />
       <Label size='lg' color='amber-dark'>コケーボ</Label>
     </div>
   );
