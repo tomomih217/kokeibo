@@ -10,9 +10,6 @@ module.exports = {
     './app/javascript/components/**/*.js',
   ],
   darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {},
-  },
   variants: {
     extend: {},
   },
@@ -46,10 +43,10 @@ module.exports = {
         'amber-card': '#FFF6C6',
         'amber-vivid': '#FE6B01',
         'submenu': '#FFFEF3',
-        'info': colors.cyan,
-        'success': colors.emerald,
-        'warning': colors.orange,
-        'danger': colors.red,
+        info: colors.cyan,
+        success: colors.emerald,
+        warning: colors.orange,
+        danger: colors.red,
       },
     },
   },

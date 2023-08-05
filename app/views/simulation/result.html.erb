@@ -39,6 +39,7 @@
     <%= link_to '戻る', edit_simulation_path(@child.result), class: 'px-3 py-2 rounded-pill bg-gray-200 text-amber-dark shadow-md hover:shadow-sm' %>
   <% else %>
      <div class='mt-5'>
+      <p class='text-red-500 text-sm mb-3'>希望進路を登録すると、マイページに高校や大学進学時の必要資金額が表示されるようになります。</p>
       <%= form_with model: @result, url: child_results_path(@child), local: true do |f| %>
         <%= f.hidden_field :age, value: @result.age %>
         <%= f.hidden_field :nursery_school, value: @result.nursery_school%>

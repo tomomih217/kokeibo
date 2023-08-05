@@ -80,4 +80,40 @@ RSpec.describe "Mypage", type: :system do
       end
     end
   end
+
+  describe 'tutorial' do
+    let!(:user){ create(:user) }
+    let!(:child){ create(:child, user: user) }
+    fcontext 'without result and plans' do
+      before { login(user) }
+      it 'starts successful' do
+        expect(page).to have_content '希望進路を登録してください'
+        expect(page).to have_content '希望進路登録'
+        expect(current_path).to eq  new_child_simulation_path(child)
+      end
+    end
+    fcontext 'with result' do
+      let!(:result){ create(:result, child: child) }
+      before { login(user) }
+      it 'does not start' do
+        expect(current_path).to eq mypage_path(child)
+      end
+    end
+    fcontext 'with plans' do
+      let!(:payment_collection){ create(:payment_collection, child: child) }
+      let!(:plan){ create(:plan, payment_collection: payment_collection) }
+      it 'does not start' do
+        expect(current_path).to eq mypage_path(child)
+      end
+    end
+    fcontext 'after cancel' do
+      before do
+        login(user)
+        click_button '後で'
+      end
+      it 'can be display mypage' do
+        expect(current_path).to eq mypage_path(child)
+      end
+    end
+  end
 end
