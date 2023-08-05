@@ -1,7 +1,8 @@
+<p class='text-amber-dark text-center'>学資保険や運用など、毎月どこにいくら積み立てるかを登録しておきましょう。</p>
 <%= form_with model: form, url: path, method: method, local: true do |form| %>
   <table class='m-auto'>
     <thead>
-      <th class='py-3'>項目</th>
+      <th class='py-3'>費目</th>
       <th class='py-3'>金額</th>
       <th class='py-3'>入金予定日</th>
     </thead>
@@ -10,7 +11,7 @@
         <%= f.hidden_field :child_id, value: @child.id %>
         <tr class='align-text-top'>
           <td class='text-center'><%= f.text_field :item, class: 'bg-white border-2 border-amber-dark rounded w-2/3 py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %></td>
-          <td class='text-center'><%= f.number_field :amount, class: 'bg-white border-2 border-amber-dark rounded w-2/3 py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %>円</td>
+          <td class='text-center'><%= f.text_field :amount, class: 'bg-white border-2 border-amber-dark rounded w-2/3 py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %>円</td>
           <td class='text-center pb-5'>
             <%= f.select :payment_day, (1..30).to_a, {include_blank: true}, step: 1000, class: 'bg-white border-2 border-amber-dark rounded py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %>日
             <!-- div class='mt-1'>

@@ -9,8 +9,8 @@
           <p class='text-2xl'><%= child.result.each_stage_cost[event_sym].to_s(:delimited) %></p>
         </div>
         <div class='mr-10'>
-          <p>見込み積立額：</p>
-          <p class='text-2xl'><%= child.culculated_amount(age).to_s(:delimited) %></p>
+          <p>予定貯金額：</p>
+          <p class='text-md'><%= child.culculated_amount(age).to_s(:delimited) %></p>
         </div>
         <div>
           <p>差額：</p>

@@ -47,8 +47,11 @@
     <p>参照：『平成30年度子供の学習費調査の結果について（文部科学省より・令和元年１２月発行）』,『令和３年度「教育費負担の実態調査結果」（日本政策金融公庫より・令和３年１２月発行）』 </p>
   </div>
 <% else %>
-  <p>データはありません</p>
-  <div class='mt-5 text-center'>
-    <%= link_to '希望進路の登録', new_child_simulation_path(@child), class: 'px-3 py-2 bg-amber-vivid text-white rounded-md shadow-md hover:shadow-sm' %>
+  <div class='text-center'>
+    <p class='text-amber-dark mb-5'>データはありません</p>
+    <p class='mb-3 text-red-500 text-sm'>希望進路を登録すると、必要な教育費の目安が表示されるようになります。</p>
+    <div>
+      <%= link_to '希望進路の登録', new_child_simulation_path(@child), class: 'px-3 py-2 bg-amber-vivid text-white rounded-md shadow-md hover:shadow-sm' %>
+    </div>
   </div>
 <% end %>
