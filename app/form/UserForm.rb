@@ -28,8 +28,11 @@ class UserForm
   def save
     return if invalid?
 
-    user.update!(name: name, password: password, password_confirmation: password_confirmation)
-    Child.create(name: child_name, stage: child_stage, user: user)
+    ActiveRecord::Base.transaction do 
+      user.update!(name: name, password: password, password_confirmation: password_confirmation)
+      Child.create(name: child_name, stage: child_stage, user: user)
+    end
+    true
   rescue ActiveRecord::RecordInvalid
     false
   end

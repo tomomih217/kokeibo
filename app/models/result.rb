@@ -99,7 +99,7 @@ class Result < ApplicationRecord
     end
 
     cost_datas[:living_alone_funds] =
-living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize'] + living_alone_funds * TEN_THOUSAND * MONTHS_PER_YEAR * YEARS_FOR_UNI
+      living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize'] + total_living_alone_funds
     cost_datas
   end
 
@@ -124,7 +124,7 @@ living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize'] + liv
       end
     end
     cost_datas[:living_alone_initialize] = living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize']
-    cost_datas[:living_alone_funds] = living_alone_funds * TEN_THOUSAND * MONTHS_PER_YEAR * YEARS_FOR_UNI
+    cost_datas[:living_alone_funds] = total_living_alone_funds
     cost_datas
   end
 
@@ -141,5 +141,9 @@ living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize'] + liv
     university_cost = high_school_cost + cost_hash[:high_school] + university_entry_cost[university.to_sym]
     result_hash[:university_cost] = university_cost
     result_hash
+  end
+
+  def total_living_alone_funds
+    living_alone_funds * TEN_THOUSAND * MONTHS_PER_YEAR * YEARS_FOR_UNI
   end
 end
