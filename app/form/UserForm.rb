@@ -13,7 +13,7 @@ class UserForm
   validates :child_name, presence: true, length: { maximum: 255 }
   validates :child_stage, presence: true
   validates :term_of_service, acceptance: true # term_of_serviceの値がtrueかどうかを判定
-  
+
   # Userのpersisted?を委譲し、createかupdateかを判断
   delegate :presisted?, to: :user
 
@@ -27,7 +27,7 @@ class UserForm
   # データベースへ保存
   def save
     return if invalid?
-    
+
     user.update!(name: name, password: password, password_confirmation: password_confirmation)
     Child.create(name: child_name, stage: child_stage, user: user)
   rescue ActiveRecord::RecordInvalid

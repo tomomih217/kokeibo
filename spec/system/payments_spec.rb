@@ -1,16 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe "Payments", type: :system do
-  let!(:user){ create(:user) }
-  let!(:child){ create(:child, user: user) }
-  let!(:plan_1){ create(:plan, item: '保険', amount: 20000, child: child) }
-  let!(:plan_2){ create(:plan, item: '投資', amount: 10000, child: child) }
+RSpec.describe 'Payments', type: :system do
+  let!(:user) { create(:user) }
+  let!(:child) { create(:child, user: user) }
+  let!(:plan_1) { create(:plan, item: '保険', amount: 20_000, child: child) }
+  let!(:plan_2) { create(:plan, item: '投資', amount: 10_000, child: child) }
   before { login(user) }
   describe 'index' do
-    let!(:payment_collection){ create(:payment_collection, child: child) }
-    let!(:payment_1){ create(:payment, :insurance, payment_collection: payment_collection) }
-    let!(:payment_2){ create(:payment, :investment, payment_collection: payment_collection) }
-    let!(:payment_3){ create(:payment, :savings, payment_collection: payment_collection) }
+    let!(:payment_collection) { create(:payment_collection, child: child) }
+    let!(:payment_1) { create(:payment, :insurance, payment_collection: payment_collection) }
+    let!(:payment_2) { create(:payment, :investment, payment_collection: payment_collection) }
+    let!(:payment_3) { create(:payment, :savings, payment_collection: payment_collection) }
     context 'access' do
       before { click_on '履歴' }
       it 'is successful' do
@@ -28,9 +28,11 @@ RSpec.describe "Payments", type: :system do
       end
     end
     context 'with payments for another child' do
-      let!(:another_child){ create(:child, user: user) }
-      let!(:payment_collection_for_another_child){ create(:payment_collection, child: another_child) }
-      let!(:payment_4){ create(:payment, item: '株', amount: 40000, payment_collection: payment_collection_for_another_child) }
+      let!(:another_child) { create(:child, user: user) }
+      let!(:payment_collection_for_another_child) { create(:payment_collection, child: another_child) }
+      let!(:payment_4) do
+        create(:payment, item: '株', amount: 40_000, payment_collection: payment_collection_for_another_child)
+      end
       before { visit child_payment_collections_path(child.id) }
       it 'cannot be displayed' do
         expect(page).to have_content '入金履歴'
@@ -41,10 +43,10 @@ RSpec.describe "Payments", type: :system do
   end
 
   describe 'create' do
-    let(:payment_collection){ build(:payment_collection, child: child) }
-    let(:payment_1){ build(:payment, :insurance, payment_collection: payment_collection) }
-    let(:payment_2){ build(:payment, :investment, payment_collection: payment_collection) }
-    let(:payment_3){ build(:payment, :savings, payment_collection: payment_collection) }
+    let(:payment_collection) { build(:payment_collection, child: child) }
+    let(:payment_1) { build(:payment, :insurance, payment_collection: payment_collection) }
+    let(:payment_2) { build(:payment, :investment, payment_collection: payment_collection) }
+    let(:payment_3) { build(:payment, :savings, payment_collection: payment_collection) }
     before { click_on '入 金' }
     context 'access' do
       it 'is successful' do
@@ -116,7 +118,7 @@ RSpec.describe "Payments", type: :system do
       end
       it 'can be displayed' do
         expect(page).to have_field 'payment_collection[payments_attributes][0][item]', with: plan_1.item
-        expect(page).to have_field 'payment_collection[payments_attributes][0][amount]', with:  plan_1.amount
+        expect(page).to have_field 'payment_collection[payments_attributes][0][amount]', with: plan_1.amount
         expect(page).to have_field 'payment_collection[payments_attributes][1][item]', with: plan_2.item
         expect(page).to have_field 'payment_collection[payments_attributes][1][amount]', with: plan_2.amount
         expect(page).to have_field 'payment_collection[payments_attributes][2][item]', with: ''
@@ -126,10 +128,10 @@ RSpec.describe "Payments", type: :system do
   end
 
   describe 'update' do
-    let!(:payment_collection){ create(:payment_collection, child: child) }
-    let!(:payment_1){ create(:payment, :insurance, payment_collection: payment_collection) }
-    let!(:payment_2){ create(:payment, :investment, payment_collection: payment_collection) }
-    let!(:payment_3){ create(:payment, :savings, payment_collection: payment_collection) }
+    let!(:payment_collection) { create(:payment_collection, child: child) }
+    let!(:payment_1) { create(:payment, :insurance, payment_collection: payment_collection) }
+    let!(:payment_2) { create(:payment, :investment, payment_collection: payment_collection) }
+    let!(:payment_3) { create(:payment, :savings, payment_collection: payment_collection) }
     before do
       visit child_payment_collections_path(child.id)
       click_on '編集'
@@ -153,7 +155,9 @@ RSpec.describe "Payments", type: :system do
       end
     end
     context 'to change 1 payment' do
-      let(:changed_payment){ build(:payment, item: 'つみたてNISA', amount: 20000, payment_collection: payment_collection) }
+      let(:changed_payment) do
+        build(:payment, item: 'つみたてNISA', amount: 20_000, payment_collection: payment_collection)
+      end
       before do
         visit edit_payment_collection_path(payment_collection.id)
         fill_in 'payment_collection[payments_attributes][0][item]', with: changed_payment.item
@@ -185,7 +189,7 @@ RSpec.describe "Payments", type: :system do
     context 'without only item' do
       before do
         visit edit_payment_collection_path(payment_collection.id)
-        fill_in 'payment_collection[payments_attributes][0][item]', with: ""
+        fill_in 'payment_collection[payments_attributes][0][item]', with: ''
         click_on '登録する'
       end
       it 'is failed' do
@@ -195,7 +199,7 @@ RSpec.describe "Payments", type: :system do
     context 'without only amount' do
       before do
         visit edit_payment_collection_path(payment_collection.id)
-        fill_in 'payment_collection[payments_attributes][0][amount]', with: ""
+        fill_in 'payment_collection[payments_attributes][0][amount]', with: ''
         click_on '登録する'
       end
       it 'is failed' do
@@ -205,10 +209,10 @@ RSpec.describe "Payments", type: :system do
   end
 
   describe 'destroy' do
-    let!(:payment_collection){ create(:payment_collection, child: child) }
-    let!(:payment_1){ create(:payment, :insurance, payment_collection: payment_collection) }
-    let!(:payment_2){ create(:payment, :investment, payment_collection: payment_collection) }
-    let!(:payment_3){ create(:payment, :savings, payment_collection: payment_collection) }
+    let!(:payment_collection) { create(:payment_collection, child: child) }
+    let!(:payment_1) { create(:payment, :insurance, payment_collection: payment_collection) }
+    let!(:payment_2) { create(:payment, :investment, payment_collection: payment_collection) }
+    let!(:payment_3) { create(:payment, :savings, payment_collection: payment_collection) }
     before { visit child_payment_collections_path(child.id) }
     context 'by payment_collection' do
       before do

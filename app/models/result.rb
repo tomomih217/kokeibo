@@ -12,17 +12,17 @@ class Result < ApplicationRecord
 
   def self.params_format(result_params)
     age = result_params[:age]
-    if age == '選択してください'
-      result_params[:age] = -1
-    else
-      age == '出産前' ? result_params[:age] = 0 : result_params[:age] = age.to_i
-    end
+    result_params[:age] = if age == '選択してください'
+                            -1
+                          else
+                            age == '出産前' ? 0 : age.to_i
+                          end
     living_alone_funds = result_params[:living_alone_funds]
-    if living_alone_funds == '選択してください'
-      result_params[:living_alone_funds] = -1
-    else
-      living_alone_funds == '仕送りの予定はない' ? result_params[:living_alone_funds] = 0 : result_params[:living_alone_funds] = living_alone_funds.delete(',').to_i
-    end
+    result_params[:living_alone_funds] = if living_alone_funds == '選択してください'
+                                           -1
+                                         else
+                                           living_alone_funds == '仕送りの予定はない' ? 0 : living_alone_funds.delete(',').to_i
+                                         end
 
     result_params
   end
@@ -36,24 +36,24 @@ class Result < ApplicationRecord
   end
 
   def self.school_types
-    schoolTypes = [
-      'nursery_school',
-      'kindergarten',
-      'primary_school',
-      'junior_high_school',
-      'high_school',
-      'university'
+    schoolTypes = %w[
+      nursery_school
+      kindergarten
+      primary_school
+      junior_high_school
+      high_school
+      university
     ]
   end
 
   def self.age_range
     ageRange = {
-      nursery_school: ["age1", "age2"],
-      kindergarten: ["age3", "age4", "age5"],
-      primary_school: ["age6", "age7", "age8", "age9", "age10", "age11"],
-      junior_high_school: ["age12", "age13", "age14"],
-      high_school: ["age15", "age16", "age17"],
-      university: ["age18", "age19", "age20", "age21"]
+      nursery_school: %w[age1 age2],
+      kindergarten: %w[age3 age4 age5],
+      primary_school: %w[age6 age7 age8 age9 age10 age11],
+      junior_high_school: %w[age12 age13 age14],
+      high_school: %w[age15 age16 age17],
+      university: %w[age18 age19 age20 age21]
     }
   end
 
@@ -72,13 +72,13 @@ class Result < ApplicationRecord
   def cost_datas_hash
     json_datas = Result.json_cost_datas
     cost_datas = {}
-    schoolTypes = [
-      'nurserySchool',
-      'kindergarten',
-      'primarySchool',
-      'juniorHighSchool',
-      'highSchool',
-      'university'
+    schoolTypes = %w[
+      nurserySchool
+      kindergarten
+      primarySchool
+      juniorHighSchool
+      highSchool
+      university
     ]
     ageRange = Result.age_range
 
@@ -92,20 +92,21 @@ class Result < ApplicationRecord
       cost_datas[school_type] = total
     end
 
-    cost_datas[:living_alone_funds] = living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize'] + living_alone_funds * 10000 * 12 * 4
+    cost_datas[:living_alone_funds] =
+living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize'] + living_alone_funds * 10_000 * 12 * 4
     cost_datas
   end
 
   def cost_datas_by_age
     json_datas = Result.json_cost_datas
     cost_datas = {}
-    schoolTypes = [
-      'nurserySchool',
-      'kindergarten',
-      'primarySchool',
-      'juniorHighSchool',
-      'highSchool',
-      'university'
+    schoolTypes = %w[
+      nurserySchool
+      kindergarten
+      primarySchool
+      juniorHighSchool
+      highSchool
+      university
     ]
     ageRange = Result.age_range
 
@@ -117,20 +118,20 @@ class Result < ApplicationRecord
       end
     end
     cost_datas[:living_alone_initialize] = living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize']
-    cost_datas[:living_alone_funds] = living_alone_funds * 10000 * 12 * 4
+    cost_datas[:living_alone_funds] = living_alone_funds * 10_000 * 12 * 4
     cost_datas
   end
-
 
   def each_stage_cost
     result_hash = {}
     datas = Result.json_cost_datas
     cost_hash = cost_datas_hash
 
-    high_school_cost = cost_hash[:nursery_school] + cost_hash[:kindergarten] + cost_hash[:primary_school] + cost_hash[:junior_high_school] + 350000
+    high_school_cost = cost_hash[:nursery_school] + cost_hash[:kindergarten] + cost_hash[:primary_school] + cost_hash[:junior_high_school] + 350_000
     result_hash[:high_school_cost] = high_school_cost
-    
-    university_entry_cost = { publicArts: 672000, publicScience: 672000, privateArts: 818000, privateScience: 888000 }
+
+    university_entry_cost = { publicArts: 672_000, publicScience: 672_000, privateArts: 818_000,
+                              privateScience: 888_000 }
     university_cost = high_school_cost + cost_hash[:high_school] + university_entry_cost[university.to_sym]
     result_hash[:university_cost] = university_cost
     result_hash

@@ -47,7 +47,7 @@ class PlansController < ApplicationController
 
   def plan_form_params
     params.require(:plan_form).permit(
-      plans_attributes: [:item, :amount, :payment_day, :is_auto, :child_id]
+      plans_attributes: %i[item amount payment_day is_auto child_id]
     )
   end
 

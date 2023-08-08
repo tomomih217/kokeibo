@@ -46,7 +46,7 @@ class PaymentCollectionsController < ApplicationController
     params.require(:payment_collection).permit(
       :paymented_at,
       :child_id,
-      payments_attributes: [:id, :item, :amount, :_destroy]
+      payments_attributes: %i[id item amount _destroy]
     )
   end
 end

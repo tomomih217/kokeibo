@@ -226,7 +226,6 @@ Rails.application.config.sorcery.configure do |config|
   # config.line.bot_prompt = "normal"
   # config.line.user_info_mapping = {name: 'displayName'}
 
-  
   # For information about Discord API
   # https://discordapp.com/developers/docs/topics/oauth2
   # config.discord.key = "xxxxxx"
@@ -321,7 +320,7 @@ Rails.application.config.sorcery.configure do |config|
     # Default: `60 * 60 * 24 * 7`
     # 45日間に変更 `60 * 60 * 24 * 45`
     #
-    user.remember_me_for = 3888000
+    user.remember_me_for = 3_888_000
 
     # When true, sorcery will persist a single remember me token for all
     # logins/logouts (to support remembering on multiple browsers simultaneously).
@@ -565,5 +564,5 @@ Rails.application.config.sorcery.configure do |config|
 
   # This line must come after the 'user config' block.
   # Define which model authenticates with sorcery.
-  config.user_class = "User"
+  config.user_class = 'User'
 end
