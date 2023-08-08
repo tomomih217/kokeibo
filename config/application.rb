@@ -1,6 +1,6 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails/all"
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -22,16 +22,16 @@ module Kokeibo
     # 国際化
     config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{rb,yml}').to_s]
     config.i18n.default_locale = :ja
-		config.i18n.available_locales = %i[ja en]
+    config.i18n.available_locales = %i[ja en]
 
     # Generateの設定
     config.generators do |g|
-      g.assets false #assets生成しない
-      g.helper false #helper生成しない
-      g.test_framework false #test生成しない
+      g.assets false # assets生成しない
+      g.helper false # helper生成しない
+      g.test_framework false # test生成しない
     end
 
     # field_with_errorsタグを自動挿入しないように設定する
-    config.action_view.field_error_proc = Proc.new{|html_tag, instance| html_tag}
+    config.action_view.field_error_proc = proc { |html_tag, _instance| html_tag }
   end
 end

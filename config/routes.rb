@@ -10,7 +10,6 @@ Rails.application.routes.draw do
     get 'complete'
   end
 
-
   resources :children, only: %i[new create] do
     resources :plans, only: %i[index new create destroy], shallow: true
     patch '/plans', to: 'plans#update'

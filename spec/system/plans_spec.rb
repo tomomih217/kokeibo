@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe "Plans", type: :system do
-  let!(:user){ create(:user) }
-  let!(:child){ create(:child, user: user) }
+RSpec.describe 'Plans', type: :system do
+  let!(:user) { create(:user) }
+  let!(:child) { create(:child, user: user) }
   describe 'index' do
     context 'access' do
       before do
@@ -15,7 +15,7 @@ RSpec.describe "Plans", type: :system do
       end
     end
     context 'with registered plan' do
-      let!(:plan){ create(:plan, child: child) }
+      let!(:plan) { create(:plan, child: child) }
       before do
         login(user)
         visit child_plans_path(child.id)
@@ -29,9 +29,9 @@ RSpec.describe "Plans", type: :system do
   end
 
   describe 'create' do
-    let(:plan){ build(:plan, child: child) }
-    let(:plan_1){ build(:plan, child: child) }
-    let(:plan_2){ build(:plan, child: child) }
+    let(:plan) { build(:plan, child: child) }
+    let(:plan_1) { build(:plan, child: child) }
+    let(:plan_2) { build(:plan, child: child) }
     before do
       login(user)
       visit new_child_plan_path(child.id)
@@ -147,8 +147,8 @@ RSpec.describe "Plans", type: :system do
   end
 
   describe 'update' do
-    let!(:plan){ create(:plan, child: child) }
-    let(:add_plan){ build(:plan, child: child) }
+    let!(:plan) { create(:plan, child: child) }
+    let(:add_plan) { build(:plan, child: child) }
     before do
       login(user)
       visit child_plans_edit_path(child.id)
@@ -193,10 +193,10 @@ RSpec.describe "Plans", type: :system do
   end
 
   describe 'destroy' do
-    let!(:plan){ create(:plan, child: child) }
+    let!(:plan) { create(:plan, child: child) }
     before { login(user) }
     context 'a plan' do
-      let!(:delete_plan){ create(:plan, child: child) }
+      let!(:delete_plan) { create(:plan, child: child) }
       before do
         visit child_plans_path(child.id)
         find("#delete_button_for_plan_#{delete_plan.id}").click

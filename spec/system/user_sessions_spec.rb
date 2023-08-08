@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe "UserSessions", type: :system do
-  let!(:user){ create(:user) }
+RSpec.describe 'UserSessions', type: :system do
+  let!(:user) { create(:user) }
   describe 'Login' do
     context 'form' do
-      before do 
+      before do
         visit login_path
       end
       it 'is currect' do

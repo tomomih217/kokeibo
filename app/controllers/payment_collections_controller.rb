@@ -1,5 +1,7 @@
 class PaymentCollectionsController < ApplicationController
   layout 'after_login_layout'
+  PLANS_COUNT = 3
+
   def index
     @payment_collections = @child.payment_collections.by_recently_paymented_at
   end
@@ -21,7 +23,7 @@ class PaymentCollectionsController < ApplicationController
 
   def edit
     @payment_collection = PaymentCollection.find(params[:id])
-    (3 - @payment_collection.payments.size).times.each { @payment_collection.payments.push(Payment.new) }
+    (@payment_collection.payments.size...PLANS_COUNT).each { @payment_collection.payments.push(Payment.new) }
   end
 
   def update
@@ -46,7 +48,7 @@ class PaymentCollectionsController < ApplicationController
     params.require(:payment_collection).permit(
       :paymented_at,
       :child_id,
-      payments_attributes: [:id, :item, :amount, :_destroy]
+      payments_attributes: %i[id item amount _destroy]
     )
   end
 end

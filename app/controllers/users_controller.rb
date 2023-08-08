@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   def confirm
     @form = UserForm.new(user_params)
     is_duplicated = User.duplicated?(user_params[:name])
-    
+
     if @form.invalid? || is_duplicated
       flash.now[:danger] = 'そのユーザー名は使用されています。' if is_duplicated
       render :new
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def complete ;end
+  def complete; end
 
   private
 

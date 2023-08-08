@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe "Children", type: :system do
-  let!(:user){ create(:user) }
+RSpec.describe 'Children', type: :system do
+  let!(:user) { create(:user) }
   describe 'create' do
-    let(:child){ build(:child, user: user) }
+    let(:child) { build(:child, user: user) }
     context 'with all atttributes' do
       before do
         login(user)
         click_on 'お子様の情報を登録'
-  
+
         fill_in 'お子様の名前', with: child.name
         select '出産前', from: 'ステージ'
         click_button '登録する'
@@ -22,7 +22,7 @@ RSpec.describe "Children", type: :system do
       before do
         login(user)
         click_on 'お子様の情報を登録'
-  
+
         # 名前を入力しない
         # fill_in 'お子様の名前', with: child.name
         select '出産前', from: 'ステージ'
@@ -36,7 +36,7 @@ RSpec.describe "Children", type: :system do
       before do
         login(user)
         click_on 'お子様の情報を登録'
-  
+
         fill_in 'お子様の名前', with: child.name
         # ステージを選択しない
         # select '出産前', from: 'ステージ'

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Users", type: :system do
+RSpec.describe 'Users', type: :system do
   describe 'before log in,' do
     describe 'Sign in' do
       context 'with all attributes' do
@@ -88,7 +88,7 @@ RSpec.describe "Users", type: :system do
       end
 
       context 'with duplicated name' do
-        let!(:duplicated_user){ create(:user, name: 'Test_1') }
+        let!(:duplicated_user) { create(:user, name: 'Test_1') }
         before do
           visit new_user_path
           fill_in 'ユーザー名', with: 'Test_1'

@@ -8,7 +8,7 @@ class PaymentCollection < ApplicationRecord
   scope :by_recently_paymented_at, -> { order(paymented_at: :desc) }
 
   def get_payments_with_plans(child)
-    3.times.each { payments.push(Payment.new) }
+    self.payments = Array.new(3){ Payment.new }
     plans = child.plans
     plans.each_with_index do |plan, idx|
       payments[idx].item = plan.item

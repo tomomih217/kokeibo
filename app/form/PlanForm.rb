@@ -11,7 +11,7 @@ class PlanForm
   # fields_forを使用するため、Planインスタンスを規定の個数生成する
   def initialize(attributes = {})
     super attributes
-    self.plans = FORM_COUNT.times.map { Plan.new() } unless self.plans.present?
+    self.plans ||= FORM_COUNT.times.map { Plan.new }
   end
 
   # 取得したパラメータを各Planインスタンスに格納
@@ -23,15 +23,13 @@ class PlanForm
   def save
     Plan.transaction do
       index = 0
-      self.plans.map do |plan|
-        unless index != 0 && plan.attribute_empty?
-          plan.save!
-        end
+      plans.map do |plan|
+        plan.save! unless index != 0 && plan.attribute_empty?
         index += 1
       end
     end
-      return true
-    rescue => e
-      return false
+    true
+  rescue StandardError => e
+    false
   end
 end

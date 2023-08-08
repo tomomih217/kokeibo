@@ -6,6 +6,6 @@ class Plan < ApplicationRecord
   validates :payment_day, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 31 }
 
   def attribute_empty?
-    return item.blank? && amount.blank? && payment_day.blank?
+    item.blank? && amount.blank? && payment_day.blank?
   end
 end

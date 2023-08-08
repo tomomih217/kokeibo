@@ -18,25 +18,24 @@ class ResultDecorator < ApplicationDecorator
   def translated_school_type(school_type)
     en = send(school_type)
     case en
-    when 'public'then
-      return '公立'
-    when 'private' then
-      return '私立'
-    when 'publicArts' then
-      return '公立文系'
-    when 'publicScrience' then
-      return '公立理系'
-    when 'privateArts' then
-      return '私立文系'
-    when 'privateScience' then
-      return '私立理系'
+    when 'public'
+      '公立'
+    when 'private'
+      '私立'
+    when 'publicArts'
+      '公立文系'
+    when 'publicScrience'
+      '公立理系'
+    when 'privateArts'
+      '私立文系'
+    when 'privateScience'
+      '私立理系'
     else
-      return en
+      en
     end
   end
 
   def formated_age(str)
-    "#{str.gsub(/[^0-9]/,"")}才"
+    "#{str.gsub(/[^0-9]/, '')}才"
   end
-
 end

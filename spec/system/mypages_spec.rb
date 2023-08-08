@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe "Mypage", type: :system do
+RSpec.describe 'Mypage', type: :system do
   describe 'in dashboard' do
-    let!(:user){ create(:user) }
-    let!(:child){ create(:child, user: user) }
+    let!(:user) { create(:user) }
+    let!(:child) { create(:child, user: user) }
     context 'with child name' do
       before { login(user) }
       it 'can be displayed' do
@@ -14,8 +14,8 @@ RSpec.describe "Mypage", type: :system do
       end
     end
     context 'with plans' do
-      let!(:plan_1){ create(:plan, child: child) }
-      let!(:plan_2){ create(:plan, child: child) }
+      let!(:plan_1) { create(:plan, child: child) }
+      let!(:plan_2) { create(:plan, child: child) }
       before { login(user) }
       it 'can be displayed' do
         expect(page).to have_content plan_1.item
@@ -27,10 +27,10 @@ RSpec.describe "Mypage", type: :system do
       end
     end
     context 'pie chart for savings amount with payment' do
-      let!(:payment_collection_1){ create(:payment_collection, child: child) }
-      let!(:payment_collection_2){ create(:payment_collection, child: child) }
-      let!(:payment_1){ create(:payment, :insurance, payment_collection: payment_collection_1) }
-      let!(:payment_2){ create(:payment, :investment, payment_collection: payment_collection_2) }
+      let!(:payment_collection_1) { create(:payment_collection, child: child) }
+      let!(:payment_collection_2) { create(:payment_collection, child: child) }
+      let!(:payment_1) { create(:payment, :insurance, payment_collection: payment_collection_1) }
+      let!(:payment_2) { create(:payment, :investment, payment_collection: payment_collection_2) }
       before { login(user) }
       it 'can be displayed' do
         expect(page).to have_selector '#savings_amount_pie_chart'
@@ -40,9 +40,9 @@ RSpec.describe "Mypage", type: :system do
       end
     end
     context 'with difference between cost and savings' do
-      let!(:result){ create(:result, child: child) }
-      let!(:plan_1){ create(:plan, child: child) }
-      let!(:plan_2){ create(:plan, child: child) }
+      let!(:result) { create(:result, child: child) }
+      let!(:plan_1) { create(:plan, child: child) }
+      let!(:plan_2) { create(:plan, child: child) }
       before { login(user) }
       it 'can be displayed' do
         expect(page).to have_no_link '希望進路を登録する'
@@ -57,12 +57,16 @@ RSpec.describe "Mypage", type: :system do
       end
     end
     context 'with payed amount in this month' do
-      let!(:plan_1){ create(:plan, amount: 10000, child: child) }
-      let!(:plan_2){ create(:plan, amount: 20000, child: child) }
-      let!(:payment_collection_1){ create(:payment_collection, paymented_at: Date.today, child: child) }
-      let!(:payment_1){ create(:payment, item: plan_1.item, amount: plan_1.amount, payment_collection: payment_collection_1) }
-      let!(:payment_collection_2){ create(:payment_collection, paymented_at: Date.today + 1.month, child: child) }
-      let!(:payment_2){ create(:payment, item: plan_2.item, amount: plan_2.amount, payment_collection: payment_collection_2) }
+      let!(:plan_1) { create(:plan, amount: 10_000, child: child) }
+      let!(:plan_2) { create(:plan, amount: 20_000, child: child) }
+      let!(:payment_collection_1) { create(:payment_collection, paymented_at: Date.today, child: child) }
+      let!(:payment_1) do
+        create(:payment, item: plan_1.item, amount: plan_1.amount, payment_collection: payment_collection_1)
+      end
+      let!(:payment_collection_2) { create(:payment_collection, paymented_at: Date.today + 1.month, child: child) }
+      let!(:payment_2) do
+        create(:payment, item: plan_2.item, amount: plan_2.amount, payment_collection: payment_collection_2)
+      end
       before { login(user) }
       it 'can be displayed checkmark' do
         expect(page).to have_content plan_1.item
@@ -72,8 +76,8 @@ RSpec.describe "Mypage", type: :system do
       end
     end
     fcontext 'with both plans and result' do
-      let!(:result){ create(:result, child: child) }
-      let!(:plan){ create(:plan, child: child) }
+      let!(:result) { create(:result, child: child) }
+      let!(:plan) { create(:plan, child: child) }
       before { login(user) }
       it 'can be displayed saving_plan_graph' do
         expect(page).to have_selector '#saving_plan_graph'
@@ -82,26 +86,26 @@ RSpec.describe "Mypage", type: :system do
   end
 
   describe 'tutorial' do
-    let!(:user){ create(:user) }
-    let!(:child){ create(:child, user: user) }
+    let!(:user) { create(:user) }
+    let!(:child) { create(:child, user: user) }
     fcontext 'without result and plans' do
       before { login(user) }
       it 'starts successful' do
         expect(page).to have_content '希望進路を登録してください'
         expect(page).to have_content '希望進路登録'
-        expect(current_path).to eq  new_child_simulation_path(child)
+        expect(current_path).to eq new_child_simulation_path(child)
       end
     end
     fcontext 'with result' do
-      let!(:result){ create(:result, child: child) }
+      let!(:result) { create(:result, child: child) }
       before { login(user) }
       it 'does not start' do
         expect(current_path).to eq mypage_path(child)
       end
     end
     fcontext 'with plans' do
-      let!(:payment_collection){ create(:payment_collection, child: child) }
-      let!(:plan){ create(:plan, payment_collection: payment_collection) }
+      let!(:payment_collection) { create(:payment_collection, child: child) }
+      let!(:plan) { create(:plan, payment_collection: payment_collection) }
       it 'does not start' do
         expect(current_path).to eq mypage_path(child)
       end
