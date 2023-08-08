@@ -45,6 +45,8 @@ class PlansController < ApplicationController
 
   private
 
+  PLANS_COUNT = 3
+
   def plan_form_params
     params.require(:plan_form).permit(
       plans_attributes: %i[item amount payment_day is_auto child_id]
@@ -53,8 +55,8 @@ class PlansController < ApplicationController
 
   def edit_plans
     plans = current_user.current_child.plans
-    if plans.length != 3
-      (3 - plans.length).times do
+    if plans.length != PLANS_COUNT
+      (PLANS_COUNT - plans.length).times do
         plans.push(Plan.new)
       end
     end

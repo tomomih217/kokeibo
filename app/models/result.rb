@@ -1,5 +1,11 @@
 class Result < ApplicationRecord
   belongs_to :child
+  BLANK = -1
+  MAX_AGE = 18
+  MONTHS_PER_YEAR = 12
+  YEARS_FOR_UNI = 4
+  TEN_THOUSAND = 10_000
+  HIGH_SCHOOL_ENTRY_COST = 350_000
 
   validates :age, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :nursery_school, presence: true
@@ -13,13 +19,13 @@ class Result < ApplicationRecord
   def self.params_format(result_params)
     age = result_params[:age]
     result_params[:age] = if age == '選択してください'
-                            -1
+                            BLANK
                           else
                             age == '出産前' ? 0 : age.to_i
                           end
     living_alone_funds = result_params[:living_alone_funds]
     result_params[:living_alone_funds] = if living_alone_funds == '選択してください'
-                                           -1
+                                           BLANK
                                          else
                                            living_alone_funds == '仕送りの予定はない' ? 0 : living_alone_funds.delete(',').to_i
                                          end
@@ -58,7 +64,7 @@ class Result < ApplicationRecord
   end
 
   def duration
-    (18 - age) * 12
+    (MAX_AGE - age) * MONTHS_PER_YEAR
   end
 
   def total_cost
@@ -93,7 +99,7 @@ class Result < ApplicationRecord
     end
 
     cost_datas[:living_alone_funds] =
-living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize'] + living_alone_funds * 10_000 * 12 * 4
+living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize'] + living_alone_funds * TEN_THOUSAND * MONTHS_PER_YEAR * YEARS_FOR_UNI
     cost_datas
   end
 
@@ -118,7 +124,7 @@ living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize'] + liv
       end
     end
     cost_datas[:living_alone_initialize] = living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize']
-    cost_datas[:living_alone_funds] = living_alone_funds * 10_000 * 12 * 4
+    cost_datas[:living_alone_funds] = living_alone_funds * TEN_THOUSAND * MONTHS_PER_YEAR * YEARS_FOR_UNI
     cost_datas
   end
 
@@ -127,7 +133,7 @@ living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize'] + liv
     datas = Result.json_cost_datas
     cost_hash = cost_datas_hash
 
-    high_school_cost = cost_hash[:nursery_school] + cost_hash[:kindergarten] + cost_hash[:primary_school] + cost_hash[:junior_high_school] + 350_000
+    high_school_cost = cost_hash[:nursery_school] + cost_hash[:kindergarten] + cost_hash[:primary_school] + cost_hash[:junior_high_school] + HIGH_SCHOOL_ENTRY_COST
     result_hash[:high_school_cost] = high_school_cost
 
     university_entry_cost = { publicArts: 672_000, publicScience: 672_000, privateArts: 818_000,
