@@ -11,7 +11,7 @@ class PlanForm
   # fields_forを使用するため、Planインスタンスを規定の個数生成する
   def initialize(attributes = {})
     super attributes
-    self.plans = FORM_COUNT.times.map { Plan.new } unless plans.present?
+    self.plans ||= FORM_COUNT.times.map { Plan.new }
   end
 
   # 取得したパラメータを各Planインスタンスに格納

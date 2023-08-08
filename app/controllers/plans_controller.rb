@@ -56,9 +56,7 @@ class PlansController < ApplicationController
   def edit_plans
     plans = current_user.current_child.plans
     if plans.length != PLANS_COUNT
-      (PLANS_COUNT - plans.length).times do
-        plans.push(Plan.new)
-      end
+      plans.concat(Array.new(PLANS_COUNT - plans.length) { Plan.new })
     end
     plans
   end
