@@ -33,6 +33,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 4.0.1'
   gem 'factory_bot_rails', '~> 4.11'
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
 end
 
 group :development do
@@ -46,8 +48,6 @@ group :development do
   gem 'spring'
   gem 'foreman'
   gem 'pry-rails'
-  gem 'rubocop', require: false
-  gem 'rubocop-rails', require: false
 end
 
 group :test do
