@@ -28,20 +28,6 @@ module.exports = {
         'sans-serif',
       ]
     },
-    colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
-      success: colors.emerald,
-      info: colors.cyan,
-      warning: colors.orange,
-      danger: colors.red,
-      white: colors.white,
-      gray: colors.gray,
-      blue: colors.blue,
-      green: colors.green,
-      yellow: colors.yellow,
-      red: colors.red
-    },
     extend: {
       colors: {
         'amber-dark': '#5C5446',
@@ -49,6 +35,26 @@ module.exports = {
         'amber-card': '#FFF6C6',
         'amber-vivid': '#FE6B01',
         'submenu': '#FFFEF3',
+        success: {
+          100: '#d1fae5',
+          500: '#10b981',
+          700: '#047857',
+        },
+        danger: {
+          100: '#fee2e2',
+          500: '#ef4444',
+          700: '#b91c1c',
+        },
+        warning: {
+          100: '#ffedd5',
+          500: '#f97316',
+          700: '#c2410c',
+        },
+        info: {
+          100: '#cffafe',
+          500: '#06b6d4',
+          700: '#0e7490',
+        }
       }
     },
   },
