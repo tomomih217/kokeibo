@@ -8,6 +8,7 @@ module.exports = {
     './app/helpers/**/*.rb',
     './app/javascript/**/*.js',
     './app/javascript/components/**/*.js',
+    './node_modules/tailwindcss/color.js',
   ],
   darkMode: false, // or 'media' or 'class'
   variants: {
