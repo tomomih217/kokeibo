@@ -22,7 +22,7 @@
             <div class="bg-white rounded-b-lg px-4">
               <div class='py-5 text-center'>
                 <p class='text-md text-amber-dark'>お子様のご年齢は？</p>
-                <%= f.select :age, age_options, class: 'border-amber-dark', selected: "#{@result.age}才" %>
+                <%= f.select :age, age_options, { selected: "#{@result.age}才" }, { class: 'border-2 border-gray-200 rounded-md p-1' } %>
               </div>
             </div>
           </div>
@@ -91,7 +91,7 @@
             <div class="bg-white rounded-b-lg px-4">
               <div class='py-5 text-center'>
                 <p class='text-md text-amber-dark mb-5'>仕送り（自宅外通学）予定金額</p>
-                <%= f.select :living_alone_funds, living_alone_funds_options, class: 'border-amber-dark', selected: @result.living_alone_funds == 0 ? '仕送りの予定はない' : "#{@result.living_alone_funds}万円" %>
+                <%= f.select :living_alone_funds, living_alone_funds_options, { selected: @result.living_alone_funds == 0 ? '仕送りの予定はない' : "#{@result.living_alone_funds}万円" }, { class: 'border-2 border-gray-200 rounded-md p-1' } %>
               </div>
             </div>
           </div>

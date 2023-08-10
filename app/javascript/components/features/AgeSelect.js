@@ -8,7 +8,7 @@ const AgeSelect = ({ identifier, onChange }) => {
 
   return (
     <div>
-      <select identifier="age" className='border' onChange={handleDropdownChange}>
+      <select identifier="age" className='border-2 border-gray-200 rounded-md p-1' onChange={handleDropdownChange}>
         <option value="">選択してください</option>
         {Array.from({ length: 19 }, (_, index) => (
           <option key={index} value={index}>{index}才</option>
