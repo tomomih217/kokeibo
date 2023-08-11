@@ -9,7 +9,7 @@ const LivingAloneFundsSelectDropdown = ({ identifier, onChange }) => {
 
   return (
     <div>
-      <select id='livingAloneFunds' className='border-2 border-gray-200 rounded-md p-1' onChange={handleDropdownChange}>
+      <select id='livingAloneFunds' className='border-2 border-gray-200 rounded-md p-1 hover:border-blue-400' onChange={handleDropdownChange}>
         <option value="">金額を選択してください</option>
         <option value="0">仕送りの予定はない</option>
         {Array.from({ length: 10 }, (_, index) => {
