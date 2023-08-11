@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2023_08_11_123601) do
     t.bigint "child_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "from_age_for_nursery_school"
+    t.integer "from_age_for_nursery_school", default: 0
     t.index ["child_id"], name: "index_results_on_child_id"
   end
 

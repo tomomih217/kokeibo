@@ -65,7 +65,7 @@
                     <% if school_type[:type] == 'nursery_school' %>
                       <div class="mb-5">
                         <label class="text-md text-amver-dark mb-3 block" for="nursery_school_from_age">入園年（保育園）</label>
-                        <%= f.select :nursery_school_from_age, (1..5).to_a.map { |n| [n.to_s + '才', n] }, { include_blank: true }, { class: 'border-2 border-gray-200 rounded-md p-1 hover:border-blue-400' } %>
+                        <%= f.select :from_age_for_nursery_school, (1..5).to_a.map { |n| [n.to_s + '才', n] }, { include_blank: true }, { class: 'border-2 border-gray-200 rounded-md p-1 hover:border-blue-400' } %>
                       </div>
                     <% end %>
                   </div>

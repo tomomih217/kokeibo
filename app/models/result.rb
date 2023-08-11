@@ -9,6 +9,7 @@ class Result < ApplicationRecord
 
   validates :age, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :nursery_school, presence: true
+  validates :from_age_for_nursery_school, numericality: { greater_than_or_equal_to: 0 }
   validates :kindergarten, presence: true
   validates :primary_school, presence: true
   validates :junior_high_school, presence: true
@@ -23,6 +24,7 @@ class Result < ApplicationRecord
                           else
                             age == '出産前' ? 0 : age.to_i
                           end
+    result_params[:from_age_for_nursery_school] = 0 if result_params[:nursery_school] == 'unselected'
     living_alone_funds = result_params[:living_alone_funds]
     result_params[:living_alone_funds] = if living_alone_funds == '選択してください'
                                            BLANK
@@ -52,7 +54,7 @@ class Result < ApplicationRecord
     ]
   end
 
-  def self.age_range
+  def age_range
     ageRange = {
       nursery_school: %w[age1 age2],
       kindergarten: %w[age3 age4 age5],
@@ -61,6 +63,14 @@ class Result < ApplicationRecord
       high_school: %w[age15 age16 age17],
       university: %w[age18 age19 age20 age21]
     }
+    if kindergarten == 'unselected'
+      array = []
+      (from_age_for_nursery_school..5).each do |age|
+        array.push("age#{age.to_s}")
+      end
+      ageRange[:nursery_school] = array
+    end
+    ageRange
   end
 
   def duration
@@ -78,22 +88,25 @@ class Result < ApplicationRecord
   def cost_datas_hash
     json_datas = Result.json_cost_datas
     cost_datas = {}
-    schoolTypes = %w[
-      nurserySchool
-      kindergarten
-      primarySchool
-      juniorHighSchool
-      highSchool
-      university
+    schoolTypes = [
+      'nurserySchool',
+      'kindergarten',
+      'primarySchool',
+      'juniorHighSchool',
+      'highSchool',
+      'university'
     ]
-    ageRange = Result.age_range
+    
+    ageRange = age_range
 
     schoolTypes.each do |schoolType|
       total = 0
       school_type = schoolType.underscore.to_sym
-      ageRange[school_type].each do |age|
-        data = json_datas[schoolType][send(school_type)][age]
-        total += data
+      if send(school_type) != 'unselected'
+        ageRange[school_type].each do |age|
+          data = json_datas[schoolType][send(school_type)][age]
+          total += data
+        end
       end
       cost_datas[school_type] = total
     end
@@ -114,7 +127,7 @@ class Result < ApplicationRecord
       highSchool
       university
     ]
-    ageRange = Result.age_range
+    ageRange = age_range
 
     schoolTypes.each do |schoolType|
       school_type = schoolType.underscore.to_sym

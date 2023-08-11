@@ -33,6 +33,7 @@ class ResultsController < ApplicationController
       :id,
       :age,
       :nursery_school,
+      :from_age_for_nursery_school,
       :kindergarten,
       :primary_school,
       :junior_high_school,
