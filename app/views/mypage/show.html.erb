@@ -79,7 +79,7 @@
   <% if @child.result.present? %>
       <div class='mb-10'>
         <%= render 'event', child: @child, event: '高校入学', event_sym: :high_school_cost, age: 15, image: 'high_school.png' %>
-        <%= render 'event', child: @child, event: '大学入学', event_sym: :university_cost, age: 18, image: 'university.png' %>
+        <%= render 'event', child: @child, event: '大学入学', event_sym: :university_cost, age: 18, image: 'university.png' unless @child.result.unselected?('university') %>
       </div>
     <% else %>
       <div class='my-10 text-center'>

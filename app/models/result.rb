@@ -63,7 +63,7 @@ class Result < ApplicationRecord
       high_school: %w[age15 age16 age17],
       university: %w[age18 age19 age20 age21]
     }
-    if kindergarten == 'unselected'
+    if unselected?('kindergarten')
       array = []
       (from_age_for_nursery_school..5).each do |age|
         array.push("age#{age.to_s}")
@@ -102,7 +102,7 @@ class Result < ApplicationRecord
     schoolTypes.each do |schoolType|
       total = 0
       school_type = schoolType.underscore.to_sym
-      if send(school_type) != 'unselected'
+      unless unselected?(school_type)
         ageRange[school_type].each do |age|
           data = json_datas[schoolType][send(school_type)][age]
           total += data
@@ -131,9 +131,11 @@ class Result < ApplicationRecord
 
     schoolTypes.each do |schoolType|
       school_type = schoolType.underscore.to_sym
-      ageRange[school_type].each do |age|
-        data = json_datas[schoolType][send(school_type)][age]
-        cost_datas[age.to_sym] = data
+      unless unselected?(school_type)
+        ageRange[school_type].each do |age|
+          data = json_datas[schoolType][send(school_type)][age]
+          cost_datas[age.to_sym] = data
+        end
       end
     end
     cost_datas[:living_alone_initialize] = living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize']
@@ -149,14 +151,20 @@ class Result < ApplicationRecord
     high_school_cost = cost_hash[:nursery_school] + cost_hash[:kindergarten] + cost_hash[:primary_school] + cost_hash[:junior_high_school] + HIGH_SCHOOL_ENTRY_COST
     result_hash[:high_school_cost] = high_school_cost
 
-    university_entry_cost = { publicArts: 672_000, publicScience: 672_000, privateArts: 818_000,
-                              privateScience: 888_000 }
-    university_cost = high_school_cost + cost_hash[:high_school] + university_entry_cost[university.to_sym]
-    result_hash[:university_cost] = university_cost
+    unless unselected?('university')
+      university_entry_cost = { publicArts: 672_000, publicScience: 672_000, privateArts: 818_000,
+                                privateScience: 888_000 }
+      university_cost = high_school_cost + cost_hash[:high_school] + university_entry_cost[university.to_sym]
+      result_hash[:university_cost] = university_cost
+    end
     result_hash
   end
 
   def total_living_alone_funds
     living_alone_funds * TEN_THOUSAND * MONTHS_PER_YEAR * YEARS_FOR_UNI
+  end
+
+  def unselected?(school_type)
+    return send(school_type) == 'unselected'
   end
 end

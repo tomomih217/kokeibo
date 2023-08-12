@@ -8,18 +8,20 @@
     <div>
       <div class='mb-5'>積立開始年齢： <%= @result.age %>才</div>
       <% Result.school_types.each do |school_type| %>
-        <div class='mb-5'>
-          <div class='flex justify-between'>
-            <div><%= t(Result.human_attribute_name(school_type.to_sym)) %>: <%= @result.decorate.translated_school_type(school_type)%></div>
-            <div class='text-xl'>約<%= @cost_datas[school_type.to_sym].to_s(:delimited) %><span class='text-sm'>円</span></div>
+        <% unless @result.unselected?(school_type)%>
+          <div class='mb-5'>
+            <div class='flex justify-between'>
+              <div><%= t(Result.human_attribute_name(school_type.to_sym)) %>: <%= @result.decorate.translated_school_type(school_type)%></div>
+              <div class='text-xl'>約<%= @cost_datas[school_type.to_sym].to_s(:delimited) %><span class='text-sm'>円</span></div>
+            </div>
+            <hr>
+            <div class='text-right'>
+              <% @result.age_range[school_type.to_sym].each do |age| %>
+                <p><%= @result.decorate.formated_age(age) %>   <%= @cost_by_ages[age.to_sym].to_s(:delimited) %><span class='text-xs'>円</span></p>
+              <% end %>
+            </div>
           </div>
-          <hr>
-          <div class='text-right'>
-            <% Result.age_range[school_type.to_sym].each do |age| %>
-              <p><%= @result.decorate.formated_age(age) %>   <%= @cost_by_ages[age.to_sym].to_s(:delimited) %><span class='text-xs'>円</span></p>
-            <% end %>
-          </div>
-        </div>
+        <% end %>
       <% end %>
       <div class='mb-5'>
         <div class='flex justify-between'>
