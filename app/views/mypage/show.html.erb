@@ -60,7 +60,7 @@
     </div>
     <% if @child.result.present? %>
       <div class='my-20' id='saving_plan_graph'>
-        <%= react_component('features/ResultGraph', { monthlyAmount: @child.plans.sum(:amount), age: @child.result.age, costArray: @child.result.cost_datas_hash.values }) %>
+        <%= react_component('features/ResultGraph', { monthlyAmount: @child.plans.sum(:amount), age: @child.result.age, costArray: @child.result.cost_array_for_graph }) %>
         <% if @child.result.total_cost > @child.plans.sum(:amount) * @child.result.duration %>
           <p class='text-red-500 text-center'>在学中に別途資金が必要です。ご注意ください。</p>
         <% end %>

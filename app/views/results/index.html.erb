@@ -8,7 +8,7 @@
     <div>
       <div class='mb-5'>積立開始年齢： <%= @result.age %>才</div>
       <% Result.school_types.each do |school_type| %>
-        <% unless @result.unselected?(school_type)%>
+        <% unless @result.unselected?(school_type) || @cost_datas[school_type.to_sym].zero? %>
           <div class='mb-5'>
             <div class='flex justify-between'>
               <div><%= t(Result.human_attribute_name(school_type.to_sym)) %>: <%= @result.decorate.translated_school_type(school_type)%></div>

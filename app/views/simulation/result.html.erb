@@ -9,7 +9,7 @@
 </div>
 
 <div class='w-2/3 m-auto'>
-  <%= react_component('features/ResultGraph', { monthlyAmount: @result.cost_per_month, age: @result.age, costArray: @result.cost_datas_hash.values }) %>
+  <%= react_component('features/ResultGraph', { monthlyAmount: @result.cost_per_month, age: @result.age, costArray: @result.cost_array_for_graph }) %>
 </div>
 
 <div class='text-center' >
