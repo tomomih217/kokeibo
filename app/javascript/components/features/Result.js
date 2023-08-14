@@ -10,24 +10,62 @@ const Result = ({ props }) => {
   //積立期間
   const duration = (18 - props.age) * 12
 
-  //積立総額
-  let costArray = [];
+  //教育費総額
+  let costArray = [0];
+  let costDatas = [];
+  let totalCost = 0;
+
   const caluculateCost = (schoolType, ageRange) => {
     const categoryKey = props[schoolType];
     const publicOrPrivate = json[schoolType][categoryKey];
 
-    let totalCost = 0;
-
-    ageRange.forEach((age) => {
-      const ageCost = publicOrPrivate[age];
-      totalCost += ageCost;
+    ageRange.forEach(function (age) {
+      let cost;
+      const ageInt = parseInt(age.slice(3), 10);
+      if (ageInt % 3 === 0) {
+        cost = publicOrPrivate[age];
+        totalCost += cost;
+        costArray.push(totalCost);
+      } else {
+        cost = publicOrPrivate[age];
+        totalCost += cost;
+      }
+      costDatas.push(cost);
+      cost = 0;
     });
 
-    costArray.push(totalCost);
   }
 
-  caluculateCost("nurserySchool", ["age1", "age2"]);
-  caluculateCost("kindergarten", ["age3", "age4", "age5"]);
+  const ageMap = {
+    1: ['age1', 'age2', 'age3', 'age4', 'age5'],
+    2: ['age2', 'age3', 'age4', 'age5'],
+    3: ['age3', 'age4', 'age5'],
+    4: ['age4', 'age5'],
+    5: ['age5'],
+  };
+
+  let ages_for_nurserySchool = (
+    props['nurserySchool'] === 'unselected'
+    ? []
+    : ageMap[props.entryage]
+  );
+  const ages_for_kindergarten = (
+    props['kindergarten'] === 'unselected'
+    ? []
+    : ['age3', 'age4', 'age5']
+  );
+  if (ages_for_kindergarten === ['age3', 'age4', 'age5']) {
+    if (props.entryage === 1){
+      ages_for_nurserySchool = ['age1', 'age2']
+    } else if (props.entryage === 2) {
+      ages_for_nurserySchool = ['age2']
+    } else {
+      ages_for_nurserySchool = []
+    }
+  }
+
+  caluculateCost("nurserySchool", ages_for_nurserySchool);
+  caluculateCost("kindergarten", ages_for_kindergarten);
   caluculateCost("primarySchool", ["age6", "age7", "age8", "age9", "age10", "age11"]);
   caluculateCost("juniorHighSchool", ["age12", "age13", "age14"]);
   caluculateCost("highSchool", ["age15", "age16", "age17"]);
@@ -39,12 +77,14 @@ const Result = ({ props }) => {
   } else {
     livingAloneCost = 0;
   }
-  costArray.push(livingAloneCost);
+  costDatas.push(livingAloneCost);
 
-  const amount = costArray.reduce(function(a,b){
+
+  const amount = costDatas.reduce(function(a,b){
     return a + b;
   })
   const formattedAmount = amount.toLocaleString();
+
 
   //月々の積立金額
   const monthlyAmount = Math.round(amount / duration);
@@ -72,8 +112,8 @@ const Result = ({ props }) => {
           『令和3年度「教育費負担の実態調査結果」（日本政策金融公庫より・令和3年12月発行）』
         </Text>
       </div>
-      <div class='mt-10'>
-        <p class='text-center text-amber-dark'>会員登録をして、教育費を貯めましょう。</p>
+      <div className='mt-10'>
+        <p className='text-center text-amber-dark'>会員登録をして、教育費を貯めましょう。</p>
         <Link page='/users/new'>
           <Button pxSize='3' pySize='2' color='green-300' fontColor='white' roundType='full'>会員登録（無料）</Button>
         </Link>
