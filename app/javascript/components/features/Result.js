@@ -127,8 +127,6 @@ const Result = ({ props }) => {
           <Button pxSize='3' pySize='2' color='green-300' fontColor='white' roundType='full'>会員登録（無料）</Button>
         </Link>
       </div>
-      <p>{costArray}</p>
-      <p>{costDatas}</p>
     </div>
   );
 }
