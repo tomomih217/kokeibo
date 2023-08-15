@@ -26,7 +26,7 @@ const SimulationForm = ({ selectedValues, handleDropdownChange, schoolTypes }) =
             <div className='lg:px-10 pt-8'>
               { schoolTypes.map((schoolType, index) => {
                 const selectedValue = schoolType.type;
-                //if (schoolType.age > selectedValues['age']){
+                if (schoolType.age > selectedValues['age']){
                   if (selectedValue === 'nurserySchool') {
                     return (
                       <div className='mb-5'>
@@ -43,7 +43,7 @@ const SimulationForm = ({ selectedValues, handleDropdownChange, schoolTypes }) =
                       </div>
                     )
                   }
-                //}           
+                }           
               }) }
             </div>
           </div>

@@ -10,76 +10,85 @@ const Result = ({ props }) => {
   //積立期間
   const duration = (18 - props.age) * 12
 
-  //教育費総額
-  let costArray = [0];
-  let costDatas = [];
-  let totalCost = 0;
+  //教育費算出
+  //costArrayはグラフに渡す、３年ごとの教育費累計額を格納した配列
+  //costDatasは年齢別に教育費を格納した配列
+  const SchoolTypes = [
+    {type: 'nurserySchool', age: 6, term: ['age1', 'age2', 'age3', 'age4', 'age5']},
+    {type: 'kindergarten', age: 6, term: ['age3', 'age4', 'age5']},
+    {type: 'primarySchool', age: 12, term: ['age6', 'age7', 'age8', 'age9', 'age10', 'age11']},
+    {type: 'juniorHighSchool', age: 15, term: ['age12', 'age13', 'age14']},
+    {type: 'highSchool', age: 18, term: ['age15', 'age16', 'age17']},
+    {type: 'university', age: 22, term: ['age18', 'age19', 'age20', 'age21'],}
+  ]
 
-  const caluculateCost = (schoolType, ageRange) => {
-    const categoryKey = props[schoolType];
-    const publicOrPrivate = json[schoolType][categoryKey];
+  const costDatas = [0];
+  const costArray = [0];
+  let total = 0;
+  SchoolTypes.forEach((school) => {
+    if (props[school.type] !== 'unselected'){
+      if (props.age < school.age){
+        const categoryKey = props[school.type];
+        const publicOrPrivate = json[school.type][categoryKey];
 
-    ageRange.forEach(function (age) {
-      let cost;
-      const ageInt = parseInt(age.slice(3), 10);
-      if (ageInt % 3 === 0) {
-        cost = publicOrPrivate[age];
-        totalCost += cost;
-        costArray.push(totalCost);
+        let ageRange;
+        if (school.type === 'nurserySchool' && props['kindergarten'] !== 'unselected'){
+          if (props.entryage === '1'){
+            ageRange = ['age1', 'age2']
+          } else if (props.entryage === '2'){
+            ageRange = ['age2']
+          } else {
+            ageRange = []
+          }
+        } else if (school.type === 'kindergarten' && props['kindergarten'] === 'unselected'){
+          ageRange = [];
+        } else {
+          ageRange = school.term
+        }
+
+        ageRange.forEach((age) => {
+          let livingAloneCost = 0;
+          if (school.type === 'university' && props.livingAloneFunds !== 0){
+            age === 'age18'
+            ? livingAloneCost = publicOrPrivate[age] + props.livingAloneFunds * 12 + json['livingAllowance']['initialize']
+            : livingAloneCost = publicOrPrivate[age] + props.livingAloneFunds * 12;
+          }
+          const cost = publicOrPrivate[age] + livingAloneCost;
+          if ((parseInt(age.slice(3), 10) + 1) % 3 === 0 && parseInt(age.slice(3), 10) !== 20){
+            total += cost;
+            costArray.push(total)
+          } else if (parseInt(age.slice(3)) === 21){
+            total += cost;
+            costArray.push(total)
+          } else {
+            total += cost;
+          }
+          costDatas.push(cost);
+        })
       } else {
-        cost = publicOrPrivate[age];
-        totalCost += cost;
+        for(let i = 0; i < school.term.length; i++){
+          if (school.type !== 'kindergarten'){
+            costDatas.push(0);
+            const eachAge = parseInt(school.term[i].slice(3), 10);
+            if ((eachAge + 1) % 3 === 0 && eachAge !== 20){
+              costArray.push(0);
+            } else if (eachAge === 21) {
+              costArray.push(0);
+            }
+          }
+        }
       }
-      costDatas.push(cost);
-      cost = 0;
-    });
-
-  }
-
-  const ageMap = {
-    1: ['age1', 'age2', 'age3', 'age4', 'age5'],
-    2: ['age2', 'age3', 'age4', 'age5'],
-    3: ['age3', 'age4', 'age5'],
-    4: ['age4', 'age5'],
-    5: ['age5'],
-  };
-
-  let ages_for_nurserySchool = (
-    props['nurserySchool'] === 'unselected'
-    ? []
-    : ageMap[props.entryage]
-  );
-  const ages_for_kindergarten = (
-    props['kindergarten'] === 'unselected'
-    ? []
-    : ['age3', 'age4', 'age5']
-  );
-  if (ages_for_kindergarten === ['age3', 'age4', 'age5']) {
-    if (props.entryage === 1){
-      ages_for_nurserySchool = ['age1', 'age2']
-    } else if (props.entryage === 2) {
-      ages_for_nurserySchool = ['age2']
     } else {
-      ages_for_nurserySchool = []
+      if (school.type === 'nurserySchool') {
+        costArray.push(0);
+        Array.from({ length: 2 }, (_, index) => {
+          costDatas.push(0);
+        })
+      }
     }
-  }
+  })
 
-  caluculateCost("nurserySchool", ages_for_nurserySchool);
-  caluculateCost("kindergarten", ages_for_kindergarten);
-  caluculateCost("primarySchool", ["age6", "age7", "age8", "age9", "age10", "age11"]);
-  caluculateCost("juniorHighSchool", ["age12", "age13", "age14"]);
-  caluculateCost("highSchool", ["age15", "age16", "age17"]);
-  caluculateCost("university", ["age18", "age19", "age20", "age21"]);
-
-  let livingAloneCost;
-  if (props.livingAloneFunds > 0) {
-    livingAloneCost = json.livingAllowance.initialize + props.livingAloneFunds * 12 * 4;
-  } else {
-    livingAloneCost = 0;
-  }
-  costDatas.push(livingAloneCost);
-
-
+  //教育費の総額
   const amount = costDatas.reduce(function(a,b){
     return a + b;
   })
@@ -118,6 +127,8 @@ const Result = ({ props }) => {
           <Button pxSize='3' pySize='2' color='green-300' fontColor='white' roundType='full'>会員登録（無料）</Button>
         </Link>
       </div>
+      <p>{costArray}</p>
+      <p>{costDatas}</p>
     </div>
   );
 }
