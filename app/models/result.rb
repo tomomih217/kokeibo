@@ -9,6 +9,7 @@ class Result < ApplicationRecord
 
   validates :age, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :nursery_school, presence: true
+  validates :from_age_for_nursery_school, numericality: { greater_than_or_equal_to: 0 }
   validates :kindergarten, presence: true
   validates :primary_school, presence: true
   validates :junior_high_school, presence: true
@@ -23,6 +24,7 @@ class Result < ApplicationRecord
                           else
                             age == '出産前' ? 0 : age.to_i
                           end
+    result_params[:from_age_for_nursery_school] = 0 if result_params[:nursery_school] == 'unselected'
     living_alone_funds = result_params[:living_alone_funds]
     result_params[:living_alone_funds] = if living_alone_funds == '選択してください'
                                            BLANK
@@ -52,7 +54,7 @@ class Result < ApplicationRecord
     ]
   end
 
-  def self.age_range
+  def age_range
     ageRange = {
       nursery_school: %w[age1 age2],
       kindergarten: %w[age3 age4 age5],
@@ -61,6 +63,15 @@ class Result < ApplicationRecord
       high_school: %w[age15 age16 age17],
       university: %w[age18 age19 age20 age21]
     }
+    if unselected?('kindergarten')
+      array = []
+      (from_age_for_nursery_school..5).each do |target_age|
+        array.push("age#{target_age.to_s}")
+      end
+      ageRange[:nursery_school] = array
+      ageRange[:kindergarten] = []
+    end
+    ageRange
   end
 
   def duration
@@ -78,22 +89,25 @@ class Result < ApplicationRecord
   def cost_datas_hash
     json_datas = Result.json_cost_datas
     cost_datas = {}
-    schoolTypes = %w[
-      nurserySchool
-      kindergarten
-      primarySchool
-      juniorHighSchool
-      highSchool
-      university
+    schoolTypes = [
+      'nurserySchool',
+      'kindergarten',
+      'primarySchool',
+      'juniorHighSchool',
+      'highSchool',
+      'university'
     ]
-    ageRange = Result.age_range
+    
+    ageRange = age_range
 
     schoolTypes.each do |schoolType|
       total = 0
       school_type = schoolType.underscore.to_sym
-      ageRange[school_type].each do |age|
-        data = json_datas[schoolType][send(school_type)][age]
-        total += data
+      unless unselected?(school_type)
+        ageRange[school_type].each do |target_age|
+          data = json_datas[schoolType][send(school_type)][target_age]
+          total += data if target_age.gsub(/[^\d]/, "").to_i >= age
+        end
       end
       cost_datas[school_type] = total
     end
@@ -114,13 +128,15 @@ class Result < ApplicationRecord
       highSchool
       university
     ]
-    ageRange = Result.age_range
+    ageRange = age_range
 
     schoolTypes.each do |schoolType|
       school_type = schoolType.underscore.to_sym
-      ageRange[school_type].each do |age|
-        data = json_datas[schoolType][send(school_type)][age]
-        cost_datas[age.to_sym] = data
+      unless unselected?(school_type)
+        ageRange[school_type].each do |target_age|
+          data = json_datas[schoolType][send(school_type)][target_age]
+          target_age.gsub(/[^\d]/, "").to_i >= age ? cost_datas[target_age.to_sym] = data : cost_datas[target_age.to_sym] = 0
+        end
       end
     end
     cost_datas[:living_alone_initialize] = living_alone_funds.zero? ? 0 : json_datas['livingAllowance']['initialize']
@@ -136,14 +152,41 @@ class Result < ApplicationRecord
     high_school_cost = cost_hash[:nursery_school] + cost_hash[:kindergarten] + cost_hash[:primary_school] + cost_hash[:junior_high_school] + HIGH_SCHOOL_ENTRY_COST
     result_hash[:high_school_cost] = high_school_cost
 
-    university_entry_cost = { publicArts: 672_000, publicScience: 672_000, privateArts: 818_000,
-                              privateScience: 888_000 }
-    university_cost = high_school_cost + cost_hash[:high_school] + university_entry_cost[university.to_sym]
-    result_hash[:university_cost] = university_cost
+    unless unselected?('university')
+      university_entry_cost = { publicArts: 672_000, publicScience: 672_000, privateArts: 818_000,
+                                privateScience: 888_000 }
+      university_cost = high_school_cost + cost_hash[:high_school] + university_entry_cost[university.to_sym]
+      result_hash[:university_cost] = university_cost
+    end
     result_hash
   end
 
   def total_living_alone_funds
     living_alone_funds * TEN_THOUSAND * MONTHS_PER_YEAR * YEARS_FOR_UNI
+  end
+
+  def unselected?(school_type)
+    return send(school_type) == 'unselected'
+  end
+
+  def cost_until_age(target_age)
+    datas = cost_datas_by_age.to_a
+    total = 0
+    datas.each do |data|
+      if data[0].to_s.gsub(/[^\d]/, "").to_i <= target_age
+        total += data[1] if data[0].to_s.gsub(/[^\d]/, "").to_i >= age
+      end
+    end
+    total
+  end
+
+  def cost_array_for_graph
+    array = [0]
+    (1..18).each do |idx|
+      if idx % 3 == 0
+        array.push(cost_until_age(idx))
+      end
+    end
+    array.push(cost_until_age(22))
   end
 end

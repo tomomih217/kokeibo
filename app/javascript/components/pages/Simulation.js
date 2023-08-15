@@ -3,12 +3,14 @@ import Container from '../components/Container';
 import Button from '../components/Button';
 import ResultValidation from '../features/ResultValidation';
 import SimulationForm from '../features/SimulationForm';
+import SchoolButtons from '../features/SchoolButtons';
 
 const Simulation = () => {
   //ユーザーの入力値を格納
   const [selectedValues, setSelectedValues] = useState({
     age: 0,
     nurserySchool: '',
+    entryage: 0,
     kindergarten: '',
     primarySchool: '',
     juniorHighSchool: '',
@@ -27,12 +29,12 @@ const Simulation = () => {
   };
 
   const schoolTypes = [
-    { type: 'nurserySchool', label: '保育園' }, 
-    { type: 'kindergarten', label: '幼稚園' },
-    { type: 'primarySchool', label: '小学校' },
-    { type: 'juniorHighSchool', label: '中学校' },
-    { type: 'highSchool', label: '高等学校' },
-    { type: 'university', label: '大学' }
+    { type: 'nurserySchool', label: '保育園(認定こども園を含む）', age: 6 }, 
+    { type: 'kindergarten', label: '幼稚園', age: 6 },
+    { type: 'primarySchool', label: '小学校', age: 12 },
+    { type: 'juniorHighSchool', label: '中学校', age: 15 },
+    { type: 'highSchool', label: '高等学校', age: 18 },
+    { type: 'university', label: '大学', age: 22 }
   ]
 
   const handleClick = () => {
@@ -50,7 +52,7 @@ const Simulation = () => {
           </Button>
 
           <div className='mt-10'>
-            { showResult && <ResultValidation selectedValues={selectedValues} /> }
+            { showResult && <ResultValidation selectedValues={selectedValues} schoolTypes={schoolTypes} /> }
           </div>
         </div>
         

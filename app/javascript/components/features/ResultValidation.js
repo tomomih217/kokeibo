@@ -1,9 +1,15 @@
 import React from 'react';
 import Result from './Result';
 
-const ResultValidation = ({ selectedValues }) => {
+const ResultValidation = ({ selectedValues, schoolTypes }) => {
     // ステートの値をチェックしてメッセージを表示
-    const isEmpty = Object.values(selectedValues).some(value => value === '');
+    const objects = selectedValues;
+    schoolTypes.forEach((schoolType) => {
+      if (schoolType.age <= selectedValues.age) {
+        delete objects[schoolType.type];
+      }
+    });
+    const isEmpty = Object.values(objects).some(value => value === '');
 
   return (
     <div>

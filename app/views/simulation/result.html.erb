@@ -9,7 +9,7 @@
 </div>
 
 <div class='w-2/3 m-auto'>
-  <%= react_component('features/ResultGraph', { monthlyAmount: @result.cost_per_month, age: @result.age, costArray: @result.cost_datas_hash.values }) %>
+  <%= react_component('features/ResultGraph', { monthlyAmount: @result.cost_per_month, age: @result.age, costArray: @result.cost_array_for_graph }) %>
 </div>
 
 <div class='text-center' >
@@ -27,6 +27,7 @@
       <%= form_with model: @result, url: result_path(@child.result), method: :patch, local: true do |f| %>
         <%= f.hidden_field :age, value: @result.age %>
         <%= f.hidden_field :nursery_school, value: @result.nursery_school%>
+        <%= f.hidden_field :from_age_for_nursery_school, value: @result.from_age_for_nursery_school %>
         <%= f.hidden_field :kindergarten, value: @result.kindergarten %>
         <%= f.hidden_field :primary_school, value: @result.primary_school %>
         <%= f.hidden_field :junior_high_school, value: @result.junior_high_school %>
@@ -43,6 +44,7 @@
       <%= form_with model: @result, url: child_results_path(@child), local: true do |f| %>
         <%= f.hidden_field :age, value: @result.age %>
         <%= f.hidden_field :nursery_school, value: @result.nursery_school%>
+        <%= f.hidden_field :from_age_for_nursery_school, value: @result.from_age_for_nursery_school %>
         <%= f.hidden_field :kindergarten, value: @result.kindergarten %>
         <%= f.hidden_field :primary_school, value: @result.primary_school %>
         <%= f.hidden_field :junior_high_school, value: @result.junior_high_school %>

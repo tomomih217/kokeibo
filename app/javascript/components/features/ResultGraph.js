@@ -48,22 +48,19 @@ const ResultGraph = ({ monthlyAmount, age, costArray }) => {
   let costDatas = [0];
   let costData = 0;
   let count = 0;
-
-  for (let i = 0; i < costArray.length; i++) {
-    if (i === 2 || i === 3) {
-      costData += costArray[2] / 2;
-      if ( i === 3 ){ count += 1; }
-    } else if (count === 5 && costArray[count + 1] !== 0) {
-      costData += costArray[count] + costArray[count + 1];
-    } else {
-      costData += costArray[count];
-      count += 1;
-    }
-    costDatas.push(costData);
-  }
+  
+  costDatas = costArray
 
   const options = {
-    maintainAspectRatio: false
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        display: true,
+        suggestedMin: 0,
+        suggestedMax: 15000000,
+      }
+    },
+    spanGaps: true,
   }
 
   const graphData = {

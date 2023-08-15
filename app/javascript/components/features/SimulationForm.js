@@ -5,6 +5,7 @@ import AgeSelect from './AgeSelect';
 import Label from '../components/Label';
 import SchoolButtons from './SchoolButtons';
 import LivingAloneFundsSelectDropdown from './LivingAloneFundsSelect';
+import EntryAgeSelect from './EntryageSelect';
 
 const SimulationForm = ({ selectedValues, handleDropdownChange, schoolTypes }) => {
   return (
@@ -22,15 +23,27 @@ const SimulationForm = ({ selectedValues, handleDropdownChange, schoolTypes }) =
         <Card widthSize='1/2 md:w-2/3' title='STEP2'>
           <div className='py-5 text-center'>
             <Text size='md' color='amber-dark'>希望進路を選択してください。</Text>
-            <div className='lg:px-28 pt-8'>
+            <div className='lg:px-10 pt-8'>
               { schoolTypes.map((schoolType, index) => {
                 const selectedValue = schoolType.type;
-                return (
-                  <div className='mb-5'>
-                    <Label size='md' color='amber-dark'>{schoolType.label}</Label>
-                    <SchoolButtons identifier={schoolType.type} selectedButton={selectedValues[selectedValue]} onChange={handleDropdownChange} />
-                  </div>
-                )
+                if (schoolType.age > selectedValues['age']){
+                  if (selectedValue === 'nurserySchool') {
+                    return (
+                      <div className='mb-5'>
+                        <Label size='md' color='amber-dark'>{schoolType.label}</Label>
+                        <SchoolButtons identifier={schoolType.type} selectedButton={selectedValues[selectedValue]} onChange={handleDropdownChange} />
+                        <EntryAgeSelect identifier='entryage' onChange={handleDropdownChange} />
+                      </div>
+                    )
+                  } else {
+                    return (
+                      <div className='mb-5'>
+                        <Label size='md' color='amber-dark'>{schoolType.label}</Label>
+                        <SchoolButtons identifier={schoolType.type} selectedButton={selectedValues[selectedValue]} onChange={handleDropdownChange} />
+                      </div>
+                    )
+                  }
+                }           
               }) }
             </div>
           </div>
