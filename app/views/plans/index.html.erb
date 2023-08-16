@@ -19,7 +19,7 @@
       <th class='px-5 py-3'>費目</th>
       <th class='px-5 py-3'>金額</th>
       <th class='px-5 py-3'>入金予定日</th>
-      <!--th class='px-5 py-3'>自動入金設定</th -->
+      <th class='px-5 py-3'>自動入金設定</th>
       <th></th>
     </thead>
     <tbody class='text-center bg-yellow-100'>
@@ -28,7 +28,7 @@
           <td class='px-5 py-3'><%= plan.item %></td>
           <td class='px-5 py-3'><%= plan.amount.to_s(:delimited) %>円</td>
           <td class='px-5 py-3'>毎月<%= plan.payment_day %>日</td>
-          <!-- td class='px-5 py-3'><%= plan.is_auto ? 'on' : 'off' %></td -->
+          <td class='px-5 py-3'><%= plan.is_auto ? 'on' : 'off' %></td>
           <td class='px-5 py-3'>
             <%= link_to '削除', plan_path(plan.id), method: :delete, id: "delete_button_for_plan_#{plan.id}", class: 'px-2 py-2 bg-red-500 text-white rounded-md shadow-md hover:shadow-sm' %>
           </td>

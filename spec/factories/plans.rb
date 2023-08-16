@@ -3,12 +3,13 @@ FactoryBot.define do
     sequence(:item, 'item_01')
     amount { 10_000 }
     payment_day { 20 }
-    is_auto { true }
+    is_auto { false }
 
     child
 
-    trait :is_no_auto do
-      is_auto { false }
+    trait :is_auto do
+      payment_day { 1 }
+      is_auto { true }
     end
   end
 end
