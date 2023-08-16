@@ -6,7 +6,7 @@
     <div class='mb-5'>
       <div class='w-2/3 rounded-lg border border-amber-dark text-amber-dark p-4 m-auto'>
         <div class='flex justify-between'>
-          <div class='text-xl'><%= payment_collection.decorate.format_paymented_at %></div>
+          <div class='text-xl'><%= payment_collection.decorate.format_paymented_at %><%= payment_collection.decorate.is_auto? %></div>
           <div>
             <%= link_to '編集', edit_payment_collection_path(payment_collection.id), class: 'px-2 py-1 bg-green-300 text-white rounded-md shadow-md hover:shadow-sm' %>
             <%= link_to '削除', payment_collection_path(payment_collection.id), method: :delete, data: { confirm: '本当に削除しますか?' }, class: 'px-2 py-1 mr-2 bg-red-500 text-white rounded-md shadow-md hover:shadow-sm' %>

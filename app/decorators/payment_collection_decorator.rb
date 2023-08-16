@@ -17,4 +17,8 @@ class PaymentCollectionDecorator < ApplicationDecorator
   def total_amount
     "¥#{payments.pluck(:amount).sum.to_s(:delimited)}"
   end
+
+  def is_auto?
+    is_auto ? '(自動保存)' : ''
+  end
 end
