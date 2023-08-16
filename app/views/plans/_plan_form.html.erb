@@ -14,10 +14,10 @@
           <td class='text-center'><%= f.text_field :amount, placeholder: '例)15000', class: 'bg-white border-2 border-amber-dark rounded w-2/3 py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %>円</td>
           <td class='text-center pb-5'>
             <%= f.select :payment_day, (1..30).to_a, {include_blank: true}, step: 1000, class: 'bg-white border-2 border-amber-dark rounded py-2 px-4 text-gray-700 focus:outline-none focus:border-purple-500' %>日
-            <!-- div class='mt-1'>
+            <div class='mt-1'>
               <%= f.check_box :is_auto %>
               <%= f.label :is_auto, '自動で入金', class: 'text-amber-dark' %>
-            </div -->
+            </div>
           </td>
         </tr>
       <% end %>
