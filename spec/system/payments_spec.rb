@@ -229,4 +229,15 @@ RSpec.describe 'Payments', type: :system do
       end
     end
   end
+
+  describe 'auto_payment' do
+    let!(:plan){ create(:plan, :is_auto, child: child) }
+    before { login(user) }
+    context 'with payment on 1st day' do
+      before { visit child_payment_collections_path(child) }
+      it 'is successful' do
+        expect(page).to have_content '(自動入金)'
+      end
+    end
+  end
 end

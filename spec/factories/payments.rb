@@ -19,5 +19,6 @@ FactoryBot.define do
       item { '口座' }
       amount { 30_000 }
     end
+
   end
 end
