@@ -25,7 +25,7 @@ class MypageController < ApplicationController
       existing_payments.any? { |payment| payment.item == plan.item }
     end
 
-    if auto_plans_to_process
+    unless auto_plans_to_process.empty?
       # auto_plans_to_processからPaymentインスタンスを生成して保存
       payment_collection = @child.payment_collections.create(paymented_at: Date.today, is_auto: true)
       auto_plans_to_process.each do |plan|
