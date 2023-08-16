@@ -26,15 +26,27 @@ class MypageController < ApplicationController
     end
 
     unless auto_plans_to_process.empty?
-      # auto_plans_to_processからPaymentインスタンスを生成して保存
-      payment_collection = @child.payment_collections.create(paymented_at: Date.today, is_auto: true)
+      # payment_collectionsにpayment_dayごとのプランを格納するハッシュを初期化
+      payment_collections = Hash.new { |hash, key| hash[key] = [] }
+    
+      # auto_plans_to_processをpayment_dayごとに分類
       auto_plans_to_process.each do |plan|
-        payment_params = {
-          item: plan.item,
-          amount: plan.amount,
-        }
-        payment_collection.payments.create(payment_params)
+        payment_collections[plan.payment_day] << plan
+      end
+    
+      # 各payment_dayごとにpayment_collectionを生成して保存
+      payment_collections.each do |payment_day, plans|
+        payment_collection = @child.payment_collections.create(paymented_at: Date.parse("#{Date.today.year}/#{Date.today.month}/#{payment_day}"), is_auto: true)
+        
+        plans.each do |plan|
+          payment_params = {
+            item: plan.item,
+            amount: plan.amount,
+          }
+          payment_collection.payments.create(payment_params)
+        end
       end
     end
+    
   end
 end
