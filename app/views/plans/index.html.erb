@@ -23,7 +23,7 @@
       <th></th>
     </thead>
     <tbody class='text-center bg-yellow-100'>
-      <% @plans.each do |plan| %>
+      <% @child.plans.each do |plan| %>
         <tr>
           <td class='px-5 py-3'><%= plan.item %></td>
           <td class='px-5 py-3'><%= plan.amount.to_s(:delimited) %>円</td>

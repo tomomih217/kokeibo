@@ -19,6 +19,6 @@ class PaymentCollectionDecorator < ApplicationDecorator
   end
 
   def is_auto?
-    is_auto ? '(自動保存)' : ''
+    is_auto ? '(自動入金)' : ''
   end
 end

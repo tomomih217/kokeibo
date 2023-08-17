@@ -1,8 +1,6 @@
 class PlansController < ApplicationController
   layout 'after_login_layout'
-  def index
-    @plans = current_user.current_child.plans
-  end
+  def index ;end
 
   def new
     @form = PlanForm.new
@@ -25,7 +23,7 @@ class PlansController < ApplicationController
 
   def update
     @form = PlanForm.new(plan_form_params)
-    plan_ids = current_user.current_child.plans.pluck(:id)
+    plan_ids = @child.plans.pluck(:id)
     if @form.save
       plan_ids.each do |id|
         Plan.destroy(id)
@@ -38,9 +36,9 @@ class PlansController < ApplicationController
   end
 
   def destroy
-    plan = current_user.current_child.plans.find(params[:id])
+    plan = @child.plans.find(params[:id])
     plan.destroy!
-    redirect_to child_plans_path(current_user.current_child), success: '積立情報設定を削除しました'
+    redirect_to child_plans_path(@child), success: '積立情報設定を削除しました'
   end
 
   private
@@ -54,7 +52,7 @@ class PlansController < ApplicationController
   end
 
   def edit_plans
-    plans = current_user.current_child.plans
+    plans = @child.plans
     if plans.length != PLANS_COUNT
       plans.concat(Array.new(PLANS_COUNT - plans.length) { Plan.new })
     end

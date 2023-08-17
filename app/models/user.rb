@@ -16,4 +16,8 @@ class User < ApplicationRecord
   def current_child
     children.first
   end
+
+  def child_index(current_child)
+    children.index(current_child)
+  end
 end

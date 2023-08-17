@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   delete '/logout', to: 'user_sessions#destroy'
 
   get '/mypage', to: 'mypage#show'
+  get '/mypage/next', to: 'mypage#next_child'
+  get '/mypage/previous', to: 'mypage#previous_child'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
