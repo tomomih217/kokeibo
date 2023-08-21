@@ -52,7 +52,7 @@
         <div>
           <p class='mt-5'>積立額</p>
           <p class='text-4xl'><%= @savings_datas.values.sum.to_s(:delimited) %></p>
-          <p class='text-sm mt-3'>積立予定額：　<%= @child.estimated_amount.to_s(:delimited) %></p>
+          <p class='text-sm mt-3'>積立目安額：　<%= @child.estimated_amount.to_s(:delimited) %></p>
           <p class="text-xl text-<%= @child.diff_amount.negative? ? 'red-500' : 'green-500' %>">(<%= '+' if @child.diff_amount.positive? %><%= @child.diff_amount.to_s(:delimited) %>)</p>
         </div>
         <div class='mt-10'>

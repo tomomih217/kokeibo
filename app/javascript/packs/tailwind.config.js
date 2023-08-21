@@ -12,6 +12,7 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   variants: {
+    visibility: ['responsive', 'hover', 'focus', 'group-hover'],
     extend: {},
   },
   plugins: [],

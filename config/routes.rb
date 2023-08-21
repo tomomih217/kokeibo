@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     post 'result', to: 'simulation#result'
     patch 'result', to: 'simulation#result'
     resources :results, only: %i[index create update], shallow: true
+    get '/change', to: 'mypage#change_child'
   end
 
   get '/login', to: 'user_sessions#new'

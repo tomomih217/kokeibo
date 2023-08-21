@@ -3,6 +3,7 @@ class MypageController < ApplicationController
   before_action :auto_payment
   before_action :change_next_current_child, only: %i[next_child]
   before_action :change_previous_current_child, only: %i[previous_child]
+  before_action :change_current_child, only: %i[change_child]
 
   def show
     @savings_datas = @child.payments.group(:item).sum(:amount)
@@ -16,6 +17,12 @@ class MypageController < ApplicationController
   end
 
   def previous_child
+    @savings_datas = @child.payments.group(:item).sum(:amount)
+    @each_stage_cost = @child.result.each_stage_cost if @child.result.present?
+    redirect_to mypage_path
+  end
+
+  def change_child
     @savings_datas = @child.payments.group(:item).sum(:amount)
     @each_stage_cost = @child.result.each_stage_cost if @child.result.present?
     redirect_to mypage_path
@@ -73,6 +80,11 @@ class MypageController < ApplicationController
   def change_previous_current_child
     idx = current_user.child_index(@child)
     idx.zero? ? session[:child_id] = current_user.children.last.id : session[:child_id] = current_user.children[idx - 1].id
+    get_current_child
+  end
+
+  def change_current_child
+    session[:child_id] = params[:child_id] if params[:child_id]
     get_current_child
   end
 end
