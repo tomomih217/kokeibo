@@ -8,7 +8,7 @@
         </div>
       <% end %>
       <div class='relative group'>
-        <div class='ml-5 text-amber-dark'><%= @child.name %>ちゃん(<%= t("enum.child.stage.#{@child.stage}") %>)</div>
+        <div class='ml-5 text-blue-500 hover:text-blue-300'><%= @child.name %>ちゃん(<%= t("enum.child.stage.#{@child.stage}") %>)▼</div>
         <div class='absolute invisible group-hover:visible bg-amber-light rounded-md'>
           <% current_user.children.each_with_index do |child| %>
             <%= link_to child_change_path(child.id) do %>

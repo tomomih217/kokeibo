@@ -3,32 +3,33 @@ class MypageController < ApplicationController
   before_action :auto_payment
   before_action :change_next_current_child, only: %i[next_child]
   before_action :change_previous_current_child, only: %i[previous_child]
-  before_action :change_current_child, only: %i[change_child]
 
   def show
-    @savings_datas = @child.payments.group(:item).sum(:amount)
-    @each_stage_cost = @child.result.each_stage_cost if @child.result.present?
+    load_common_data
   end
 
   def next_child
-    @savings_datas = @child.payments.group(:item).sum(:amount)
-    @each_stage_cost = @child.result.each_stage_cost if @child.result.present?
+    load_common_data
     redirect_to mypage_path
   end
 
   def previous_child
-    @savings_datas = @child.payments.group(:item).sum(:amount)
-    @each_stage_cost = @child.result.each_stage_cost if @child.result.present?
+    load_common_data
     redirect_to mypage_path
   end
 
   def change_child
-    @savings_datas = @child.payments.group(:item).sum(:amount)
-    @each_stage_cost = @child.result.each_stage_cost if @child.result.present?
+    session[:child_id] = params[:child_id] if params[:child_id]
+    load_common_data
     redirect_to mypage_path
   end
 
   private
+
+  def load_common_data
+    @savings_datas = @child.payments.group(:item).sum(:amount)
+    @each_stage_cost = @child.result&.each_stage_cost
+  end
 
   def auto_payment
     # @childのplansでis_auto属性がtrueかつpayment_dayの値が本日よりも前のものを取得
@@ -71,20 +72,17 @@ class MypageController < ApplicationController
     end
   end
 
-  def change_next_current_child
+  def change_child_index(offset)
     idx = current_user.child_index(@child)
-    current_user.children[idx + 1].nil? ? session[:child_id] = current_user.children.first.id : session[:child_id] = current_user.children[idx + 1].id
+    session[:child_id] = current_user.children[(idx + offset) % current_user.children.size].id
     get_current_child
+  end
+
+  def change_next_current_child
+    change_child_index(1)
   end
 
   def change_previous_current_child
-    idx = current_user.child_index(@child)
-    idx.zero? ? session[:child_id] = current_user.children.last.id : session[:child_id] = current_user.children[idx - 1].id
-    get_current_child
-  end
-
-  def change_current_child
-    session[:child_id] = params[:child_id] if params[:child_id]
-    get_current_child
+    change_child_index(-1)
   end
 end
