@@ -3,10 +3,10 @@
 <% else %>
   <% if @child.plans.present? %>
     <div class='flex justify-center items-center'>
-      <% unless @child.id == current_user.children.first.id %>
+      <% if current_user.children.size != 1 && @child.id != current_user.children.first.id %>
         <%= link_to mypage_previous_path do %>
           <div class='rounded-full bg-gray-200 shadow-md p-3 mr-5 hover:bg-gray-300 hover:shadow-sm'>
-            <%= image_tag 'left_arrow.png', size: '30x30' %>
+            <%= image_tag 'left_arrow.png', size: '30x30', id: 'previous_child' %>
           </div>
         <% end %>
       <% end %>
@@ -33,10 +33,10 @@
         <hr class='border-amber-dark'>
         <p class='text-amber-dark text-center text-lg font-bold mt-2'><%= @child.plans.sum(:amount).to_s(:delimited) %>円</p>
       </div>
-      <% unless @child.id == current_user.children.last.id %>
+      <% if current_user.children.size != 1 && @child.id != current_user.children.last.id %>
         <%= link_to mypage_next_path do %>
           <div class='rounded-full bg-gray-200 shadow-md p-3 ml-5 hover:bg-gray-300 hover:shadow-sm'>
-            <%= image_tag 'right_arrow.png', size: '30x30' %>
+            <%= image_tag 'right_arrow.png', size: '30x30', id: 'next_child' %>
           </div>
         <% end %>
       <% end %>

@@ -85,6 +85,40 @@ RSpec.describe 'Mypage', type: :system do
     end
   end
 
+  describe 'Change child' do
+    let!(:user) { create(:user) }
+    let!(:child) { create(:child, user: user) }
+    fcontext 'clicked arrow button' do
+      let!(:another_child){ create(:child, name: 'another', user: user) }
+      before do
+        login(user)
+        find('next_child').click
+      end
+      it 'is successful' do
+        expect(page).to have_content "#{another_child.name}ちゃん"
+      end
+    end
+    fcontext 'selected another child' do
+      let!(:another_child){ create(:child, name: 'another', user: user) }
+      before do
+        login(user)
+        find("child_#{another_child.id}").click
+      end
+      it 'is successful' do
+        it 'is successful' do
+          expect(page).to have_content "#{another_child.name}ちゃん"
+        end
+      end
+    end
+    fcontext 'without another child' do
+      before { login(user) }
+      it 'cannot be displayed arrow button' do
+        expect(page).to have_no_selector '#next_child'
+        expect(page).to have_no_selector '#previous_child'
+      end
+    end
+  end
+
   describe 'tutorial' do
     let!(:user) { create(:user) }
     let!(:child) { create(:child, user: user) }
