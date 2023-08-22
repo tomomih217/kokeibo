@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   layout 'before_login_layout'
   skip_before_action :require_login, only: %i[new confirm create complete]
   skip_before_action :delete_session, only: %i[create]
-  skip_before_action :set_current_child
+  skip_before_action :get_current_child
   after_action :delete_session, only: %i[create]
 
   def new
