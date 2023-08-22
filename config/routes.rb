@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     post 'result', to: 'simulation#result'
     patch 'result', to: 'simulation#result'
     resources :results, only: %i[index create update], shallow: true
+    get '/change', to: 'mypage#change_child'
   end
 
   get '/login', to: 'user_sessions#new'
@@ -27,6 +28,8 @@ Rails.application.routes.draw do
   delete '/logout', to: 'user_sessions#destroy'
 
   get '/mypage', to: 'mypage#show'
+  get '/mypage/next', to: 'mypage#next_child'
+  get '/mypage/previous', to: 'mypage#previous_child'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

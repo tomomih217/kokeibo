@@ -1,12 +1,35 @@
 class MypageController < ApplicationController
   layout 'after_login_layout'
   before_action :auto_payment
+  before_action :change_next_current_child, only: %i[next_child]
+  before_action :change_previous_current_child, only: %i[previous_child]
+
   def show
-    @savings_datas = @child.payments.group(:item).sum(:amount)
-    @each_stage_cost = @child.result.each_stage_cost if @child.result.present?
+    load_common_data
+  end
+
+  def next_child
+    load_common_data
+    redirect_to mypage_path
+  end
+
+  def previous_child
+    load_common_data
+    redirect_to mypage_path
+  end
+
+  def change_child
+    session[:child_id] = params[:child_id] if params[:child_id]
+    load_common_data
+    redirect_to mypage_path
   end
 
   private
+
+  def load_common_data
+    @savings_datas = @child.payments.group(:item).sum(:amount)
+    @each_stage_cost = @child.result&.each_stage_cost
+  end
 
   def auto_payment
     # @childのplansでis_auto属性がtrueかつpayment_dayの値が本日よりも前のものを取得
@@ -26,15 +49,40 @@ class MypageController < ApplicationController
     end
 
     unless auto_plans_to_process.empty?
-      # auto_plans_to_processからPaymentインスタンスを生成して保存
-      payment_collection = @child.payment_collections.create(paymented_at: Date.today, is_auto: true)
+      # payment_collectionsにpayment_dayごとのプランを格納するハッシュを初期化
+      payment_collections = Hash.new { |hash, key| hash[key] = [] }
+    
+      # auto_plans_to_processをpayment_dayごとに分類
       auto_plans_to_process.each do |plan|
-        payment_params = {
-          item: plan.item,
-          amount: plan.amount,
-        }
-        payment_collection.payments.create(payment_params)
+        payment_collections[plan.payment_day] << plan
+      end
+    
+      # 各payment_dayごとにpayment_collectionを生成して保存
+      payment_collections.each do |payment_day, plans|
+        payment_collection = @child.payment_collections.create(paymented_at: Date.parse("#{Date.today.year}/#{Date.today.month}/#{payment_day}"), is_auto: true)
+        
+        plans.each do |plan|
+          payment_params = {
+            item: plan.item,
+            amount: plan.amount,
+          }
+          payment_collection.payments.create(payment_params)
+        end
       end
     end
+  end
+
+  def change_child_index(offset)
+    idx = current_user.child_index(@child)
+    session[:child_id] = current_user.children[(idx + offset) % current_user.children.size].id
+    get_current_child
+  end
+
+  def change_next_current_child
+    change_child_index(1)
+  end
+
+  def change_previous_current_child
+    change_child_index(-1)
   end
 end

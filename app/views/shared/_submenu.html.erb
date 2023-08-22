@@ -12,8 +12,10 @@
     <%= link_to child_results_path(@child) do %>
       <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(child_results_path(@child)) %>">希望進路</li>
     <% end %>
-    <!-- li class='mb-3'>お子様情報追加</li>
-    <li class='mb-3'>パートナー追加</li>
+    <%= link_to new_child_path do %>
+      <li class="px-5 py-3 hover:bg-gray-100<%= ' underline bg-gray-200' if current_page?(new_child_path) %>">お子様情報追加</li>
+    <% end %>
+    <!--li class='mb-3'>パートナー追加</li>
     <li class='mb-3'>会員情報変更</li>
     <li class='mb-3'>退会手続き</li-->
   </ul>

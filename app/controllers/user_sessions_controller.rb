@@ -1,6 +1,6 @@
 class UserSessionsController < ApplicationController
   skip_before_action :require_login
-  skip_before_action :set_current_child
+  skip_before_action :get_current_child
 
   layout 'before_login_layout'
   def new

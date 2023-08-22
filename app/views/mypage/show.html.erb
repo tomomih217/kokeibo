@@ -2,28 +2,44 @@
   <%= link_to 'お子様の情報を登録', new_child_path, class: 'px-3 py-2 text-white bg-amber-vivid rounded-md' %>
 <% else %>
   <% if @child.plans.present? %>
-    <div class='w-2/3 rounded-lg border border-yellow-200 text-amber-dark bg-yellow-200 p-4 m-auto'>
-      <div class='flex justify-between mb-3'>
-        <h1 class='text-3xl text-amber-dark'><%= Date.today.year %>年<%= Date.today.month %>月</h1>
-        <%= link_to '入 金', new_child_payment_collection_path(@child.id), class: 'px-10 py-1 bg-amber-vivid text-white text-md text-align-center rounded-md shadow-md hover:shadow-sm' %>
+    <div class='flex justify-center items-center'>
+      <% if current_user.children.size != 1 && @child.id != current_user.children.first.id %>
+        <%= link_to mypage_previous_path do %>
+          <div class='rounded-full bg-gray-200 shadow-md p-3 mr-5 hover:bg-gray-300 hover:shadow-sm'>
+            <%= image_tag 'left_arrow.png', size: '30x30', id: 'previous_child' %>
+          </div>
+        <% end %>
+      <% end %>
+      <div class='w-2/3 rounded-lg border border-yellow-200 text-amber-dark bg-yellow-200 p-4'>
+        <div class='flex justify-between mb-3'>
+          <h1 class='text-3xl text-amber-dark'><%= Date.today.year %>年<%= Date.today.month %>月</h1>
+          <%= link_to '入 金', new_child_payment_collection_path(@child.id), class: 'px-10 py-1 bg-amber-vivid text-white text-md text-align-center rounded-md shadow-md hover:shadow-sm' %>
+        </div>
+        <table class='w-full m-auto'>
+          <tbody>
+            <% @child.plans.each do |plan| %>
+              <tr>
+                <td class='w-1/3 text-amber-dark text-left pb-2'><%= plan.item %></td>
+                <td class='w-1/3 text-amber-dark text-center pb-2'><%= plan.amount.to_s(:delimited) %>円</td>
+                <% if Payment.joins(:payment_collection).where(payment_collection: {paymented_at: Date.today.all_month, child_id: @child.id}).find_by(item: plan.item) %>
+                  <td><%= image_tag 'check.png', size: '25x25', class: 'm-auto', id: "check_for_#{plan.id}" %></td>
+                <% else %>
+                  <td class='w-1/3 text-amber-dark text-right pb-2'><%= plan.payment_day %>日入金予定</td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <hr class='border-amber-dark'>
+        <p class='text-amber-dark text-center text-lg font-bold mt-2'><%= @child.plans.sum(:amount).to_s(:delimited) %>円</p>
       </div>
-      <table class='w-full m-auto'>
-        <tbody>
-          <% @child.plans.each do |plan| %>
-            <tr>
-              <td class='w-1/3 text-amber-dark text-left pb-2'><%= plan.item %></td>
-              <td class='w-1/3 text-amber-dark text-center pb-2'><%= plan.amount.to_s(:delimited) %>円</td>
-              <% if Payment.joins(:payment_collection).where(payment_collection: {paymented_at: Date.today.all_month, child_id: @child.id}).find_by(item: plan.item) %>
-                <td><%= image_tag 'check.png', size: '25x25', class: 'm-auto', id: "check_for_#{plan.id}" %></td>
-              <% else %>
-                <td class='w-1/3 text-amber-dark text-right pb-2'><%= plan.payment_day %>日入金予定</td>
-              <% end %>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <hr class='border-amber-dark'>
-      <p class='text-amber-dark text-center text-lg font-bold mt-2'><%= @child.plans.sum(:amount).to_s(:delimited) %>円</p>
+      <% if current_user.children.size != 1 && @child.id != current_user.children.last.id %>
+        <%= link_to mypage_next_path do %>
+          <div class='rounded-full bg-gray-200 shadow-md p-3 ml-5 hover:bg-gray-300 hover:shadow-sm'>
+            <%= image_tag 'right_arrow.png', size: '30x30', id: 'next_child' %>
+          </div>
+        <% end %>
+      <% end %>
     </div>
   <% end %>
 
@@ -36,7 +52,7 @@
         <div>
           <p class='mt-5'>積立額</p>
           <p class='text-4xl'><%= @savings_datas.values.sum.to_s(:delimited) %></p>
-          <p class='text-sm mt-3'>積立予定額：　<%= @child.estimated_amount.to_s(:delimited) %></p>
+          <p class='text-sm mt-3'>積立目安額：　<%= @child.estimated_amount.to_s(:delimited) %></p>
           <p class="text-xl text-<%= @child.diff_amount.negative? ? 'red-500' : 'green-500' %>">(<%= '+' if @child.diff_amount.positive? %><%= @child.diff_amount.to_s(:delimited) %>)</p>
         </div>
         <div class='mt-10'>
