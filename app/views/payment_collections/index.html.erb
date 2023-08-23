@@ -1,7 +1,7 @@
 <h1 class='text-3xl text-amber-dark text-center mb-5'>入金履歴</h1>
+<%= render 'calender' %>
 
 <% if @payment_collections.present? %>
-
   <% @payment_collections.each do |payment_collection| %>
     <div class='mb-5'>
       <div class='w-2/3 rounded-lg border border-amber-dark text-amber-dark p-4 m-auto'>

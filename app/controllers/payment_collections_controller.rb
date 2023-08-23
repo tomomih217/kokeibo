@@ -42,10 +42,6 @@ class PaymentCollectionsController < ApplicationController
     redirect_to child_payment_collections_path(@child), success: '入金情報を削除しました'
   end
 
-  def calender
-    @payment_collections = @child.payment_collections
-  end
-
   private
 
   def payment_collection_params
