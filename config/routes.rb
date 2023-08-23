@@ -16,6 +16,9 @@ Rails.application.routes.draw do
     put '/plans', to: 'plans#update'
     get '/plans/edit', to: 'plans#edit'
     resources :payment_collections, only: %i[index new create edit update destroy], shallow: true
+    controller :payment_collections do
+      get :calender
+    end
     resources :simulation, only: %i[new edit], shallow: true
     post 'result', to: 'simulation#result'
     patch 'result', to: 'simulation#result'
