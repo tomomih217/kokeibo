@@ -4,6 +4,7 @@ class PaymentCollectionsController < ApplicationController
 
   def index
     @payment_collections = @child.payment_collections.by_recently_paymented_at
+    @year = params[:year] || Date.today.year
   end
 
   def new
