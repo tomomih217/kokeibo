@@ -1,0 +1,15 @@
+<div class='w-2/3 m-auto mb-10'>
+  <div class='text-amber-dark m-auto'>
+    <div id='calender_year'>
+      <p><%= calender_year %>年度</p>
+    </div>
+    <div class='flex flex-wrap justify-center text-center'>
+      <% (4..12).each do |n| %>
+        <%= render 'stamp', year: calender_year, month: n %>
+      <% end %>
+      <% (1..3).each do |n| %>
+        <%= render 'stamp', year: calender_year, month: n %>
+      <% end %>
+    </div>
+  </div>
+</div>

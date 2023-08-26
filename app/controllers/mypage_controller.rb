@@ -68,6 +68,7 @@ class MypageController < ApplicationController
           }
           payment_collection.payments.create(payment_params)
         end
+        @child.stamping(payment_collection.paymented_at)
       end
     end
   end

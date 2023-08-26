@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_16_064914) do
+ActiveRecord::Schema.define(version: 2023_08_24_183028) do
 
   create_table "children", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -66,6 +66,15 @@ ActiveRecord::Schema.define(version: 2023_08_16_064914) do
     t.index ["child_id"], name: "index_results_on_child_id"
   end
 
+  create_table "stamps", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "child_id", null: false
+    t.integer "status", default: 0
+    t.datetime "stamped_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["child_id"], name: "index_stamps_on_child_id"
+  end
+
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
     t.string "crypted_password"
@@ -80,4 +89,5 @@ ActiveRecord::Schema.define(version: 2023_08_16_064914) do
 
   add_foreign_key "payments", "payment_collections"
   add_foreign_key "results", "children"
+  add_foreign_key "stamps", "children"
 end

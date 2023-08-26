@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Payments', type: :system do
   let!(:user) { create(:user) }
   let!(:child) { create(:child, user: user) }
-  let!(:plan_1) { create(:plan, item: '保険', amount: 20_000, child: child) }
-  let!(:plan_2) { create(:plan, item: '投資', amount: 10_000, child: child) }
+  let!(:plan_1) { create(:plan, item: '学資保険', amount: 20_000, child: child) }
+  let!(:plan_2) { create(:plan, item: 'つみたてNISA', amount: 10_000, child: child) }
   before { login(user) }
   describe 'index' do
     let!(:payment_collection) { create(:payment_collection, child: child) }
@@ -125,6 +125,41 @@ RSpec.describe 'Payments', type: :system do
         expect(page).to have_field 'payment_collection[payments_attributes][2][amount]', with: ''
       end
     end
+    context 'with payed stamp' do
+      before do
+        fill_in 'payment_collection[paymented_at]', with: Date.today
+
+        fill_in 'payment_collection[payments_attributes][0][item]', with: payment_1.item
+        fill_in 'payment_collection[payments_attributes][0][amount]', with: payment_1.amount
+
+        fill_in 'payment_collection[payments_attributes][1][item]', with: ''
+        fill_in 'payment_collection[payments_attributes][1][amount]', with: ''
+
+        click_on '登録する'
+        click_on '履歴'
+      end
+      it 'is successful' do
+        expect(page).to have_selector "#payed_stamp_for_#{payment_collection.paymented_at.year}_#{payment_collection.paymented_at.month}"
+      end
+    end
+    context 'with complete stamp' do
+      before do
+        fill_in 'payment_collection[paymented_at]', with: Date.today
+
+        fill_in 'payment_collection[payments_attributes][0][item]', with: payment_1.item
+        fill_in 'payment_collection[payments_attributes][0][amount]', with: payment_1.amount
+
+        fill_in 'payment_collection[payments_attributes][1][item]', with: payment_2.item
+        fill_in 'payment_collection[payments_attributes][1][amount]', with: payment_2.amount
+
+        click_on '登録する'
+        click_on '履歴'
+      end
+      it 'is successful' do
+        expect(page).to have_selector "#complete_stamp_for_#{payment_collection.paymented_at.year}_#{payment_collection.paymented_at.month}"
+      end
+    end
+
   end
 
   describe 'update' do
@@ -206,6 +241,17 @@ RSpec.describe 'Payments', type: :system do
         expect(page).to have_content '編集に失敗しました'
       end
     end
+    context 'with change stamp from complete to payed' do
+      before do
+        visit edit_payment_collection_path(payment_collection.id)
+        check 'payment_collection[payments_attributes][1][_destroy]'
+        click_on '登録する'
+      end
+      it 'is successful' do
+        expect(page).to have_selector "#payed_stamp_for_#{payment_collection.paymented_at.year}_#{payment_collection.paymented_at.month}"
+        expect(page).to have_no_selector "#complete_stamp_for_#{payment_collection.paymented_at.year}_#{payment_collection.paymented_at.month}"
+      end
+    end
   end
 
   describe 'destroy' do
@@ -226,17 +272,20 @@ RSpec.describe 'Payments', type: :system do
         expect(page).to have_no_content payment_2.item
         expect(page).to have_no_content payment_3.item
         expect(page).to have_content 'データはありません'
+        expect(page).to have_no_selector "#payed_stamp_for_#{payment_collection.paymented_at.year}_#{payment_collection.paymented_at.month}"
+        expect(page).to have_no_selector "#complete_stamp_for_#{payment_collection.paymented_at.year}_#{payment_collection.paymented_at.month}"
       end
     end
   end
 
   describe 'auto_payment' do
-    let!(:plan){ create(:plan, :is_auto, child: child) }
+    let!(:plan){ create(:plan, :is_auto, item: '学資保険', child: child) }
     before { login(user) }
     context 'with payment on 1st day' do
       before { visit child_payment_collections_path(child) }
       it 'is successful' do
         expect(page).to have_content '(自動入金)'
+        expect(page).to have_selector "#payed_stamp_for_#{Date.today.year}_#{Date.today.month}"
       end
     end
   end

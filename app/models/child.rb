@@ -4,6 +4,7 @@ class Child < ApplicationRecord
   has_one :result
   has_many :payment_collections, dependent: :destroy
   has_many :payments, through: :payment_collections
+  has_many :stamps, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 255 }
   validates :stage, presence: true
@@ -64,4 +65,52 @@ class Child < ApplicationRecord
   def culculated_amount(age)
     plans.sum(:amount) * duration(age)
   end
+
+  def stamping(day)
+    plans_array = plans.pluck(:item)
+    day ||= Date.today
+    count = plans_array.size
+    collections = payment_collections.where(paymented_at: day.beginning_of_month..day.end_of_month)
+    collections.each do |collection|
+      collection.payments.each do |payment|
+        if plans_array.include?(payment.item)
+          plans_array.delete(payment.item)
+        end
+      end
+    end
+
+    # stampステータスの判定
+    if plans_array.size == count
+      attributes = {
+        stamped_at: day.beginning_of_month,
+        status: :unpayed
+      }
+    elsif plans_array.size == 0
+      attributes = {
+        stamped_at: day.beginning_of_month,
+        status: :complete
+      }
+    else
+      attributes = {
+        stamped_at: day.beginning_of_month,
+        status: :payed
+      }
+    end
+    stamp(attributes)
+  end
+
+  def stamp(attributes)
+    existing_stamp = stamps.find_by(stamped_at: attributes[:stamped_at])
+
+    if existing_stamp
+      if existing_stamp.status != attributes[:status]
+        existing_stamp.update(attributes)
+      end
+      existing_stamp
+    else
+      stamps.create(attributes)
+    end
+  end
+
+        
 end

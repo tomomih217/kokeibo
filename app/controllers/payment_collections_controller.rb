@@ -4,6 +4,7 @@ class PaymentCollectionsController < ApplicationController
 
   def index
     @payment_collections = @child.payment_collections.by_recently_paymented_at
+    @stamps = @child.stamps
   end
 
   def new
@@ -14,6 +15,7 @@ class PaymentCollectionsController < ApplicationController
   def create
     @payment_collection = PaymentCollection.new(payment_collection_params)
     if @payment_collection.save
+      @child.stamping(@payment_collection.paymented_at)
       redirect_to mypage_path(params[:child_id]), success: '入金しました'
     else
       flash.now[:danger] = '入金に失敗しました'
@@ -29,6 +31,7 @@ class PaymentCollectionsController < ApplicationController
   def update
     @payment_collection = @child.payment_collections.find(params[:id])
     if @payment_collection.update(payment_collection_params)
+      @child.stamping(@payment_collection.paymented_at)
       redirect_to child_payment_collections_path(@child), success: '入金情報を編集しました'
     else
       flash.now[:danger] = '編集に失敗しました'
@@ -39,6 +42,7 @@ class PaymentCollectionsController < ApplicationController
   def destroy
     payment_collection = @child.payment_collections.find(params[:id])
     payment_collection.destroy!
+    @child.stamping(payment_collection.paymented_at)
     redirect_to child_payment_collections_path(@child), success: '入金情報を削除しました'
   end
 
