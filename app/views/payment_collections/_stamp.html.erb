@@ -1,0 +1,18 @@
+<div class='w-1/4'>
+  <div id='calender_month' class='border'>
+    <%= "#{month}月" %>
+  </div>
+  <div class='h-20 border'>
+    <% if @stamps.find_by(stamped_at: Date.parse("#{calender_year}/#{month}/1"))&.payed? %>
+      <div class='flex justify-center items-center h-full'>
+        <%= image_tag 'payed_stamp.png', size: '80x80' %>
+      </div>
+    <% elsif @stamps.find_by(stamped_at: Date.parse("#{calender_year}/#{month}/1"))&.complete? %>
+      <div class='flex justify-center items-center'>
+        <%= image_tag 'complete_stamp.png', size: '80x80' %>
+      </div>
+    <% else %>
+      <p>-</p>
+    <% end %>
+  </div>
+</div>
