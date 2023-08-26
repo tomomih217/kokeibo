@@ -12,4 +12,8 @@ module ApplicationHelper
     options.push('仕送りの予定はない')
     options += (1..20).map { |x| x.to_s + '万円' }
   end
+
+  def calender_year(year=Date.today.year)
+    return year
+  end
 end

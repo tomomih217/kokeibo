@@ -42,6 +42,7 @@ class PaymentCollectionsController < ApplicationController
   def destroy
     payment_collection = @child.payment_collections.find(params[:id])
     payment_collection.destroy!
+    @child.stamping(payment_collection.paymented_at)
     redirect_to child_payment_collections_path(@child), success: '入金情報を削除しました'
   end
 
