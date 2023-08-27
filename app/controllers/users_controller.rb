@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   layout 'before_login_layout', only: %i[new confirm create]
-  layout 'after_login_layout', only: %i[show edit destroy]
+  layout 'after_login_layout', only: %i[show edit update destroy]
   skip_before_action :require_login, only: %i[new confirm create complete]
   skip_before_action :delete_session, only: %i[create destroy]
   skip_before_action :get_current_child, only: %i[new confirm create]
@@ -36,6 +36,17 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @user = current_user
+  end
+
+  def update
+    @user = current_user
+    if @user.update(user_params)
+      redirect_to user_path(current_user), success: '会員情報を編集しました。'
+    else
+      flash.now[:danger] = '編集に失敗しました'
+      render :edit
+    end
   end
 
   def destroy
