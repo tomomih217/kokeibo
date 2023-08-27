@@ -153,6 +153,47 @@ RSpec.describe 'Users', type: :system do
     end
   end
 
+  describe 'update' do
+    let!(:user){ create(:user) }
+    let!(:child){ create(:child, user: user) }
+    before do
+      login(user)
+      visit edit_user_path(user)
+    end
+    context 'with all attributes' do
+      before do
+        fill_in 'ユーザー名', with: 'change_name'
+        click_on '編集'
+      end
+      it 'is successful' do
+        expect(page).to have_content '会員情報を更新しました。'
+        expect(current_path).to eq user_path(user)
+        expect(page).to have_content 'change_name' 
+      end
+    end
+    context 'without name' do
+      before do
+        fill_in 'ユーザー名', with: ''
+        click_on '編集'
+      end
+      it 'is failed' do
+        expect(page).to have_content '編集に失敗しました'
+        expect(page).to have_content 'ユーザー名を入力してください'
+      end
+    end
+    context 'with a duplicated name' do
+      let!(:duplicated_user){ create(:user, name: 'hogehoge') }
+      before do
+        fill_in 'ユーザー名', with: duplicated_user.name
+        click_on '編集'
+      end
+      it 'is failed' do
+        expect(page).to have_content '編集に失敗しました'
+        expect(page).to have_content 'ユーザー名はすでに存在します'
+      end
+    end
+  end
+
   describe 'destroy' do
     let!(:user){ create(:user) }
     let!(:child){ create(:child, user: user) }
