@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Users', type: :system do
   describe 'before log in,' do
     describe 'Sign up' do
-      fcontext 'with all attributes' do
+      context 'with all attributes' do
         before do
           visit new_user_path
           fill_in 'ユーザー名', with: 'Test_1'
