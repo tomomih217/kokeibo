@@ -120,4 +120,21 @@ RSpec.describe 'Users', type: :system do
       end
     end
   end
+
+  describe 'destroy' do
+    let!(:user){ create(:user) }
+    let!(:child){ create(:child, user: user) }
+    fcontext 'after login' do
+      before do 
+        login(user)
+        page.accept_confirm do
+          click_on '退会'
+        end
+      end
+      it 'is successful' do
+        expect(page).to have_content '退会が完了しました。ご利用ありがとうございました。'
+        expect(current_path).to eq root_path
+      end
+    end
+  end
 end
