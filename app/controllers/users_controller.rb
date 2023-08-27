@@ -32,8 +32,8 @@ class UsersController < ApplicationController
   def complete; end
 
   def destroy
-    User.destroy!(current_user.id)
-    redirect_to root_path, success: '退会が完了しました。ご利用ありがとうございました。'
+    User.destroy(current_user.id)
+    redirect_to login_path, success: '退会が完了しました。ご利用ありがとうございました。'
   end
 
   private

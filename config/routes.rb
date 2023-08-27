@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get '/privacypolicy', to: redirect('/')
   get '/termandcondition', to: redirect('/')
 
-  resources :users, only: %i[new create]
+  resources :users, only: %i[new create destroy]
   namespace :users do
     post 'confirm'
     get 'complete'
