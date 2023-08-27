@@ -121,10 +121,42 @@ RSpec.describe 'Users', type: :system do
     end
   end
 
-  describe 'destroy' do
+  describe 'show' do
     let!(:user){ create(:user) }
     let!(:child){ create(:child, user: user) }
     fcontext 'after login' do
+      before do
+        login(user)
+        click_on 'ユーザー情報照会'
+      end
+      it 'can access' do
+        expect(page).to have_content 'ユーザー情報照会'
+        expect(current_path).to eq user_path(user)
+      end
+    end
+  end
+  
+  describe 'edit' do
+    let!(:user){ create(:user) }
+    let!(:child){ create(:child, user: user) }
+    fcontext 'after login' do
+      before do
+        login(user)
+        click_on 'ユーザー情報照会'
+        click_on '編集'
+      end
+      it 'can access' do
+        expect(page).to have_content 'ユーザー情報編集'
+        expect(current_path).to eq edit_user_path(user)
+        expect(page).to have_selector "#users_name_for_#{user.id}"
+      end
+    end
+  end
+
+  describe 'destroy' do
+    let!(:user){ create(:user) }
+    let!(:child){ create(:child, user: user) }
+    context 'after login' do
       before do 
         login(user)
         page.accept_confirm do
