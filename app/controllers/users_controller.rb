@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   layout 'before_login_layout'
   skip_before_action :require_login, only: %i[new confirm create complete]
-  skip_before_action :delete_session, only: %i[create]
+  skip_before_action :delete_session, only: %i[create destroy]
   skip_before_action :get_current_child
-  after_action :delete_session, only: %i[create]
+  after_action :delete_session, only: %i[create destroy]
 
   def new
     @form = UserForm.new
@@ -30,6 +30,11 @@ class UsersController < ApplicationController
   end
 
   def complete; end
+
+  def destroy
+    User.destroy(current_user.id)
+    redirect_to login_path, success: '退会が完了しました。ご利用ありがとうございました。'
+  end
 
   private
 
