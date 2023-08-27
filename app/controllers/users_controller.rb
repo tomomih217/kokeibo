@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
-  layout 'before_login_layout'
+  layout 'before_login_layout', only: %i[new confirm create]
+  layout 'after_login_layout', only: %i[show edit destroy]
   skip_before_action :require_login, only: %i[new confirm create complete]
   skip_before_action :delete_session, only: %i[create destroy]
-  skip_before_action :get_current_child
+  skip_before_action :get_current_child, only: %i[new confirm create]
   after_action :delete_session, only: %i[create destroy]
 
   def new
@@ -30,6 +31,12 @@ class UsersController < ApplicationController
   end
 
   def complete; end
+
+  def show
+  end
+
+  def edit
+  end
 
   def destroy
     User.destroy(current_user.id)

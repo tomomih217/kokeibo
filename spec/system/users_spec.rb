@@ -127,10 +127,10 @@ RSpec.describe 'Users', type: :system do
     fcontext 'after login' do
       before do
         login(user)
-        click_on 'ユーザー情報照会'
+        click_on '会員情報'
       end
       it 'can access' do
-        expect(page).to have_content 'ユーザー情報照会'
+        expect(page).to have_content '会員情報照会'
         expect(current_path).to eq user_path(user)
       end
     end
@@ -142,11 +142,11 @@ RSpec.describe 'Users', type: :system do
     fcontext 'after login' do
       before do
         login(user)
-        click_on 'ユーザー情報照会'
+        click_on '会員情報'
         click_on '編集'
       end
       it 'can access' do
-        expect(page).to have_content 'ユーザー情報編集'
+        expect(page).to have_content '会員情報編集'
         expect(current_path).to eq edit_user_path(user)
         expect(page).to have_selector "#users_name_for_#{user.id}"
       end
