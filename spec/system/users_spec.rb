@@ -133,7 +133,7 @@ RSpec.describe 'Users', type: :system do
       end
       it 'is successful' do
         expect(page).to have_content '退会が完了しました。ご利用ありがとうございました。'
-        expect(current_path).to eq root_path
+        expect(current_path).to eq login_path
       end
     end
   end
