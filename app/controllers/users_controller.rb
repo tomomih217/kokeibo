@@ -1,9 +1,8 @@
 class UsersController < ApplicationController
-  layout 'before_login_layout', only: %i[new confirm create]
-  layout 'after_login_layout', only: %i[show edit update destroy]
+  layout :switch_layout
   skip_before_action :require_login, only: %i[new confirm create complete]
   skip_before_action :delete_session, only: %i[create destroy]
-  skip_before_action :get_current_child, only: %i[new confirm create]
+  skip_before_action :get_current_child, only: %i[new confirm create complete]
   after_action :delete_session, only: %i[create destroy]
 
   def new
@@ -24,8 +23,9 @@ class UsersController < ApplicationController
   def create
     @form = UserForm.new(session[:user_params])
     if @form.save
-      redirect_to users_complete_path
+      redirect_to users_complete_path, success: '会員登録が完了しました'
     else
+      flash.now[:danger] = '登録に失敗しました'
       render :new
     end
   end
@@ -33,6 +33,7 @@ class UsersController < ApplicationController
   def complete; end
 
   def show
+    @user = current_user
   end
 
   def edit
@@ -58,5 +59,12 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :password, :password_confirmation, :child_name, :child_stage, :term_of_service)
+  end
+
+  def switch_layout
+    case action_name
+    when 'new', 'confirm', 'create', 'complete' then 'before_login_layout'
+    when 'show', 'edit', 'update', 'destroy' then 'after_login_layout'
+    end
   end
 end
