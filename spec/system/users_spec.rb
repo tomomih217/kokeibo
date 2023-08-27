@@ -130,7 +130,8 @@ RSpec.describe 'Users', type: :system do
         click_on '会員情報'
       end
       it 'can access' do
-        expect(page).to have_content '会員情報照会'
+        expect(page).to have_content user.name
+        expect(page).to have_content "#{user.created_at.year}年#{user.created_at.month}月#{user.created_at.day}日"
         expect(current_path).to eq user_path(user)
       end
     end
@@ -139,7 +140,7 @@ RSpec.describe 'Users', type: :system do
   describe 'edit' do
     let!(:user){ create(:user) }
     let!(:child){ create(:child, user: user) }
-    fcontext 'after login' do
+    context 'after login' do
       before do
         login(user)
         click_on '会員情報'
@@ -159,8 +160,9 @@ RSpec.describe 'Users', type: :system do
     context 'after login' do
       before do 
         login(user)
+        click_on '会員情報'
         page.accept_confirm do
-          click_on '退会'
+          click_on '退会する'
         end
       end
       it 'is successful' do
