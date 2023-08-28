@@ -10,7 +10,9 @@ Rails.application.routes.draw do
     post 'confirm'
     get 'complete'
   end
-  resources :users, only: %i[new create show edit update destroy]  
+  resources :users, only: %i[new create show edit update destroy] do
+    resources :contacts, only: %i[new create]
+  end
 
   resources :children, only: %i[new create] do
     resources :plans, only: %i[index new create destroy], shallow: true

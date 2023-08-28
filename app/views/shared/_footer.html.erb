@@ -1,13 +1,9 @@
 <footer class='w-full py-5 bg-gray-200'>
   <div class='w-4/5 m-auto'>
     <div class='flex justify-around'>
-      <a href='/privacypolicy'>
-         <p class='text-sm text-blue-500'>プライバシーポリシー</p>
-      </a>
-      <a href='/termandcondition'>
-        <p class='text-sm text-blue-500'>利用規約</p>
-      </a>
-      <p class='text-sm text-blue-500'>お問い合わせ</p>
+      <%= link_to 'プライバシーポリシー', privacypolicy_path, class: 'text-sm text-blue-500 hover:text-blue-300' %>
+      <%= link_to '利用規約', termandcondition_path, class: 'text-sm text-blue-500 hover:text-blue-300' %>
+      <%= link_to 'お問い合わせ', new_user_contact_path(current_user), class: 'text-sm text-blue-500 hover:text-blue-300'  %>
     </div>
     <div class='text-center mt-3'>
       <p class='text-sm text-amber-dark'>＠ Tomomi Hashimoto All Rights reserved.</p>
