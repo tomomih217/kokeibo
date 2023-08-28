@@ -1,0 +1,13 @@
+<h1 class='text-3xl text-amber-dark text-center mb-5'>会員情報照会</h1>
+
+<div class='w-2/3 rounded-lg border border-yellow-200 bg-yellow-100 text-amber-dark p-10 m-auto'>
+  <div class='text-right'>
+    <%= link_to '編集', edit_user_path(@user), class: 'px-2 py-1 bg-green-300 text-white rounded-md shadow-md hover:shadow-sm' %>
+  </div>
+  <h2 class='text-2xl'><%= @user.name %></h2>
+  <p class='text-sm mt-3'>登録日：<%= "#{@user.created_at.year}年#{@user.created_at.month}月#{@user.created_at.day}日" %></p>
+</div>
+
+<div class='mt-10 text-center'>
+  <%= link_to '退会する', user_path(@user), method: :delete, data: { confirm: '退会すると積立情報が消えてしまいます。本当に退会しますか？' }, class: 'px-3 py-2 bg-red-500 text-white rounded-md' %>
+</div>
