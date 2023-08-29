@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'contacts/new'
-  get 'contacts/create'
   root 'top#index'
   get '/simulation', to: redirect('/')
   get '/privacypolicy', to: redirect('/')
@@ -11,8 +9,10 @@ Rails.application.routes.draw do
     get 'complete'
   end
   resources :users, only: %i[new create show edit update destroy] do
-    resources :contacts, only: %i[new create]
+    get 'term_and_condition'
+    get 'privacy_policy'
   end
+  resources :contacts, only: %i[new create]
 
   resources :children, only: %i[new create] do
     resources :plans, only: %i[index new create destroy], shallow: true

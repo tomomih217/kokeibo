@@ -1,4 +1,5 @@
 class ContactsController < ApplicationController
+  layout 'after_login_layout'
   def new
     @contact = Contact.new
   end
@@ -16,6 +17,6 @@ class ContactsController < ApplicationController
   private
 
   def contact_params
-    params.require(:contact).permit(:email, :content).merge(user_id: params[:user_id])
+    params.require(:contact).permit(:email, :content).merge(user_id: current_user.id)
   end
 end

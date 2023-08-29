@@ -55,6 +55,10 @@ class UsersController < ApplicationController
     redirect_to login_path, success: '退会が完了しました。ご利用ありがとうございました。'
   end
 
+  def term_and_condition; end
+
+  def privacy_policy; end
+
   private
 
   def user_params
@@ -64,7 +68,7 @@ class UsersController < ApplicationController
   def switch_layout
     case action_name
     when 'new', 'confirm', 'create', 'complete' then 'before_login_layout'
-    when 'show', 'edit', 'update', 'destroy' then 'after_login_layout'
+    when 'show', 'edit', 'update', 'destroy', 'privacy_policy', 'term_and_condition' then 'after_login_layout'
     end
   end
 end
