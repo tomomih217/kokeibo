@@ -8,8 +8,9 @@ class ContactsController < ApplicationController
     @contact = Contact.new(contact_params)
     if @contact.save
       ContactMailer.contact_mail(@contact, current_user).deliver
-      redirect_to mypage_path
+      redirect_to mypage_path, success: 'お問い合わせを送信しました。ありがとうございました。'
     else
+      flash.now[:danger] = '送信に失敗しました。'
       render :new
     end
   end
