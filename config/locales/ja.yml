@@ -24,6 +24,9 @@ ja:
         high_school: '高校'
         university: '大学'
         living_alone_funds: '仕送り金額'
+      contact:
+        email: 'メールアドレス'
+        content: 'お問い合わせ内容'
     errors:
       models:
         result:
