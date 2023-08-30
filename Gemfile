@@ -48,6 +48,7 @@ group :development do
   gem 'foreman'
   gem 'pry-rails'
   gem 'spring'
+  gem 'letter_opener_web', '~>1.3.4'
 end
 
 group :test do

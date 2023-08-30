@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
   root 'top#index'
   get '/simulation', to: redirect('/')
   get '/privacypolicy', to: redirect('/')
@@ -8,7 +9,11 @@ Rails.application.routes.draw do
     post 'confirm'
     get 'complete'
   end
-  resources :users, only: %i[new create show edit update destroy]  
+  resources :users, only: %i[new create show edit update destroy] do
+    get 'term_and_condition'
+    get 'privacy_policy'
+  end
+  resources :contacts, only: %i[new create]
 
   resources :children, only: %i[new create] do
     resources :plans, only: %i[index new create destroy], shallow: true
