@@ -3,6 +3,23 @@ require 'rails_helper'
 RSpec.describe 'Contact', type: :system do
   let!(:user){ create(:user) }
   let!(:child){ create(:child, user: user) }
+  describe 'link' do
+    context 'after login' do
+      before { login(user) }
+      it 'exists in footer' do
+        within 'footer' do
+          expect(page).to have_link 'お問い合わせ', href: new_contact_path
+        end
+      end
+    end
+    context 'before login' do
+      it 'do not exists' do
+        expect(page).to have_no_link 'お問い合わせ', href: new_contact_path
+        expect(page).to have_no_content 'お問い合わせ'
+      end
+    end
+  end
+
   describe 'create' do
     let(:contact){ build(:contact, user: user) }
     before do
