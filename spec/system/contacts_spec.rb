@@ -14,7 +14,7 @@ RSpec.describe 'Contact', type: :system do
         expect(current_path).to eq new_contact_path
       end
     end
-    fcontext 'with all attributes' do
+    context 'with all attributes' do
       before do
         fill_in 'メールアドレス', with: contact.email
         fill_in 'お問い合わせ内容', with: contact.content
@@ -27,12 +27,27 @@ RSpec.describe 'Contact', type: :system do
       end
     end
     context 'without email' do
+      before do
+        # fill_in 'メールアドレス', with: contact.email
+        fill_in 'お問い合わせ内容', with: contact.content
+
+        click_button '送信'
+      end
       it 'is failed' do
-        
+        expect(page).to have_content '送信に失敗しました。'
+        expect(page).to have_content 'メールアドレスを入力してください'
       end
     end
     context 'without content' do
+      before do
+        fill_in 'メールアドレス', with: contact.email
+        # fill_in 'お問い合わせ内容', with: contact.content
+
+        click_button '送信'
+      end
       it 'is failed' do
+        expect(page).to have_content '送信に失敗しました。'
+        expect(page).to have_content 'お問い合わせ内容を入力してください'
       end
     end
   end
