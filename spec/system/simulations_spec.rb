@@ -57,6 +57,7 @@ RSpec.describe "Simulations", type: :system do
             expect(current_path).to eq child_results_path(child)
           end
         end
+      end
     end
   end
   
@@ -217,7 +218,7 @@ RSpec.describe "Simulations", type: :system do
     before { visit edit_simulation_path(result) }
     context 'with registerd result content' do
       it 'can be displayed' do
-        expect(page).to have_field 'result[age]' with: result.age
+        expect(page).to have_field 'result[age]', with: result.age
         within '.form-nursery_school-group' do
           expect(page).to have_checked_field 'private'
         end

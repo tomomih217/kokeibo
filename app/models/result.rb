@@ -52,6 +52,7 @@ class Result < ApplicationRecord
       high_school
       university
     ]
+    schoolTypes
   end
 
   def age_range
@@ -66,7 +67,7 @@ class Result < ApplicationRecord
     if unselected?('kindergarten')
       array = []
       (from_age_for_nursery_school..5).each do |target_age|
-        array.push("age#{target_age.to_s}")
+        array.push("age#{target_age}")
       end
       ageRange[:nursery_school] = array
       ageRange[:kindergarten] = []
