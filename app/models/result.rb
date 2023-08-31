@@ -90,14 +90,9 @@ class Result < ApplicationRecord
     ageRange = age_range
 
     schoolTypes.each do |schoolType|
-      total = 0
       school_type = schoolType.underscore.to_sym
       next if unselected?(school_type)
       
-      #ageRange[school_type].each do |target_age|
-      #  data = json_datas[schoolType][send(school_type)][target_age]
-      #  total += data if target_age.gsub(/[^\d]/, "").to_i >= age
-      #end
       total = ageRange[school_type].sum { |target_age| json_datas[schoolType][send(school_type)][target_age] if target_age.gsub(/[^\d]/, "").to_i >= age }
       cost_datas[school_type] = total
     end
