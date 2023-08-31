@@ -36,22 +36,11 @@ class Result < ApplicationRecord
   end
 
   def self.json_cost_datas
-    # JSONからデータ取得
-    cost_datas = {}
-    File.open('./public/education_cost.json') do |file|
-      cost_datas = JSON.load(file)
-    end
+    JSON.parse(File.read('./public/education_cost.json'))
   end
 
   def self.school_types
-    schoolTypes = %w[
-      nursery_school
-      kindergarten
-      primary_school
-      junior_high_school
-      high_school
-      university
-    ]
+    %w[nursery_school kindergarten primary_school junior_high_school high_school university]
   end
 
   def age_range
@@ -66,7 +55,7 @@ class Result < ApplicationRecord
     if unselected?('kindergarten')
       array = []
       (from_age_for_nursery_school..5).each do |target_age|
-        array.push("age#{target_age.to_s}")
+        array.push("age#{target_age}")
       end
       ageRange[:nursery_school] = array
       ageRange[:kindergarten] = []
@@ -101,14 +90,10 @@ class Result < ApplicationRecord
     ageRange = age_range
 
     schoolTypes.each do |schoolType|
-      total = 0
       school_type = schoolType.underscore.to_sym
-      unless unselected?(school_type)
-        ageRange[school_type].each do |target_age|
-          data = json_datas[schoolType][send(school_type)][target_age]
-          total += data if target_age.gsub(/[^\d]/, "").to_i >= age
-        end
-      end
+      next if unselected?(school_type)
+      
+      total = ageRange[school_type].sum { |target_age| json_datas[schoolType][send(school_type)][target_age] if target_age.gsub(/[^\d]/, "").to_i >= age }
       cost_datas[school_type] = total
     end
 
@@ -161,7 +146,7 @@ class Result < ApplicationRecord
   end
 
   def unselected?(school_type)
-    return send(school_type) == 'unselected'
+    send(school_type) == 'unselected'
   end
 
   def cost_until_age(target_age)
@@ -176,12 +161,6 @@ class Result < ApplicationRecord
   end
 
   def cost_array_for_graph
-    array = [0]
-    (1..18).each do |idx|
-      if idx % 3 == 0
-        array.push(cost_until_age(idx))
-      end
-    end
-    array.push(cost_until_age(22))
+    (1..18).each_with_object([0]) { |idx, array| array.push(cost_until_age(idx)) if idx % 3 == 0 } + [cost_until_age(22)]
   end
 end

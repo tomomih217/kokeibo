@@ -2,17 +2,22 @@ require 'rails_helper'
 
 RSpec.describe 'FlashMessage', type: :system do
   let!(:user) { create(:user) }
-  let(:wrong_user){ build(:user, password: '') }
-  describe 'of success type' do
+  let!(:child){ create(:child, user: user) }
+  let(:wrong_user){ build(:user, name: '') }
+  context 'of success type' do
     before { login(user) }
-    context 'is green' do
-      expect(find('#flash_message')).to have_css '.bg-success-100'
+    it 'is green' do  
+      expect(page).to have_css '.bg-success-100'
+      expect(page).to have_css '.border-success-500'
+      expect(page).to have_css '.text-success-700'
     end
   end
-  describe 'of danger type' do
+  context 'of danger type' do
     before { login(wrong_user) }
-    context 'is red' do
-      expect(find('#flash_message')).to have_css '.bg-danger-100'
+    it 'is red' do
+      expect(page).to have_css '.bg-danger-100'
+      expect(page).to have_css '.border-danger-500'
+      expect(page).to have_css '.text-danger-700'
     end
   end
 end

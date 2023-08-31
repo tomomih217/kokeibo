@@ -14,6 +14,7 @@ RSpec.describe "Simulations", type: :system do
           within '.form-nursery_school-group' do
             find('label', text: '私立').click
           end
+          select "#{result.from_age_for_nursery_school}才", from: 'result[from_age_for_nursery_school]'
           within '.form-kindergarten-group' do
             find('label', text: '私立').click
           end
@@ -30,8 +31,8 @@ RSpec.describe "Simulations", type: :system do
             find('label', text: '私立理系').click
           end
           find("option[value='#{result.living_alone_funds}万円']").select_option
-          click_button 'シュミレーション結果'
-          click_button '登録する'
+          click_on 'シュミレーション結果'
+          click_on '登録する'
         end
         it 'is successful' do
           expect(page).to have_content '希望進路を登録しました'
@@ -41,22 +42,21 @@ RSpec.describe "Simulations", type: :system do
     end
     
     describe 'update' do
-      describe 'create' do
-        let!(:result){ create(:result, child: child) }
-        before { visit edit_simulation_path(result) }
-        context 'with all attributes' do
-          before do
-            within '.form-high_school-group' do
-              find('label', text: '公立').click
-            end
-            click_button 'シュミレーション結果'
-            click_button '編集する'
+      let!(:result){ create(:result, child: child) }
+      before { visit edit_simulation_path(result) }
+      context 'with all attributes' do
+        before do
+          within '.form-high_school-group' do
+            find('label', text: '公立').click
           end
-          it 'is successful' do
-            expect(page).to have_content '希望進路を編集しました'
-            expect(current_path).to eq child_results_path(child)
-          end
+          click_button 'シュミレーション結果'
+          click_on '編集する'
         end
+        it 'is successful' do
+          expect(page).to have_content '希望進路を編集しました'
+          expect(current_path).to eq mypage_path
+        end
+      end
     end
   end
   
@@ -68,7 +68,7 @@ RSpec.describe "Simulations", type: :system do
         expect(page).to have_link '希望進路の登録', href: new_child_simulation_path(child)
       end
     end
-    fcontext 'with registerd result' do
+    context 'with registerd result' do
       let!(:result){ create(:result, child: child) }
       before { visit child_results_path(child) }
       it 'has button to link to simulation#edit' do
@@ -94,6 +94,7 @@ RSpec.describe "Simulations", type: :system do
         within '.form-nursery_school-group' do
           find('label', text: '私立').click
         end
+        select "#{result.from_age_for_nursery_school}才", from: 'result[from_age_for_nursery_school]'
         within '.form-kindergarten-group' do
           find('label', text: '私立').click
         end
@@ -114,9 +115,9 @@ RSpec.describe "Simulations", type: :system do
       end
       it 'is successful' do
         expect(current_path).to eq child_result_path(child) # シュミレーション結果画面への遷移を確認
-        expect(page).to have_content "#{result.age}〜18才まで" # 積立期間が表示されること
-        expect(page).to have_content '総額： 22,015,376円' # 積立総額が表示されること
-        expect(page).to have_content '月額　約101,923円' # 月額の積立金額が表示されること
+        expect(page).to have_content "0〜18才まで" # 積立期間が表示されること
+        expect(page).to have_content '総額： 18,685,376円' # 積立総額が表示されること
+        expect(page).to have_content '月額　約86,506円' # 月額の積立金額が表示されること
         expect(page).to have_selector 'canvas' # グラフが表示されること
       end
     end
@@ -124,21 +125,7 @@ RSpec.describe "Simulations", type: :system do
       before do
         # ageを選択しない
         # find("option[value='#{result.age}才']").select_option
-        within '.form-nursery_school-group' do
-          find('label', text: '私立').click
-        end
-        within '.form-kindergarten-group' do
-          find('label', text: '私立').click
-        end
-        within '.form-primary_school-group' do
-          find('label', text: '公立').click
-        end
-        within '.form-junior_high_school-group' do
-          find('label', text: '公立').click
-        end
-        within '.form-high_school-group' do
-          find('label', text: '私立').click
-        end
+        
         within '.form-university-group' do
           find('label', text: '私立理系').click
         end
@@ -217,7 +204,7 @@ RSpec.describe "Simulations", type: :system do
     before { visit edit_simulation_path(result) }
     context 'with registerd result content' do
       it 'can be displayed' do
-        expect(page).to have_field 'result[age]' with: result.age
+        expect(page).to have_field 'result[age]', with: '出産前'
         within '.form-nursery_school-group' do
           expect(page).to have_checked_field 'private'
         end
@@ -248,8 +235,8 @@ RSpec.describe "Simulations", type: :system do
       end
       it 'is successful' do
         expect(current_path).to eq child_result_path(child) # シュミレーション結果画面への遷移を確認
-        expect(page).to have_content "#{result.age}〜18才まで" # 積立期間が表示されること
-        expect(page).to have_content '総額： 17.072,091円' # 積立総額が表示されること
+        expect(page).to have_content "0〜18才まで" # 積立期間が表示されること
+        expect(page).to have_content '総額： 17,072,091円' # 積立総額が表示されること
         expect(page).to have_content '月額　約79,037円' # 月額の積立金額が表示されること
         expect(page).to have_selector 'canvas' # グラフが表示されること
       end
@@ -257,7 +244,7 @@ RSpec.describe "Simulations", type: :system do
     context 'without age' do
       before do
         # ageを選択しない
-        find("option[value='選択してください']").select_option
+        select '選択してください', from: 'result[age]'
         click_button 'シュミレーション結果'
       end
       it 'is failed' do
@@ -268,7 +255,7 @@ RSpec.describe "Simulations", type: :system do
     context 'without selected living_alone_fund' do
       before do
         # 仕送り金額を選択しない
-        find("option[value='選択してください']").select_option
+        select '選択してください', from: 'result[living_alone_funds]'
         click_button 'シュミレーション結果'
       end
       it 'is failed' do
