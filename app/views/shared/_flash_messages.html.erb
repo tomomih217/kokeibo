@@ -1,19 +1,13 @@
 <% flash.each do |message_type, message| %>
-  <% if message_type == 'success' %>
-    <div id='flash_message' class="bg-success-100 border-l-4 border-success-500 text-success-700 p-4" role="alert">
-      <p><%= message %></p>
-    </div>
-  <% elsif message_type == 'danger' %>
-    <div id='flash_message' class="bg-danger-100 border-l-4 border-danger-500 text-danger-700 p-4" role="alert">
-      <p><%= message %></p>
-    </div>
-  <% elsif message_type == 'warning' %>
-    <div id='flash_message' class="bg-warning-100 border-l-4 border-warning-500 text-warning-700 p-4" role="alert">
-      <p><%= message %></p>
-    </div>
-  <% elsif message_type == 'info' %>
-    <div id='flash_message' class="bg-info-100 border-l-4 border-info-500 text-info-700 p-4" role="alert">
-      <p><%= message %></p>
-    </div>
-  <% end %>
+  <% class_name = case message_type
+                   when 'success' then 'bg-success-100 border-l-4 border-success-500 text-success-700 p-4'
+                   when 'danger' then 'bg-danger-100 border-l-4 border-danger-500 text-danger-700 p-4'
+                   when 'warning' then 'bg-warning-100 border-l-4 border-warning-500 text-warning-700 p-4'
+                   when 'info' then 'bg-info-100 border-l-4 border-info-500 text-info-700 p-4'
+                   else ''
+                   end %>
+  
+  <div id='flash_message' class="<%= class_name %>" role="alert">
+    <p><%= message %></p>
+  </div>
 <% end %>
