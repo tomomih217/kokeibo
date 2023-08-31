@@ -53,13 +53,6 @@ class Child < ApplicationRecord
 
   def duration(age)
     (age - result.age) * 12
-=begin
-    t = Date.today.year * 12 + Date.today.month
-    culculated_date = (Date.today + age.years)
-    s_day = Date.new(culculated_date.year, 3, 31)
-    s = culculated_date.year * 12 + 3
-    s - t
-=end
   end
 
   def culculated_amount(age)
@@ -111,6 +104,4 @@ class Child < ApplicationRecord
       stamps.create(attributes)
     end
   end
-
-        
 end
