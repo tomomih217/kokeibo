@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
-  has_many :children
-  has_many :contacts
+  has_many :children, dependent: :destroy
+  has_many :contacts, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 255 }, uniqueness: true
   # 新規登録かパスワード変更の時に以下のバリデーションを適用する。

@@ -1,7 +1,7 @@
 class Child < ApplicationRecord
   belongs_to :user
   has_many :plans, dependent: :destroy
-  has_one :result
+  has_one :result, dependent: :destroy
   has_many :payment_collections, dependent: :destroy
   has_many :payments, through: :payment_collections
   has_many :stamps, dependent: :destroy
