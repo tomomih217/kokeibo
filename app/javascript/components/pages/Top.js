@@ -26,7 +26,7 @@ const Top = () => {
         </ul>
         <div className='mt-16 text-center'>
           <Link page='/simulation'>
-            <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='lg'>教育費シュミレーション</Button>
+            <Button pxSize='3' pySize='2' color='amber-vivid' fontColor='white' roundType='lg'>教育費シミュレーション</Button>
           </Link>
         </div>
       </div>

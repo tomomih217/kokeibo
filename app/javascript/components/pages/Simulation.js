@@ -43,7 +43,7 @@ const Simulation = () => {
 
   return (
     <div>
-      <Container title='教育費シュミレーション'>
+      <Container title='教育費シミュレーション'>
         <SimulationForm selectedValues={selectedValues} handleDropdownChange={handleDropdownChange} schoolTypes={schoolTypes} />
 
         <div className='text-center mt-5 mb-24'>

@@ -10,9 +10,9 @@ describe('Topコンポーネント', () => {
     expect(text).toBeInTheDocument();
   });
 
-  it('教育費シュミレーションボタンが表示されること', () => {
+  it('教育費シミュレーションボタンが表示されること', () => {
     const { getByText } = render(<Top />);
-    const loginButton = getByText('教育費シュミレーション');
+    const loginButton = getByText('教育費シミュレーション');
     expect(loginButton).toBeInTheDocument();
   });
 
