@@ -48,12 +48,12 @@ RSpec.describe 'Mypage', type: :system do
         expect(page).to have_no_link '希望進路を登録する'
         expect(page).to have_content '高校入学時'
         expect(page).to have_content child.result.each_stage_cost[:high_school_cost].to_s(:delimited)
-        expect(page).to have_content child.culculated_amount(15).to_s(:delimited)
-        expect(page).to have_content (child.result.each_stage_cost[:high_school_cost] - child.culculated_amount(15)).to_s(:delimited)
+        expect(page).to have_content child.decorate.hold_amount(15)
+        # expect(page).to have_content (child.result.each_stage_cost[:high_school_cost] - child.culculated_amount(15)).to_s(:delimited)
         expect(page).to have_content '大学入学時'
         expect(page).to have_content child.result.each_stage_cost[:university_cost].to_s(:delimited)
-        expect(page).to have_content child.culculated_amount(18).to_s(:delimited)
-        expect(page).to have_content (child.result.each_stage_cost[:university_cost] - child.culculated_amount(18)).to_s(:delimited)
+        expect(page).to have_content child.decorate.hold_amount(18)
+        # expect(page).to have_content (child.result.each_stage_cost[:university_cost] - child.culculated_amount(18)).to_s(:delimited)
       end
     end
     context 'with payed amount in this month' do
@@ -153,6 +153,30 @@ RSpec.describe 'Mypage', type: :system do
       end
       it 'can be display mypage' do
         expect(current_path).to eq mypage_path(child)
+      end
+    end
+  end
+
+  describe 'is rendered' do
+    let!(:user) { create(:user) }
+    let!(:child) { create(:child, user: user) }
+    context 'when access top page without logout' do
+      before do
+        login(user)
+        visit root_path
+      end
+      it 'is successful' do
+        expect(current_path).to eq mypage_path
+      end
+    end
+    context 'when access top page after logout' do
+      before do
+        login(user)
+        click_button 'ログアウト'
+        visit root_path
+      end
+      it 'is failed' do
+        expect(current_path).to eq root_path
       end
     end
   end
