@@ -197,6 +197,21 @@ RSpec.describe "Simulations", type: :system do
         expect(page).to have_content '仕送り金額を選択してください'
       end
     end
+    fcontext 'over 6 ages' do
+      it 'is successful' do
+        fail
+      end
+    end
+    context 'with 3 ages and nursery school in 1 age' do
+      it 'is successful' do
+        fail
+      end
+    end
+    context 'without kindergarten' do
+      it 'is successful' do
+        fail
+      end
+    end
   end
 
   describe 'edit' do
@@ -262,6 +277,21 @@ RSpec.describe "Simulations", type: :system do
       it 'is failed' do
         expect(page).to have_content '教育費シミュレーション'
         expect(page).to have_content '仕送り金額を選択してください'
+      end
+    end
+    context 'over 6 ages' do
+      it 'is successful' do
+        fail
+      end
+    end
+    context 'with 3 ages and nursery school in 1 age' do
+      it 'is successful' do
+        fail
+      end
+    end
+    context 'without kindergarten' do
+      it 'is successful' do
+        fail
       end
     end
   end

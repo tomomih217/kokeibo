@@ -39,7 +39,7 @@ RSpec.describe 'Mypage', type: :system do
         expect(page).to have_content child.estimated_amount.to_s(:delimited)
       end
     end
-    context 'with difference between cost and savings' do
+    fcontext 'with difference between cost and savings' do
       let!(:result) { create(:result, child: child) }
       let!(:plan_1) { create(:plan, child: child) }
       let!(:plan_2) { create(:plan, child: child) }
@@ -49,11 +49,11 @@ RSpec.describe 'Mypage', type: :system do
         expect(page).to have_content '高校入学時'
         expect(page).to have_content child.result.each_stage_cost[:high_school_cost].to_s(:delimited)
         expect(page).to have_content child.decorate.hold_amount(15)
-        # expect(page).to have_content (child.result.each_stage_cost[:high_school_cost] - child.culculated_amount(15)).to_s(:delimited)
+        expect(page).to have_content (child.result.each_stage_cost[:high_school_cost] - child.culculated_amount(15)).to_s(:delimited)
         expect(page).to have_content '大学入学時'
         expect(page).to have_content child.result.each_stage_cost[:university_cost].to_s(:delimited)
         expect(page).to have_content child.decorate.hold_amount(18)
-        # expect(page).to have_content (child.result.each_stage_cost[:university_cost] - child.culculated_amount(18)).to_s(:delimited)
+        expect(page).to have_content (child.result.each_stage_cost[:university_cost] - child.culculated_amount(18)).to_s(:delimited)
       end
     end
     context 'with payed amount in this month' do
